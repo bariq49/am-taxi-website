@@ -1,0 +1,34 @@
+import { getBookingSettings, getFleets, getFleetsByDistance, getHourlyPricings, QueryParams } from "@/lib/api/fleets";
+import { useQuery } from "@tanstack/react-query";
+
+export const useFleets = (params?: QueryParams) => {
+    return useQuery({
+        queryKey: ["fleets", params],
+        queryFn: () => getFleets(params),
+    });
+};
+
+export const useHourlyPricings = (
+    params?: QueryParams,
+    options?: { enabled?: boolean }
+) => {
+    return useQuery({
+        queryKey: ["hourly-pricings", params],
+        queryFn: () => getHourlyPricings(params),
+        enabled: options?.enabled ?? true,
+    });
+};
+
+export const useFleetsByDistance = (distance: number, params?: QueryParams) => {
+    return useQuery({
+        queryKey: ["fleets-by-distance", distance, params],
+        queryFn: () => getFleetsByDistance(distance, params),
+    });
+};
+
+export const useBookingSettings = () => {
+    return useQuery({
+        queryKey: ["booking-settings"],
+        queryFn: getBookingSettings,
+    });
+};
