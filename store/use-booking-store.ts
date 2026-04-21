@@ -22,6 +22,8 @@ export interface BookingStep1PersistedData {
     pickupAddress: string;
     deliveryAddress: string;
     stops: { address: string }[];
+    pickupDate: string;
+    pickupTime: string;
     duration?: string;
     durationValue?: string;
     distanceMiles?: number;

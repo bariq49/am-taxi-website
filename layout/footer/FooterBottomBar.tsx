@@ -5,7 +5,7 @@ export default function FooterBottomBar() {
     <div className="bg-[#0F0F0F]">
       <div className="container mx-auto flex flex-col items-center justify-between gap-3 px-4 py-4 text-center sm:px-6 md:flex-row md:text-left lg:px-8">
         <p className="text-xs text-gray-400 sm:text-sm">
-          Copyright © {new Date().getFullYear()} <span className="font-bold text-primary">DSL Limo Services.</span> All Rights Reserved
+          Copyright © {new Date().getFullYear()} <span className="font-bold text-primary">AMS Airport Transfer.</span> All Rights Reserved
         </p>
 
         <p className="text-xs text-gray-400 sm:text-sm">

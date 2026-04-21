@@ -44,7 +44,7 @@ export default function TimeColumn({
                 </button>
                 <div
                     ref={ref}
-                    className="max-h-40 overflow-y-auto scrollbar-hide"
+                    className="max-h-40 overflow-y-auto [&::-webkit-scrollbar]:hidden [scrollbar-width:none] [-ms-overflow-style:none]"
                 >
                     {values.map((val) => {
                         const isSelected = selected === val;
@@ -54,9 +54,9 @@ export default function TimeColumn({
                                 key={val}
                                 type="button"
                                 onClick={() => onSelect(val)}
-                                className={`w-full py-2 text-sm border-b last:border-b-0 transition ${isSelected
-                                    ? "bg-black text-white"
-                                    : "bg-white hover:bg-gray-100"
+                                className={`w-full py-2 text-sm border-b last:border-b-0 transition font-bold ${isSelected
+                                    ? "bg-primary text-white"
+                                    : "bg-white hover:bg-gray-100 text-slate-700"
                                     }`}
                             >
                                 {typeof val === "number"

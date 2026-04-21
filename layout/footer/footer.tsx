@@ -1,4 +1,4 @@
-import { MapPin, Phone, Mail, Facebook, Instagram } from "lucide-react";
+import { MapPin, Phone, Mail } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import FooterLinksColumn, { FooterLinkItem } from "./FooterLinksColumn";
@@ -11,7 +11,7 @@ import {
   COMPANY_PHONE,
   COMPANY_PHONE_HREF,
   SOCIAL_LINKS,
-} from "@/constants/app-defaults";
+} from "@/constants/app-default";
 
 export default function Footer() {
   const quickLinks: FooterLinkItem[] = [
@@ -51,23 +51,6 @@ export default function Footer() {
               </Link>
             </div>
             <p className="max-w-sm text-sm leading-relaxed text-gray-300">{COMPANY_DESCRIPTION}</p>
-            <div className="flex flex-wrap mt-4">
-              {[
-                { href: SOCIAL_LINKS.facebook, icon: Facebook, label: "Facebook" },
-                { href: SOCIAL_LINKS.instagram, icon: Instagram, label: "Instagram" },
-              ].map((icon) => (
-                <a
-                  key={icon.label}
-                  href={icon.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={icon.label}
-                  className="rounded-full border border-white/15 p-2 transition hover:border-white/30 hover:bg-white/5 mr-2"
-                >
-                  <icon.icon className="h-[18px] w-[18px] text-gray-300 " />
-                </a>
-              ))}
-            </div>
           </div>
 
           <div className="lg:col-span-2">

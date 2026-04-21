@@ -133,20 +133,20 @@ export type QueryParams = Record<string, string | number | boolean | undefined>;
 
 export const getHourlyPricings = async (params?: QueryParams): Promise<HourlyPricingListResponse> => {
     const response = await api.get(API_ROUTES.HOURLY_PRICING, { params });
-    return response as any;
+    return response.data;
 };
 
 export const getFleetsByDistance = async (distance: number, params?: QueryParams): Promise<any> => {
     const response = await api.get(`${API_ROUTES.FLEET}/by-distance/${distance}`, { params });
-    return response.data.data;
+    return response.data;
 };
 
 export const getFleets = async (params?: QueryParams): Promise<any> => {
     const response = await api.get(API_ROUTES.FLEET, { params: { isActive: true } });
-    return response.data.data;
+    return response.data;
 };
 
 export const getBookingSettings = async (): Promise<any> => {
     const response = await api.get(API_ROUTES.BOOKING_SETTINGS);
-    return response.data.data;
+    return response.data;
 };

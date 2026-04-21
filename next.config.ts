@@ -1,7 +1,15 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  images: {
+    remotePatterns: [
+      ...(["lh3", "lh4", "lh5", "lh6"] as const).map((sub) => ({
+        protocol: "https" as const,
+        hostname: `${sub}.googleusercontent.com`,
+        pathname: "/**",
+      })),
+    ],
+  },
 };
 
 export default nextConfig;

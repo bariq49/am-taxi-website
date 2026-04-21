@@ -11,9 +11,10 @@ import {
   isSameDay,
   isBefore,
   startOfDay,
+  isSameMonth,
 } from "date-fns";
 import { toZonedTime } from "date-fns-tz";
-import { ChevronRight, Calendar } from "lucide-react";
+import { ChevronRight, Calendar, X } from "lucide-react";
 import { DEFAULT_TIMEZONE } from "@/constants/app-default";
 
 interface DatePickerProps {
@@ -26,6 +27,7 @@ interface DatePickerProps {
   disabled?: boolean;
   label?: string;
   error?: boolean;
+  customTrigger?: (value: string) => React.ReactNode;
 }
 
 export default function DatePicker({
@@ -38,6 +40,7 @@ export default function DatePicker({
   disabled,
   label,
   error,
+  customTrigger,
 }: DatePickerProps) {
   const [open, setOpen] = useState(false);
   const [currentMonth, setCurrentMonth] = useState(
@@ -98,6 +101,7 @@ export default function DatePicker({
   };
 
   const selectedDate = parseValueDate();
+  const displayValue = formatDisplay();
 
   return (
     <div className="relative w-full">
@@ -106,76 +110,101 @@ export default function DatePicker({
           {label}
         </label>
       )}
-      <div
-        className={`border rounded-lg px-4 py-3 flex items-center gap-2 transition
-          ${error ? "border-red-500" : "border-gray-300"}
-          ${disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}
-        `}
-        onClick={() => {
-          if (!disabled) setOpen((prev) => !prev);
-        }}
-      >
-        <Calendar size={16} />
-
-        <span className={value ? "text-black" : "text-gray-400"}>
-          {formatDisplay()}
-        </span>
-      </div>
+      {customTrigger ? (
+        <div onClick={() => !disabled && setOpen((prev) => !prev)}>
+            {customTrigger(displayValue)}
+        </div>
+      ) : (
+        <div
+          className={`border rounded-lg px-4 py-3 flex items-center gap-2 transition
+            ${error ? "border-red-500" : "border-gray-300"}
+            ${disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}
+          `}
+          onClick={() => {
+            if (!disabled) setOpen((prev) => !prev);
+          }}
+        >
+          <Calendar size={16} />
+  
+          <span className={value ? "text-black" : "text-gray-400"}>
+            {displayValue}
+          </span>
+        </div>
+      )}
       {open && (
         <>
           <div
             className="fixed inset-0 bg-black/40 z-40"
             onClick={() => setOpen(false)}
           />
-          <div className="absolute z-50 mt-2 w-full bg-white rounded-xl shadow-lg p-4">
-            <div className="flex justify-between items-center mb-3">
-              <button onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}>
-                <ChevronRight className="rotate-180" />
-              </button>
-
-              <span className="font-medium">
-                {format(currentMonth, "MMMM yyyy")}
-              </span>
-
-              <button onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}>
-                <ChevronRight />
+          <div className="fixed sm:absolute z-50 bottom-0 sm:bottom-auto sm:mt-2 inset-x-0 sm:inset-auto w-full sm:w-[320px] bg-white rounded-t-2xl sm:rounded-xl shadow-2xl sm:shadow-lg overflow-hidden left-0">
+            {/* Mobile Header - Primary background */}
+            <div className='flex sm:hidden items-center justify-between bg-primary p-4 text-white'>
+              <span className='font-bold text-lg'>Select Date</span>
+              <button 
+                type="button"
+                onClick={() => setOpen(false)}
+              >
+                <X size={24} />
               </button>
             </div>
-            <div className="grid grid-cols-7 text-xs text-center mb-2 text-gray-500">
-              {["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"].map((d) => (
-                <div key={d}>{d}</div>
-              ))}
-            </div>
 
-            {/* Days */}
-            <div className="grid grid-cols-7 gap-1 text-sm">
-              {getCalendarDays().map((date, i) => {
-                const inactive = date.getMonth() !== currentMonth.getMonth();
-                const disabledDay = isDisabled(date);
-                const selected =
-                  selectedDate && isSameDay(date, selectedDate);
+            <div className='p-4'>
+              <div className="flex justify-between items-center mb-3">
+                <button 
+                  type="button"
+                  disabled={isSameMonth(currentMonth, new Date())}
+                  onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}
+                  className='p-1 hover:bg-slate-100 rounded-full transition-colors disabled:opacity-20 disabled:pointer-events-none'
+                >
+                  <ChevronRight size={20} className="rotate-180" />
+                </button>
 
-                return (
-                  <div
-                    key={i}
-                    onClick={() => !disabledDay && handleSelect(date)}
-                    className={`text-center py-2 rounded cursor-pointer
-                      ${disabledDay ? "text-gray-300 cursor-not-allowed" : ""}
-                      ${inactive ? "text-gray-400" : ""}
-                      ${selected ? "bg-black text-white" : "hover:bg-gray-100"}
-                    `}
-                  >
-                    {date.getDate()}
-                  </div>
-                );
-              })}
+                <span className="font-bold text-slate-800">
+                  {format(currentMonth, "MMMM yyyy")}
+                </span>
+
+                <button 
+                  type="button"
+                  onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}
+                  className='p-1 hover:bg-slate-100 rounded-full transition-colors'
+                >
+                  <ChevronRight size={20} />
+                </button>
+              </div>
+
+              <div className="grid grid-cols-7 text-xs text-center mb-2 font-bold text-slate-400">
+                {["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"].map((d) => (
+                  <div key={d} className="py-1">{d}</div>
+                ))}
+              </div>
+
+              {/* Days */}
+              <div className="grid grid-cols-7 gap-1 text-sm">
+                {getCalendarDays().map((date, i) => {
+                  const inactive = date.getMonth() !== currentMonth.getMonth();
+                  const disabledDay = isDisabled(date);
+                  const selected = selectedDate && isSameDay(date, selectedDate);
+
+                  return (
+                    <div
+                      key={i}
+                      onClick={() => !disabledDay && handleSelect(date)}
+                      className={`text-center py-2.5 rounded-lg cursor-pointer transition-all
+                        ${disabledDay ? "text-slate-200 cursor-not-allowed pointer-events-none" : ""}
+                        ${inactive ? "text-slate-300" : (disabledDay ? "text-slate-200" : "font-bold text-slate-800")}
+                        ${selected 
+                          ? "bg-primary text-white shadow-md font-bold" 
+                          : !disabledDay && !inactive ? "hover:bg-slate-100" : ""
+                        }
+                      `}
+                    >
+                      {date.getDate()}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-            <button
-              onClick={() => setOpen(false)}
-              className="mt-3 w-full py-2 text-sm bg-gray-200 rounded"
-            >
-              Close
-            </button>
           </div>
         </>
       )}

@@ -56,6 +56,8 @@ interface InputProps {
     maxLength?: number;
     inputMode?: React.HTMLAttributes<HTMLInputElement>["inputMode"];
     digitsOnly?: boolean;
+    inputClassName?: string;
+    labelClassName?: string;
 }
 
 export const Input: React.FC<InputProps> = ({
@@ -77,14 +79,16 @@ export const Input: React.FC<InputProps> = ({
     selectValueAsNumber = false,
     maxLength,
     inputMode,
-    digitsOnly = false
+    digitsOnly = false,
+    inputClassName,
+    labelClassName,
 }) => {
     const { control } = useFormContext();
     const [showPassword, setShowPassword] = React.useState(false);
 
     const inputBase = cn(
-        "w-full py-2.5 border rounded-lg bg-white text-black appearance-none focus:outline-none focus:ring-0 focus-visible:outline-none",
-        icon ? "pl-10 pr-4" : "px-4"
+        "w-full py-2 border rounded-lg bg-white text-black appearance-none focus:outline-none focus:ring-0 focus-visible:outline-none transition-all",
+        inputClassName
     );
     const inputError = (error: boolean) => error ? "border-red-500" : "border-gray-300";
 
@@ -319,27 +323,32 @@ export const Input: React.FC<InputProps> = ({
 
                 return (
                     <FormItem className={cn("flex flex-col", className)}>
-                        {label && (
-                            <FormLabel>
-                                {label}
-                                {required && <span className="text-destructive ml-1">*</span>}
-                            </FormLabel>
-                        )}
-                        <div className="relative">
-                            {icon && type !== "date" && type !== "time" && type !== "counter" && (
-                                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 z-10 pointer-events-none">
+                        <div className="flex items-start gap-3">
+                            {icon && (
+                                <div className="mt-1 flex-shrink-0">
                                     {icon}
-                                </span>
+                                </div>
                             )}
-                            <FormControl>
-                                {renderInput(field, hasError)}
-                            </FormControl>
+                            <div className="flex flex-col flex-1 min-w-0">
+                                {label && (
+                                    <FormLabel className={cn(
+                                        "text-[10px] uppercase font-bold text-slate-400/80 mb-0.5 tracking-wider",
+                                        labelClassName
+                                    )}>
+                                        {label}
+                                        {required && <span className="text-destructive ml-1">*</span>}
+                                    </FormLabel>
+                                )}
+                                <FormControl>
+                                    {renderInput(field, hasError)}
+                                </FormControl>
+                            </div>
 
                             {onRemove && (
                                 <button
                                     type="button"
                                     onClick={onRemove}
-                                    className="absolute -top-2 -right-2 bg-primary text-white w-5 h-5 rounded-full flex items-center justify-center"
+                                    className="bg-primary text-white w-5 h-5 rounded-full flex items-center justify-center ml-2"
                                 >
                                     <X size={12} />
                                 </button>

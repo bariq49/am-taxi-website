@@ -1,4 +1,5 @@
-import { Input } from '@/components/ui/Input';
+
+import { Input } from '@/components/form/Input';
 import React from 'react';
 interface StopItemProps {
     index: number;

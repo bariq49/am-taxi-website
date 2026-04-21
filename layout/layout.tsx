@@ -1,5 +1,6 @@
 'use client';
 
+import Footer from "./footer/footer";
 import Header from "./header/Header";
 
 
@@ -19,6 +20,7 @@ export default function DefaultLayout({
             >
                 {children}
             </main>
+            <Footer />
         </div>
     );
 }
