@@ -27,6 +27,7 @@ export const ReturnTripSection = () => {
     const nextIsReturn = !isReturn;
     form.setValue("isReturn", nextIsReturn, { shouldDirty: true });
     if (!nextIsReturn) {
+      form.setValue("isReturnMeetGreet", false, { shouldDirty: true });
       form.setValue("returnChildSeatsEnabled", false, { shouldDirty: true });
       form.setValue("returnChildSeats", [], { shouldDirty: true });
     }
@@ -36,7 +37,7 @@ export const ReturnTripSection = () => {
     <div className="space-y-0">
       <div
         className={cn(
-          "p-3 md:p-4 flex flex-col sm:flex-row gap-3 md:gap-5 items-start w-full relative bg-muted border border-border",
+          "p-3 md:p-4 flex flex-col sm:flex-row gap-3 md:gap-5 items-start w-full relative bg-gray-100 border border-border",
           isReturn ? "rounded-t-sm rounded-b-none border-b-0" : "rounded-sm"
         )}
       >
@@ -112,6 +113,7 @@ export const ReturnTripSection = () => {
               required
             />
           </div>
+          {/* <MeetGreetField mode="return" /> */}
           <ChildSeatsField mode="return" />
         </div>
       ) : null}

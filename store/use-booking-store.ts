@@ -13,8 +13,6 @@ export type Vehicle = FleetByDistance & {
 
 export type Pricing = {
     base: number;
-    tax: number;
-    gratuity: number;
     total: number;
 };
 
@@ -66,16 +64,8 @@ export interface BookingServiceItem {
 
 export interface BookingSettingsSnapshot {
     _id: string;
-    taxRate: number;
-    gratuityRate: number;
     stopFee: BookingServiceItem;
     airportPickup: BookingServiceItem;
-    outbound: {
-        meetAndGreet: BookingServiceItem;
-    };
-    return: {
-        meetAndGreet: BookingServiceItem;
-    };
     childSeats: {
         _id: string;
         name: string;
@@ -221,15 +211,6 @@ export const calculatePricing = (state: BookingState): Pricing | null => {
         base += bookingSettings.airportPickup.price;
     }
 
-    // Meet & greet
-    if (step3?.isMeetGreet && bookingSettings.outbound.meetAndGreet.isActive) {
-        base += bookingSettings.outbound.meetAndGreet.price;
-    }
-
-    if (step3?.isReturnMeetGreet && bookingSettings.return.meetAndGreet.isActive) {
-        base += bookingSettings.return.meetAndGreet.price;
-    }
-
     // Return trip fare
     if (step3?.isReturn) {
         base +=
@@ -254,16 +235,10 @@ export const calculatePricing = (state: BookingState): Pricing | null => {
     base += calcSeats(step3?.childSeats);
     base += calcSeats(step3?.returnChildSeats);
 
-    // Tax & gratuity
-    const tax = (base * bookingSettings.taxRate) / 100;
-    const gratuity = (base * bookingSettings.gratuityRate) / 100;
-
-    const total = base + tax + gratuity;
+    const total = base;
 
     return {
         base,
-        tax,
-        gratuity,
         total,
     };
 };

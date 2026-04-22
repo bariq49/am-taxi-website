@@ -1,9 +1,8 @@
 import React from "react";
 import { useWatch, type UseFormReturn } from "react-hook-form";
-import { Switch } from "@/components/ui/switch";
-import { Input } from "@/components/ui/Input";
+import { Switch } from "@/components/form/switch";
+import { Input } from "@/components/form/Input";
 import { cn } from "@/lib/utils";
-import { formatBookingAmount } from "@/lib/booking-pricing";
 
 interface AirportPickupFieldProps {
   form: UseFormReturn<any>;
@@ -38,7 +37,7 @@ export const AirportPickupField = ({
         )}
       >
         <span className="text-sm font-medium">
-          Airport Pickup {`(${formatBookingAmount(airportPickupBasePrice)})`}
+          Airport Pickup {`(${(airportPickupBasePrice)})`}
         </span>
         <Switch
           checked={Boolean(isAirportPickup)}

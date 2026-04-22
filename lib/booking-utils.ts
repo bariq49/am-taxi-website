@@ -1,6 +1,12 @@
 import { HourlyPricingPackage } from "./api/fleets";
 import { addMinutes, parse, format, isValid, parseISO } from "date-fns";
 
+export function formatPrice(value: number | undefined | null, currencySign: string = "€"): string {
+  const numericValue = Number(value ?? 0);
+  const safeValue = Number.isFinite(numericValue) ? numericValue : 0;
+  return `${currencySign}${safeValue.toFixed(2)}`;
+}
+
 export interface AddressInfo {
   name: string;
   detail: string;

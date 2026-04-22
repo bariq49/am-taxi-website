@@ -4,7 +4,20 @@ import React from "react"
 import { Download, Loader } from "lucide-react"
 import { toast } from "sonner"
 import { useBookingStatus, useDownloadBookingReceipt } from "@/hooks/query/use-booking"
-import { formatBookingAmount } from "@/lib/booking-pricing"
+import TripRouteDetails, { type RouteAddress } from "@/components/booking/shared/trip-route-details"
+
+const formatBookingAmount = (value: number) => `$${(Math.round(value * 100) / 100).toFixed(2)}`
+const parseAddress = (address?: string): RouteAddress => {
+  if (!address?.trim()) return { name: "", detail: "" }
+  const parts = address.split(",")
+  if (parts.length > 1) {
+    return {
+      name: parts[0].trim(),
+      detail: parts.slice(1).join(",").trim(),
+    }
+  }
+  return { name: address.trim(), detail: "" }
+}
 
 function OrderPage({ id }: { id: string }) {
   const { data: booking, isLoading, isError } = useBookingStatus(id)
@@ -35,11 +48,9 @@ function OrderPage({ id }: { id: string }) {
   }
 
   const stops = booking.tripDetails.stops?.filter((s) => s.address?.trim()) ?? []
-  const allLocations = [
-    booking.tripDetails.pickupAddress,
-    ...stops.map((s) => s.address),
-    booking.tripDetails.deliveryAddress,
-  ].filter(Boolean)
+  const pickup = parseAddress(booking.tripDetails.pickupAddress)
+  const delivery = parseAddress(booking.tripDetails.deliveryAddress)
+  const routeStops = stops.map((s) => parseAddress(s.address))
 
   const totalAmount = booking.amount || 0
   const outboundChildSeatCount = booking.tripDetails.childSeats?.reduce(
@@ -52,12 +63,6 @@ function OrderPage({ id }: { id: string }) {
   ) || 0
   const childSeatCount = outboundChildSeatCount + returnChildSeatCount
   const pricing = booking.pricingBreakdown
-  const mergedGratuityAmount =
-    (pricing?.vehicle.oneWay.gratuityAmount || 0) +
-    (pricing?.vehicle.return.isSelected ? pricing.vehicle.return.gratuityAmount : 0)
-  const mergedTaxAmount =
-    (pricing?.vehicle.oneWay.taxAmount || 0) +
-    (pricing?.vehicle.return.isSelected ? pricing.vehicle.return.taxAmount : 0)
   const mergedBasePriceAmount =
     (pricing?.vehicle.oneWay.basePrice || 0) +
     (pricing?.vehicle.return.isSelected ? pricing.vehicle.return.basePrice : 0)
@@ -104,17 +109,13 @@ function OrderPage({ id }: { id: string }) {
         <main className="space-y-6">
           <section className="bg-white rounded-xl border border-gray-200 p-6">
             <h2 className="text-lg font-semibold text-gray-800 mb-4">Route</h2>
-            <div className="space-y-2">
-              {allLocations.map((location, index) => (
-                <div key={`${location}-${index}`} className="text-sm text-gray-700">
-                  {index === 0
-                    ? `Pickup: ${location}`
-                    : index === allLocations.length - 1
-                      ? `Drop-off: ${location}`
-                      : `Stop ${index}: ${location}`}
-                </div>
-              ))}
-            </div>
+            {/* <TripRouteDetails
+              pickup={pickup}
+              delivery={delivery}
+              stops={routeStops}
+              pickupTime={booking.tripDetails.pickupTime}
+              showAnimation
+            /> */}
           </section>
 
           <section className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -206,23 +207,6 @@ function OrderPage({ id }: { id: string }) {
                   value={`- ${formatBookingAmount(mergedDiscountAmount)}`}
                   isDiscount
                 />
-                <InfoField
-                  label={
-                    pricing.vehicle.return.isSelected
-                      ? `Gratuity (One-way ${pricing.vehicle.oneWay.gratuityRate}% + Return ${pricing.vehicle.return.gratuityRate}%)`
-                      : `One-way Gratuity (${pricing.vehicle.oneWay.gratuityRate}%)`
-                  }
-                  value={formatBookingAmount(mergedGratuityAmount)}
-                />
-                <InfoField
-                  label={
-                    pricing.vehicle.return.isSelected
-                      ? `Tax (One-way ${pricing.vehicle.oneWay.taxRate}% + Return ${pricing.vehicle.return.taxRate}%)`
-                      : `One-way Tax (${pricing.vehicle.oneWay.taxRate}%)`
-                  }
-                  value={formatBookingAmount(mergedTaxAmount)}
-                />
-
                 {pricing.extras.stops.total > 0 ? (
                   <InfoField
                     label={`Stops (${pricing.extras.stops.count} x ${formatBookingAmount(pricing.extras.stops.unitPrice)})`}

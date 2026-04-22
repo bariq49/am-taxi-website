@@ -34,7 +34,7 @@ export default function HeroSection() {
                         <div className="flex flex-col items-center gap-2 md:items-start">
                             <h1 className="text-center text-4xl font-extrabold text-white md:text-left md:text-6xl">
                                 Taxi service throughout <br />
-                                <span className="text-center md:text-left md:text-6xl lg:text-7xl xl:text-8xl bg-gradient-to-r from-secondary to-white bg-clip-text text-transparent">the Netherlands</span>
+                                <span className="text-center md:text-left md:text-6xl lg:text-7xl xl:text-8xl bg-gradient-to-r from-primary to-white bg-clip-text text-transparent">the Netherlands</span>
                             </h1>
                             <div className="flex flex-row items-center justify-center gap-y-4 gap-x-6 mt-6 flex-wrap md:items-start md:justify-start md:flex-col md:ml-2">
                                 {[
@@ -43,7 +43,7 @@ export default function HeroSection() {
                                     "Premium Vehicles at Economy Prices",
                                 ].map((item, index) => (
                                     <div key={index} className="flex items-center gap-2 md:gap-4">
-                                        <div className="flex h-5 w-5 items-center justify-center rounded-full bg-gradient-to-br from-secondary to-white shadow-lg md:h-7 md:w-7">
+                                        <div className="flex h-5 w-5 items-center justify-center rounded-full bg-gradient-to-br from-primary to-white shadow-lg md:h-7 md:w-7">
                                             <Check className="h-3 w-3 text-white md:h-4 md:w-4" />
                                         </div>
                                         <span className="text-sm font-medium text-white/90 md:text-lg">
@@ -51,17 +51,17 @@ export default function HeroSection() {
                                         </span>
                                     </div>
                                 ))}
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div className="flex items-center justify-center h-full w-full">
+                            <div className="w-full max-w-md">
+                                <Step1 />
                             </div>
                         </div>
                     </div>
-
-                    <div className="flex items-center justify-center h-full w-full">
-                        <div className="w-full max-w-md">
-                            <Step1 />
-                        </div>
-                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
     );
 }

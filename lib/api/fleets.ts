@@ -47,8 +47,6 @@ export interface BookingServiceItem {
 
 export interface BookingSettingsResponse {
     _id: string;
-    taxRate: number;
-    gratuityRate: number;
     discounts: {
         signup: number;
         guest: number;
@@ -78,10 +76,6 @@ export interface ChildSeat {
 
 export interface FleetPriceBreakdown {
     basePrice: number;
-    gratuityRate: number;
-    gratuityAmount: number;
-    taxRate: number;
-    taxAmount: number;
     totalPrice: number;
     displayDiscountRate: number;
     displayDiscountAmount: number;

@@ -12,7 +12,6 @@ import { cn } from '@/lib/utils'
 function SelectVehiclePage() {
   const router = useRouter()
   const category = useBookingStore((s) => s.category)
-  const isHourly = category === 'hourly'
   const showRouteMap = category === 'one-way'
 
   return (
@@ -37,7 +36,6 @@ function SelectVehiclePage() {
             !showRouteMap && 'max-md:pt-6 max-md:mt-1'
           )}
         >
-          {/* Mobile Tab/Pull Indicator */}
           <div className="flex justify-center w-full lg:hidden mb-4 -mt-1">
             <div className="w-12 h-1.5 bg-gray rounded-full" />
           </div>

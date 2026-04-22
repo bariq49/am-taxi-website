@@ -1,263 +1,220 @@
 'use client'
 
-import React from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
-import { useRouter, useSearchParams } from 'next/navigation'
-import { Download, Loader } from 'lucide-react'
-import { MdDone } from 'react-icons/md'
-import { toast } from 'sonner'
-import { useBookingStatus, useDownloadBookingReceipt } from '@/hooks/query/use-booking'
+import { useEffect } from "react"
+import { useSearchParams } from "next/navigation"
+import {
+  Check,
+  WalletCards,
+} from "lucide-react"
+import TripRouteDetails from "@/components/booking/shared/trip-route-details"
+import { useBookingStatus } from "@/hooks/queries/use-booking"
+import type { RouteAddress } from "@/components/booking/shared/trip-route-details"
 
-function PaymentSuccessContent() {
-  const router = useRouter()
+const formatAmount = (value: number) => `$${(Math.round((value || 0) * 100) / 100).toFixed(2)}`
+
+const parseAddress = (address?: string): RouteAddress => {
+  if (!address?.trim()) return { name: "", detail: "" }
+  const parts = address.split(",")
+  if (parts.length > 1) {
+    return {
+      name: parts[0].trim(),
+      detail: parts.slice(1).join(",").trim(),
+    }
+  }
+  return { name: address.trim(), detail: "" }
+}
+
+export default function Page() {
   const searchParams = useSearchParams()
-  const [redirectSeconds, setRedirectSeconds] = React.useState(10)
+  const bookingId = searchParams.get("booking_id") || undefined
+  const { data: booking } = useBookingStatus(bookingId)
 
-  const bookingId = searchParams.get('booking_id') || searchParams.get('id') || ''
-  const {
-    data: booking,
-    isLoading,
-    isError,
-  } = useBookingStatus(bookingId || undefined)
-  const { mutateAsync: downloadReceipt, isPending: isDownloadingReceipt } = useDownloadBookingReceipt()
-  const trackedPurchaseIdRef = React.useRef<string | null>(null)
-
-
-  const pickup = booking?.tripDetails?.pickupAddress || "";
-  const delivery = booking?.tripDetails?.deliveryAddress || "";
-  const stops = React.useMemo(
-    () => (booking?.tripDetails?.stops ?? []).filter((stop) => Boolean(stop.address?.trim())).map(s => s.address),
-    [booking?.tripDetails?.stops]
-  );
-
-  const formattedDuration = null;
-
-  const pickupTime = booking?.tripDetails?.pickupTime || "";
-
-  React.useEffect(() => {
-    if (redirectSeconds <= 0) {
-      router.push('/')
+  useEffect(() => {
+    if (!bookingId) {
+      console.log("Payment success page: bookingId missing in query params")
       return
     }
 
-    const timer = window.setTimeout(() => {
-      setRedirectSeconds((prev) => prev - 1)
-    }, 1000)
-
-    return () => window.clearTimeout(timer)
-  }, [redirectSeconds, router])
-
-  React.useEffect(() => {
-    if (!booking) return
-    if (booking.paymentStatus !== "paid") return
-
-    const transactionId = booking.bookingNumber || booking._id
-    if (!transactionId || trackedPurchaseIdRef.current === transactionId) return
-
-    const dataLayerPayload = {
-      event: "purchase",
-      ecommerce: {
-        transaction_id: transactionId,
-        value: Number(booking.amount || 0),
-        currency: "USD",
-        items: [
-          {
-            item_id: booking.vehicle?._id || booking._id,
-            item_name: booking.vehicle?.name || "Limo Booking",
-            item_category: booking.category,
-            quantity: 1,
-            price: Number(booking.amount || 0),
-          },
-        ],
-      },
+    if (booking) {
+      console.log("Payment success page booking data:", booking)
     }
+  }, [booking, bookingId])
 
-    const windowWithDataLayer = window as Window & { dataLayer?: unknown[] }
-    windowWithDataLayer.dataLayer = windowWithDataLayer.dataLayer || []
-    windowWithDataLayer.dataLayer.push(dataLayerPayload)
-    trackedPurchaseIdRef.current = transactionId
-  }, [booking])
+  const pickup = parseAddress(booking?.tripDetails?.pickupAddress)
+  const delivery = parseAddress(booking?.tripDetails?.deliveryAddress)
+  const routeStops = (booking?.tripDetails?.stops ?? [])
+    .filter((stop: { address?: string }) => Boolean(stop.address?.trim()))
+    .map((stop: { address?: string }) => parseAddress(stop.address))
 
-  if (isLoading) {
-    return (
-      <div className='w-full min-h-[50vh] bg-secondary/70 flex items-center justify-center'>
-        <Loader className='animate-spin text-primary' />
-      </div>
-    )
-  }
-
-  if (!bookingId || isError || !booking) {
-    return (
-      <div className='w-full min-h-screen flex items-center justify-center p-4'>
-        <div className='bg-background border border-destructive/30 text-destructive rounded-xl p-4 text-center'>
-          {!bookingId ? 'Booking ID is missing in URL.' : 'Unable to load booking details.'}
-        </div>
-      </div>
-    )
-  }
+  const tripType =
+    booking?.category === "hourly"
+      ? "Hourly"
+      : booking?.category === "return-trip"
+        ? "Return"
+        : "One Way"
+  const outwardValue = booking?.tripDetails?.pickupDate || "—"
+  const passengerName = booking?.passengerDetails?.fullName || "Guest"
+  const passengerEmail = booking?.passengerDetails?.email || "N/A"
+  const bookingNumber = booking?.bookingNumber || booking?._id || "N/A"
+  const fare = booking?.pricingBreakdown?.totals?.subtotal ?? booking?.amount ?? 0
+  const totalPaid = booking?.pricingBreakdown?.totals?.totalAmount ?? booking?.amount ?? 0
+  const childSeatsCount = (booking?.tripDetails?.childSeats ?? []).reduce(
+    (sum: number, item: { quantity?: number }) => sum + (item.quantity || 0),
+    0
+  )
+  const returnChildSeatsCount = (booking?.tripDetails?.returnChildSeats ?? []).reduce(
+    (sum: number, item: { quantity?: number }) => sum + (item.quantity || 0),
+    0
+  )
+  const totalChildSeats = childSeatsCount + returnChildSeatsCount
+  const vehicleName = booking?.vehicle?.name || "Luxury Fleet"
+  const vehiclePassengers = booking?.vehicle?.passengers ?? "—"
+  const vehicleSuitcases = booking?.vehicle?.suitcases ?? "—"
+  const vehicleClass = booking?.vehicle?.carType || "Standard"
+  const vehicleImage = booking?.vehicle?.image || "https://images.unsplash.com/photo-1549399542-7e82138f5d4c?auto=format&fit=crop&w=1200&q=80"
 
   return (
-    <div className='w-full bg-secondary flex flex-col min-h-[50vh] pt-52'>
-      <div className='max-w-5xl mx-auto py-16 lg:py-24 w-full flex items-center justify-center flex-col gap-6 lg:gap-12 text-center p-3'>
-        <div className='w-full flex items-center justify-center flex-col gap-3 lg:gap-5'>
-          <MdDone className='p-2 text-background bg-primary rounded-full' size={45} />
-          <div className='text-foreground/80'>Great choice, {booking.passengerDetails.fullName}</div>
-          <div className='text-foreground text-2xl lg:text-4xl font-bold'>YOUR RESERVATION IS CONFIRMED</div>
-          <div className='text-foreground/80'>
-            We&apos;ve sent a confirmation email to {booking.passengerDetails.email}
+    <div className="bg-gray-50 pt-28 sm:pt-24 md:pt-40 lg:pt-60 px-3 sm:px-4 pb-6 sm:pb-8">
+      <div className="mx-auto w-full container grid grid-cols-1 gap-4 sm:gap-6 lg:grid-cols-[1.05fr_0.95fr] px-4">
+        <div className="space-y-4 sm:space-y-5">
+          <div className="h-12 w-12 sm:h-14 sm:w-14 rounded-full bg-primary-900 text-white flex items-center justify-center shadow-md mx-auto lg:mx-0">
+            <Check className="h-6 w-6 sm:h-7 sm:w-7" strokeWidth={2.6} />
           </div>
-        </div>
 
-        <div className='w-full grid md:grid-cols-3 lg:gap-5'>
-          <div className='lg:col-span-2 w-full bg-background max-lg:rounded-b-xl max-lg:order-2 lg:rounded-l-xl border border-border py-6 px-8 gap-8 flex flex-col justify-center text-start relative overflow-hidden'>
-            <div className='text-xl lg:text-2xl font-bold text-foreground'>Your itinerary</div>
+          <div className="text-center lg:text-left">
+            <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground">
+              Thank You, {passengerName}
+            </h1>
+            <p className="mt-2 text-sm sm:text-base text-gray-600 leading-relaxed">
+              Your ride has been confirmed and is ready for your journey. A confirmation email has been sent to {passengerEmail} with full trip details.
+            </p>
+          </div>
 
-            {/* Route Timeline */}
-            <div className="relative pb-1 pl-9 pt-1">
-              {/* Vertical line */}
-              <div className="absolute bottom-[20px] left-[7px] top-[14px] w-[2px] overflow-visible bg-border">
-                <div
-                  className="absolute left-1/2 z-10 h-2 w-2 rounded-full bg-primary shadow-sm"
-                  style={{ animation: "moveDown 4s ease-in-out infinite" }}
+          <div className="rounded-xl border border-border bg-background px-4 py-3 sm:px-5 sm:py-4 shadow-sm text-center lg:text-left">
+            <p className="text-[11px] uppercase tracking-wide text-muted">
+              Confirmation Number
+            </p>
+            <p className="mt-1 text-lg sm:text-xl font-semibold text-foreground">{bookingNumber}</p>
+          </div>
+
+          <div className="rounded-xl border border-border bg-background p-4 sm:p-5 shadow-sm lg:hidden">
+            <h2 className="text-xl sm:text-2xl font-semibold text-foreground">Trip Details</h2>
+            <TripRouteDetails
+              className="mt-4"
+              pickup={pickup}
+              delivery={delivery}
+              stops={routeStops}
+              pickupTime={booking?.tripDetails?.pickupTime}
+              deliveryTime={booking?.tripDetails?.returnTime}
+              showTripMeta
+              tripType={tripType}
+              categoryLabel="Outward"
+              categoryValue={outwardValue}
+            />
+          </div>
+
+          <div className="rounded-xl border border-border bg-background p-4 sm:p-5 shadow-sm lg:hidden">
+            <h2 className="text-xl sm:text-2xl font-semibold text-foreground">Vehicle Details</h2>
+            <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-[220px_1fr]">
+              <div className="overflow-hidden rounded-lg border border-border bg-gray-100 p-2">
+                <img
+                  src={vehicleImage}
+                  alt={vehicleName}
+                  className="h-36 sm:h-40 w-full object-contain md:h-full"
                 />
               </div>
-
-              {/* Pickup Point */}
-              <div className="relative mb-5">
-                <div className="absolute -left-9 top-1 h-4 w-4 rounded-[4px] border-[3px] border-background bg-primary ring-1 ring-primary shadow-sm">
-                  <div
-                    className="absolute inset-0 rounded-[2px] bg-primary"
-                    style={{ animation: "pulseAtDestination 4s ease-in-out infinite" }}
-                  />
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                <div className="rounded-md bg-gray-50 px-3 py-2">
+                  <p className="text-[11px] uppercase tracking-wide text-muted">Vehicle Type</p>
+                  <p className="mt-1 text-sm font-semibold text-foreground">{vehicleName}</p>
                 </div>
-                <div className="flex justify-between items-start gap-3">
-                  <div className="flex-1">
-                    <h3 className="text-sm font-normal leading-tight text-foreground/90 sm:text-base">
-                      {pickup || "Pickup location"}
-                    </h3>
-                  </div>
+                <div className="rounded-md bg-gray-50 px-3 py-2">
+                  <p className="text-[11px] uppercase tracking-wide text-muted">Car Class</p>
+                  <p className="mt-1 text-sm font-semibold text-foreground">{vehicleClass}</p>
                 </div>
-
-                {/* Metrics Badges */}
-                <div className="mt-2 flex flex-wrap items-center gap-2">
-                  {formattedDuration && (
-                    <div className="rounded-full border border-border bg-secondary px-3 py-1 text-[10px] font-medium text-muted-foreground">
-                      {formattedDuration}
-                    </div>
-                  )}
+                <div className="rounded-md bg-gray-50 px-3 py-2 sm:col-span-2">
+                  <p className="text-[11px] uppercase tracking-wide text-muted">Capacity</p>
+                  <p className="mt-1 text-sm font-semibold text-foreground">{vehiclePassengers} Passengers, {vehicleSuitcases} Bags</p>
                 </div>
               </div>
-
-              {/* Intermediate Stops */}
-              {stops.map((stop, idx) => (
-                <div key={idx} className="relative mb-5">
-                  <div className="absolute -left-9 top-1 h-4 w-4 rounded-full border-[3px] border-background bg-primary ring-1 ring-primary shadow-sm"></div>
-                  <div className="flex justify-between items-start gap-3">
-                    <div className="flex-1">
-                      <h3 className="text-sm font-normal leading-tight text-foreground/90 sm:text-base">
-                        {stop || `Stop ${idx + 1}`}
-                      </h3>
-                    </div>
-                  </div>
-                </div>
-              ))}
-
-              {/* Delivery Point */}
-              {delivery && (
-                <div className="relative">
-                  <div className="absolute -left-9 top-1 h-4 w-4 rounded-[4px] border-[3px] border-background bg-primary ring-1 ring-primary shadow-sm">
-                    <div
-                      className="absolute inset-0 rounded-[2px] bg-primary"
-                      style={{ animation: "pulseAtDestination 4s ease-in-out infinite" }}
-                    />
-                  </div>
-                  <div className="flex justify-between items-start gap-3">
-                    <div className="flex-1">
-                      <h3 className="text-sm font-normal leading-tight text-foreground/90 sm:text-base">
-                        {delivery || "Delivery location"}
-                      </h3>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            <div className='flex flex-col gap-1'>
-              <div className='text-foreground/70 font-medium'>Pickup Date & Time</div>
-              <div className='text-foreground font-semibold'>
-                {booking.tripDetails.pickupDate} {booking.tripDetails.pickupTime}
-              </div>
-            </div>
-
-            <style>{`
-              @keyframes moveDown {
-                0% { top: 0%; opacity: 0; transform: translateX(-50%) scale(0.6); }
-                10% { opacity: 1; transform: translateX(-50%) scale(1); }
-                90% { opacity: 1; transform: translateX(-50%) scale(1); }
-                100% { top: 100%; opacity: 0; transform: translateX(-50%) scale(0.6); }
-              }
-              @keyframes pulseAtDestination {
-                0% { transform: scale(1); opacity: 0.8; }
-                50% { transform: scale(1.4); opacity: 0; }
-                100% { transform: scale(1); opacity: 0; }
-              }
-            `}</style>
-
-            <div className='flex items-center justify-end w-full'>
-              <div className='flex items-center gap-3'>
-                <button
-                  type='button'
-                  onClick={async () => {
-                    try {
-                      await downloadReceipt(booking._id)
-                    } catch {
-                      toast.error('Unable to download receipt. Please try again.')
-                    }
-                  }}
-                  disabled={isDownloadingReceipt}
-                  className='border border-primary cursor-pointer text-primary px-3 py-2 font-semibold w-fit rounded-md inline-flex items-center gap-2 disabled:opacity-60'
-                >
-                  <Download size={16} />
-                  {isDownloadingReceipt ? 'Downloading...' : 'Download Receipt'}
-                </button>
-                <Link
-                  className='bg-primary px-3 py-2 text-background font-semibold w-fit rounded-md'
-                  href={`/book-ride/order-details/${booking._id}`}
-                >
-                  View Order Details
-                </Link>
-              </div>
-            </div>
-
-            <div className='text-sm text-foreground/70 text-right'>
-              Moving to home in {redirectSeconds} second{redirectSeconds === 1 ? '' : 's'}...
             </div>
           </div>
 
-          {booking.vehicle?.image ? (
-            <div className='max-lg:rounded-t-xl lg:rounded-r-xl border border-border p-4 gap-5 flex flex-col items-center justify-center bg-white max-lg:order-1'>
-              <Image
-                src={booking.vehicle.image}
-                width={350}
-                height={350}
-                alt={booking.vehicle.name || 'Vehicle'}
-                className='w-full object-contain'
-              />
-              <div className='font-bold text-foreground'>{booking.vehicle.name}</div>
+          <div className="rounded-xl border border-secondary-200 bg-gradient-to-br from-background via-secondary-50 to-secondary-100 p-4 sm:p-5 shadow-sm">
+            <h2 className="text-xl sm:text-2xl font-semibold text-foreground">Payment Summary</h2>
+            <div className="mt-4 space-y-2.5">
+              <div className="flex items-center justify-between text-sm sm:text-base">
+                <p className="text-gray-500">BASE FARE</p>
+                <p className="font-semibold text-foreground">{formatAmount(fare)}</p>
+              </div>
+
+              <div className="border-t border-secondary-200 pt-3">
+                <p className="text-xs text-muted">Additional Services</p>
+                <p className="mt-1 text-sm sm:text-base text-gray-500">
+                  {totalChildSeats > 0 ? `Child Seat (${totalChildSeats})` : "No additional services"}
+                </p>
+              </div>
+
+              <div className="border-t border-secondary-200 pt-3 flex items-center justify-between">
+                <p className="text-xl sm:text-2xl font-semibold text-foreground">Total Paid</p>
+                <p className="text-3xl sm:text-2xl font-bold text-secondary">{formatAmount(totalPaid)}</p>
+              </div>
+
+              <div className="pt-1 flex items-center gap-2 text-xs text-gray-500">
+                <WalletCards className="h-3.5 w-3.5" />
+                <p>Payment status: {booking?.paymentStatus || "pending"}</p>
+              </div>
             </div>
-          ) : null}
+          </div>
+
+        </div>
+
+        <div className="space-y-4">
+          <div className="hidden rounded-xl border border-border bg-background p-5 shadow-sm lg:block">
+            <h2 className="text-2xl font-semibold text-foreground">Trip Details</h2>
+            <TripRouteDetails
+              className="mt-4"
+              pickup={pickup}
+              delivery={delivery}
+              stops={routeStops}
+              pickupTime={booking?.tripDetails?.pickupTime}
+              deliveryTime={booking?.tripDetails?.returnTime}
+              showTripMeta
+              tripType={tripType}
+              categoryLabel="Outward"
+              categoryValue={outwardValue}
+            />
+          </div>
+
+          <div className="hidden rounded-xl border border-border bg-background p-5 shadow-sm lg:block">
+            <h2 className="text-2xl font-semibold text-foreground">Vehicle Details</h2>
+            <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-[220px_1fr]">
+              <div className="overflow-hidden rounded-lg border border-border bg-gray-100 p-2">
+                <img
+                  src={vehicleImage}
+                  alt={vehicleName}
+                  className="h-40 w-full object-contain md:h-full"
+                />
+              </div>
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                <div className="rounded-md bg-gray-50 px-3 py-2">
+                  <p className="text-[11px] uppercase tracking-wide text-muted">Vehicle Type</p>
+                  <p className="mt-1 text-sm font-semibold text-foreground">{vehicleName}</p>
+                </div>
+                <div className="rounded-md bg-gray-50 px-3 py-2">
+                  <p className="text-[11px] uppercase tracking-wide text-muted">Car Class</p>
+                  <p className="mt-1 text-sm font-semibold text-foreground">{vehicleClass}</p>
+                </div>
+                <div className="rounded-md bg-gray-50 px-3 py-2 sm:col-span-2">
+                  <p className="text-[11px] uppercase tracking-wide text-muted">Capacity</p>
+                  <p className="mt-1 text-sm font-semibold text-foreground">{vehiclePassengers} Passengers, {vehicleSuitcases} Bags</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
   )
 }
-
-export default function PaymentSuccessPage() {
-  return (
-    <React.Suspense fallback={null}>
-      <PaymentSuccessContent />
-    </React.Suspense>
-  )
-}
-

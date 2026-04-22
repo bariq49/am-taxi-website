@@ -9,6 +9,8 @@ export const SOLID_HEADER_ROUTES = [
   "/contact",
   "/book-ride/select-vehicle",
   "/book-ride/passenger-details",
+  "/book-ride/payment-success",
+  "/book-ride/payment-cancel",
   "/auth/login",
   "/dashboard",
   "/services",

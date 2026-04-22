@@ -81,9 +81,11 @@ export const Input: React.FC<InputProps> = ({
 }) => {
     const { control } = useFormContext();
     const [showPassword, setShowPassword] = React.useState(false);
+    const fieldRadiusClass = "rounded-sm";
 
     const inputBase = cn(
-        "w-full py-2.5 border border-border rounded-sm bg-white text-black appearance-none focus:outline-none focus:ring-0 focus-visible:outline-none",
+        "w-full py-2.5 border border-border bg-white text-black appearance-none focus:outline-none focus:ring-0 focus-visible:outline-none",
+        fieldRadiusClass,
         icon ? "pl-10 pr-4" : "px-4"
     );
     const inputError = (error: boolean) => error ? "border-error" : "border-border";
@@ -114,11 +116,13 @@ export const Input: React.FC<InputProps> = ({
                         onChange={(phone) => field.onChange(phone)}
                         containerClass="!w-full phone-input-container"
                         inputClass={cn(
-                            "!w-full !h-[46px] !pl-12 !pr-4 !border !rounded-sm !bg-white !text-black",
+                            "!w-full !h-[46px] !pl-12 !pr-4 !border !bg-white !text-black",
+                            `!${fieldRadiusClass}`,
                             error ? "!border-error" : "!border-gray-300"
                         )}
                         buttonClass={cn(
-                            "!border !border-r !rounded-l-sm !bg-white",
+                            "!border !border-r !bg-white",
+                            fieldRadiusClass === "rounded-sm" ? "!rounded-l-sm" : "",
                             error ? "!border-error !border-r-error" : "!border-gray-300 !border-r-gray-300"
                         )}
                     />
@@ -145,7 +149,8 @@ export const Input: React.FC<InputProps> = ({
 
                 return (
                     <div className={cn(
-                        "flex h-[46px] items-center border rounded-lg bg-white text-black overflow-hidden",
+                        "flex h-[46px] items-center border bg-white text-black overflow-hidden",
+                        fieldRadiusClass,
                         inputError(error)
                     )}>
                         <button
@@ -226,6 +231,7 @@ export const Input: React.FC<InputProps> = ({
                         <SelectTrigger
                             className={cn(
                                 "w-full h-[46px] rounded-lg border bg-white text-black shadow-none focus:ring-0 focus:ring-transparent focus-visible:ring-0 focus-visible:ring-transparent",
+                                fieldRadiusClass,
                                 icon ? "pl-10 pr-4" : "px-4",
                                 inputError(error)
                             )}
@@ -305,7 +311,7 @@ export const Input: React.FC<InputProps> = ({
                 if (type === "toggle") {
                     return (
                         <FormItem className={cn("flex flex-col", className)}>
-                            <div className="flex items-center justify-between gap-3 rounded-lg border border-border bg-background p-3">
+                            <div className={cn("flex items-center justify-between gap-3 border border-border bg-background p-3", fieldRadiusClass)}>
                                 <FormLabel className={hasError ? "text-error" : undefined}>
                                     {label}
                                     {required && <span className="text-error ml-1">*</span>}

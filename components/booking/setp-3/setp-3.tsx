@@ -4,11 +4,14 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { Mail, User } from "lucide-react";
 import { useBookingStore, useTotalPrice } from "@/store/use-booking-store";
+import { useCreateCheckoutSession } from "@/hooks/queries/use-booking";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/form/form";
 import { Input } from "@/components/form/Input";
 import { ReturnTripSection } from "./return-trip-section";
 import { ChildSeatsField } from "./child-seats-field";
+import { AirportPickupField } from "./airport-pickup-field";
+import { formatPrice } from "@/lib/booking-utils";
 
 interface PassengerDetailsFormValues {
     firstName: string;
@@ -18,6 +21,9 @@ interface PassengerDetailsFormValues {
     isReturn: boolean;
     isMeetGreet: boolean;
     isReturnMeetGreet: boolean;
+    isAirportPickup: boolean;
+    airlineName: string;
+    flightNumber: string;
     returnDate: string;
     returnTime: string;
     childSeatsEnabled: boolean;
@@ -31,10 +37,14 @@ function Step3() {
         category,
         setStep3Data,
         step3,
+        step1,
+        bookingSettings,
     } = useBookingStore();
     const totalPrice = useTotalPrice();
     const safeTotalPrice = Number.isFinite(totalPrice) ? totalPrice : 0;
     const isHourly = category === "hourly";
+    const { mutateAsync: createCheckoutSession, isPending: isCreatingCheckoutSession } =
+        useCreateCheckoutSession();
 
     const form = useForm<PassengerDetailsFormValues>({
         defaultValues: {
@@ -45,6 +55,9 @@ function Step3() {
             isReturn: false,
             isMeetGreet: false,
             isReturnMeetGreet: false,
+            isAirportPickup: false,
+            airlineName: "",
+            flightNumber: "",
             returnDate: "",
             returnTime: "",
             childSeatsEnabled: false,
@@ -66,9 +79,21 @@ function Step3() {
         return () => subscription.unsubscribe();
     }, [form, setStep3Data]);
 
-    const handleSubmit = (data: any) => {
+    const handleSubmit = async (data: any) => {
         setStep3Data(data);
-    }
+        await createCheckoutSession({
+            booking: {
+                category,
+                step1,
+                step3: data,
+                selectedVehicle: useBookingStore.getState().selectedVehicle,
+                pricing: {
+                    base: safeTotalPrice,
+                    total: safeTotalPrice,
+                },
+            },
+        });
+    };
 
     return (
         <div className="flex flex-col gap-6 animate-in fade-in duration-500">
@@ -115,12 +140,23 @@ function Step3() {
                         <ReturnTripSection />
                     )}
 
+                    {step1?.isAirportSelected && (
+                        <AirportPickupField
+                            form={form}
+                            airportPickupBasePrice={bookingSettings?.airportPickup?.price ?? 0}
+                            disabled
+                        />
+                    )}
+
+                    {/* <MeetGreetField mode="outbound" /> */}
+
                     <ChildSeatsField mode="outbound" />
 
                     <Button
                         type="submit"
+                        loading={isCreatingCheckoutSession}
                     >
-                        Proceed to Pay — ${safeTotalPrice.toFixed(2)}
+                        Proceed to Pay — {formatPrice(safeTotalPrice)}
                     </Button>
                 </form>
             </Form>

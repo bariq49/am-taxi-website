@@ -67,7 +67,7 @@ export const ChildSeatsField = ({
     <div className="space-y-0">
       <div
         className={cn(
-          "flex items-center justify-between gap-3 border border-border bg-background p-3",
+          "flex h-[46px] items-center justify-between gap-3 border border-border bg-background px-3",
           seatsEnabled ? "rounded-t-sm rounded-b-none border-b-0" : "rounded-sm"
         )}
       >

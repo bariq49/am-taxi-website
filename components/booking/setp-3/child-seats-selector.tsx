@@ -33,19 +33,19 @@ export const ChildSeatsSelector = ({
         return (
           <div
             key={seat._id}
-            className="rounded-sm border border-border bg-background p-1 px-2 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between"
+            className="rounded-sm border border-border bg-background px-2 py-1.5 flex flex-col gap-2 sm:min-h-[46px] sm:flex-row sm:items-center sm:justify-between"
           >
             <div className="text-sm  text-foreground">
               {seat.name}
             </div>
 
             <div className="flex w-full items-center gap-3 sm:w-auto">
-              <div className="flex h-[46px] w-full items-center overflow-hidden rounded-sm border border-border bg-white text-black sm:w-auto cursor-pointer">
+              <div className="flex h-[36px] w-full items-center overflow-hidden rounded-sm border border-border bg-white text-black sm:w-auto cursor-pointer">
                 <button
                   type="button"
                   onClick={() => onQuantityChange(seat._id, -1)}
                   disabled={quantity <= 0}
-                  className="h-full w-12 shrink-0 flex items-center justify-center border-r border-gray-200 text-base font-semibold hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
+                  className="h-full w-12 shrink-0 cursor-pointer flex items-center justify-center border-r border-gray-200 text-base font-semibold hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
                   aria-label={`Decrease ${seat.name}`}
                 >
                   -
@@ -56,7 +56,7 @@ export const ChildSeatsSelector = ({
                 <button
                   type="button"
                   onClick={() => onQuantityChange(seat._id, 1)}
-                  className="h-full w-12 shrink-0 flex items-center justify-center border-l border-gray-200 text-base font-semibold hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
+                  className="h-full w-12 cursor-pointer shrink-0 flex items-center justify-center border-l border-gray-200 text-base font-semibold hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
                   aria-label={`Increase ${seat.name}`}
                 >
                   +
