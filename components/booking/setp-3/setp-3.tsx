@@ -19,8 +19,6 @@ interface PassengerDetailsFormValues {
     phone: string;
     email: string;
     isReturn: boolean;
-    isMeetGreet: boolean;
-    isReturnMeetGreet: boolean;
     isAirportPickup: boolean;
     airlineName: string;
     flightNumber: string;
@@ -41,10 +39,8 @@ function Step3() {
         bookingSettings,
     } = useBookingStore();
     const totalPrice = useTotalPrice();
-    const safeTotalPrice = Number.isFinite(totalPrice) ? totalPrice : 0;
     const isHourly = category === "hourly";
-    const { mutateAsync: createCheckoutSession, isPending: isCreatingCheckoutSession } =
-        useCreateCheckoutSession();
+    const { mutateAsync: createCheckoutSession, isPending } = useCreateCheckoutSession();
 
     const form = useForm<PassengerDetailsFormValues>({
         defaultValues: {
@@ -53,8 +49,6 @@ function Step3() {
             phone: "",
             email: "",
             isReturn: false,
-            isMeetGreet: false,
-            isReturnMeetGreet: false,
             isAirportPickup: false,
             airlineName: "",
             flightNumber: "",
@@ -82,16 +76,7 @@ function Step3() {
     const handleSubmit = async (data: any) => {
         setStep3Data(data);
         await createCheckoutSession({
-            booking: {
-                category,
-                step1,
-                step3: data,
-                selectedVehicle: useBookingStore.getState().selectedVehicle,
-                pricing: {
-                    base: safeTotalPrice,
-                    total: safeTotalPrice,
-                },
-            },
+            booking: useBookingStore.getState(),
         });
     };
 
@@ -147,16 +132,12 @@ function Step3() {
                             disabled
                         />
                     )}
-
-                    {/* <MeetGreetField mode="outbound" /> */}
-
                     <ChildSeatsField mode="outbound" />
-
                     <Button
                         type="submit"
-                        loading={isCreatingCheckoutSession}
+                        loading={isPending}
                     >
-                        Proceed to Pay — {formatPrice(safeTotalPrice)}
+                        Proceed to Pay — {formatPrice(totalPrice)}
                     </Button>
                 </form>
             </Form>
