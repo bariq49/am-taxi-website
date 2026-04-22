@@ -5,37 +5,14 @@ import { useSearchParams } from "next/navigation"
 import { Check, WalletCards } from "lucide-react"
 import TripRouteDetails from "@/components/booking/shared/trip-route-details"
 import { useBookingStatus } from "@/hooks/queries/use-booking"
-import type { RouteAddress } from "@/components/booking/shared/trip-route-details"
-
-const formatAmount = (value: number) => `$${(Math.round((value || 0) * 100) / 100).toFixed(2)}`
-
-const parseAddress = (address?: string): RouteAddress => {
-  if (!address?.trim()) return { name: "", detail: "" }
-  const parts = address.split(",")
-  if (parts.length > 1) {
-    return {
-      name: parts[0].trim(),
-      detail: parts.slice(1).join(",").trim(),
-    }
-  }
-  return { name: address.trim(), detail: "" }
-}
+import { formatPrice, parseAddress, formatTripDate } from "@/lib/booking-utils"
+import { PaymentSuccessSkeleton } from "@/components/skeletons/payment-success-skeleton"
 
 function PaymentSuccessContent() {
   const searchParams = useSearchParams()
   const bookingId = searchParams.get("booking_id") || undefined
-  const { data: booking } = useBookingStatus(bookingId)
-
-  useEffect(() => {
-    if (!bookingId) {
-      console.log("Payment success page: bookingId missing in query params")
-      return
-    }
-
-    if (booking) {
-      console.log("Payment success page booking data:", booking)
-    }
-  }, [booking, bookingId])
+  const { data: booking, isLoading } = useBookingStatus(bookingId)
+  if (isLoading) return <PaymentSuccessSkeleton />
 
   const pickup = parseAddress(booking?.tripDetails?.pickupAddress)
   const delivery = parseAddress(booking?.tripDetails?.deliveryAddress)
@@ -49,7 +26,7 @@ function PaymentSuccessContent() {
       : booking?.category === "return-trip"
         ? "Return"
         : "One Way"
-  const outwardValue = booking?.tripDetails?.pickupDate || "—"
+  const outwardValue = formatTripDate(booking?.tripDetails?.pickupDate)
   const passengerName = booking?.passengerDetails?.fullName || "Guest"
   const passengerEmail = booking?.passengerDetails?.email || "N/A"
   const bookingNumber = booking?.bookingNumber || booking?._id || "N/A"
@@ -74,7 +51,7 @@ function PaymentSuccessContent() {
     <div className="bg-gray-50 pt-28 sm:pt-24 md:pt-40 lg:pt-60 px-3 sm:px-4 pb-6 sm:pb-8">
       <div className="mx-auto w-full container grid grid-cols-1 gap-4 sm:gap-6 lg:grid-cols-[1.05fr_0.95fr] px-4">
         <div className="space-y-4 sm:space-y-5">
-          <div className="h-12 w-12 sm:h-14 sm:w-14 rounded-full bg-primary-900 text-white flex items-center justify-center shadow-md mx-auto lg:mx-0">
+          <div className="h-12 w-12 sm:h-14 sm:w-14 rounded-full bg-primary text-white flex items-center justify-center shadow-md mx-auto lg:mx-0">
             <Check className="h-6 w-6 sm:h-7 sm:w-7" strokeWidth={2.6} />
           </div>
 
@@ -142,7 +119,7 @@ function PaymentSuccessContent() {
             <div className="mt-4 space-y-2.5">
               <div className="flex items-center justify-between text-sm sm:text-base">
                 <p className="text-gray-500">BASE FARE</p>
-                <p className="font-semibold text-foreground">{formatAmount(fare)}</p>
+                <p className="font-semibold text-foreground">{formatPrice(fare, "$")}</p>
               </div>
 
               <div className="border-t border-secondary-200 pt-3">
@@ -154,7 +131,7 @@ function PaymentSuccessContent() {
 
               <div className="border-t border-secondary-200 pt-3 flex items-center justify-between">
                 <p className="text-xl sm:text-2xl font-semibold text-foreground">Total Paid</p>
-                <p className="text-3xl sm:text-2xl font-bold text-secondary">{formatAmount(totalPaid)}</p>
+                <p className="text-3xl sm:text-2xl font-bold text-secondary">{formatPrice(totalPaid, "$")}</p>
               </div>
 
               <div className="pt-1 flex items-center gap-2 text-xs text-gray-500">
@@ -218,7 +195,7 @@ function PaymentSuccessContent() {
 
 export default function Page() {
   return (
-    <Suspense fallback={<div className="flex min-h-screen items-center justify-center bg-gray-50 font-bold text-primary">Loading journey details...</div>}>
+    <Suspense fallback={<PaymentSuccessSkeleton />}>
       <PaymentSuccessContent />
     </Suspense>
   )

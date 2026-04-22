@@ -204,9 +204,9 @@ export const calculatePricing = (state: BookingState): Pricing | null => {
     }
 
     // Airport pickup
-    if (step1.isAirportSelected && bookingSettings.airportPickup.isActive) {
-        base += bookingSettings.airportPickup.price;
-    }
+    // if (step1.isAirportSelected && bookingSettings.airportPickup.isActive) {
+    //     base += bookingSettings.airportPickup.price;
+    // }
 
     // Return trip fare
     if (step3?.isReturn) {

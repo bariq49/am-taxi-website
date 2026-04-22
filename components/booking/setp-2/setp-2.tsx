@@ -32,7 +32,7 @@ function Step2() {
     return (
         <div className="w-full flex flex-col gap-2 md:gap-4">
             {isLoading && fleets.length === 0 && Array.from({ length: 3 }).map((_, index) => (
-                <VehicleCardSkeleton key={`fleet-skeleton-${index}`} />
+                <VehicleCardSkeleton key={`fleet-skeleton-${index}`} isExpanded={index === 0} />
             ))}
 
             {fleets.map((item: FleetByDistance) => {
@@ -42,7 +42,7 @@ function Step2() {
                         fleet={item}
                         isSelected={selectedVehicle?._id === item._id}
                         isLoading={loadingVehicleId === item._id}
-                        onSelect={setSelectedVehicle}
+                        onSelect={(fleet) => setSelectedVehicle(selectedVehicle?._id === fleet._id ? null : fleet)}
                         onContinue={handleContinue}
                     />
                 );

@@ -1,43 +1,86 @@
 "use client";
 
-export function VehicleCardSkeleton() {
+import { cn } from "@/lib/utils";
+
+interface VehicleCardSkeletonProps {
+  isExpanded?: boolean;
+}
+
+export function VehicleCardSkeleton({ isExpanded = false }: VehicleCardSkeletonProps) {
   return (
-    <div className="flex flex-col overflow-hidden rounded-xl border border-gray-300 bg-white shadow-sm">
-      <div className="flex flex-col px-2.5 py-2 sm:px-3 sm:py-3 md:px-3.5">
-        <div className="flex flex-row items-center gap-2 sm:gap-3 md:gap-4">
-          <div className="flex w-24 flex-shrink-0 items-center justify-center sm:w-28 md:w-36">
-            <div className="h-20 w-full animate-pulse rounded-lg bg-gray-200 sm:h-28 md:h-32" />
-          </div>
+    <div
+      className={cn(
+        "group relative overflow-visible rounded-sm border transition-all duration-300 bg-gray-50 border-border",
+        isExpanded && "bg-white shadow-sm"
+      )}
+    >
+      {/* Best Value Pill Skeleton */}
+      <div className="absolute -top-3 left-1 z-20">
+        <div className="h-6 w-20 sm:w-24 animate-pulse rounded-full bg-primary/20 shadow-sm" />
+      </div>
 
-          <div className="flex min-w-0 flex-1 flex-col items-start justify-center gap-1 sm:gap-1.5">
-            <div className="h-4 w-28 animate-pulse rounded bg-gray-200 sm:h-5 sm:w-32 md:h-6 md:w-40" />
+      <div className="flex items-center md:p-4 p-2 py-1">
+        {/* Vehicle Image Skeleton */}
+        <div className="relative flex-shrink-0 w-32 sm:w-40 lg:w-48 aspect-[4/3] sm:aspect-auto flex items-center justify-center bg-gray/10 rounded-md overflow-hidden px-1 sm:px-2">
+           <div className="w-full aspect-[16/9] animate-pulse bg-gray-200 rounded" />
+        </div>
 
-            <div className="flex items-center gap-1 sm:gap-2">
-              <div className="h-3 w-8 animate-pulse rounded bg-gray-200 sm:h-3.5 sm:w-10" />
-              <div className="h-3 w-3 animate-pulse rounded-full bg-gray-200 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4" />
-              <div className="h-3 w-2 animate-pulse rounded bg-gray-200 sm:h-3.5 sm:w-3" />
-              <div className="h-3 w-3 animate-pulse rounded-full bg-gray-200 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4" />
-              <div className="h-3 w-2 animate-pulse rounded bg-gray-200 sm:h-3.5 sm:w-3" />
+        {/* Content Section Skeleton */}
+        <div className="flex-1 flex flex-col justify-between min-w-0 ml-2 sm:ml-4">
+          <div className="flex justify-between items-stretch gap-2">
+            <div className="flex-1 min-w-0 flex flex-col justify-between">
+              <div className="space-y-1.5">
+                {/* Title */}
+                <div className="h-4 sm:h-5 w-24 sm:w-32 animate-pulse rounded bg-gray-200" />
+                {/* Subtitle */}
+                <div className="h-3 sm:h-4 w-32 sm:w-48 animate-pulse rounded bg-gray-200" />
+              </div>
+
+              {/* Icon Pills Skeleton */}
+              <div className="flex flex-wrap gap-1 sm:gap-2 pt-3">
+                <div className="h-6 sm:h-8 w-12 sm:w-16 animate-pulse rounded-full bg-gray-200 shrink-0" />
+                <div className="h-6 sm:h-8 w-12 sm:w-16 animate-pulse rounded-full bg-gray-200 shrink-0" />
+                <div className="h-6 sm:h-8 w-6 sm:w-10 animate-pulse rounded-full bg-gray-200 shrink-0" />
+              </div>
             </div>
 
-            <div className="h-3 w-36 animate-pulse rounded bg-gray-200 sm:h-3.5 sm:w-40 md:h-4 md:w-52" />
-          </div>
+            {/* Selection & Price Skeleton */}
+            <div className="flex flex-col items-end justify-between flex-shrink-0">
+              {/* Checkbox circle */}
+              <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full animate-pulse bg-primary/20 shadow-sm" />
 
-          <div className="flex flex-shrink-0 flex-col items-end justify-center gap-0.5">
-            <div className="flex flex-col items-end gap-0.5">
-              <div className="mb-0.5 h-2.5 w-14 animate-pulse rounded bg-gray-200 sm:h-3 sm:w-16 md:h-3.5 md:w-20" />
-              <div className="h-5 w-16 animate-pulse rounded bg-gray-200 sm:h-6 sm:w-20 md:h-8 md:w-24" />
+              {/* Price */}
+              <div className="text-right space-y-1">
+                <div className="h-3 w-12 sm:w-16 animate-pulse rounded bg-gray-200 ml-auto" />
+                <div className="h-5 sm:h-7 w-16 sm:w-24 animate-pulse rounded bg-gray-200 ml-auto" />
+              </div>
             </div>
-            <div className="mt-0.5 h-2.5 w-12 animate-pulse rounded bg-gray-200 sm:mt-1 sm:h-3 sm:w-16" />
           </div>
         </div>
       </div>
 
-      <div className="w-full border-t border-gray-200">
-        <div className="w-full px-2 py-1.5 sm:px-2.5 sm:py-2 md:px-3">
-          <div className="h-7 w-full animate-pulse rounded bg-gray-200 sm:h-8 md:h-9" />
+      {isExpanded && (
+        <div className="animate-in fade-in slide-in-from-top-2 duration-300">
+          {/* Inset Dashed Separator */}
+          <div className="border-t border-dashed border-border mx-4" />
+          <div className="px-4 py-2 flex flex-col sm:flex-row items-center justify-center sm:justify-between gap-4">
+            <div className="flex items-center justify-between sm:justify-start gap-x-3 sm:gap-x-8 gap-y-3 w-full sm:w-auto">
+                <div className="flex items-center gap-2">
+                    <div className="h-4 w-4 animate-pulse bg-gray-200 rounded-full" />
+                    <div className="h-4 w-20 animate-pulse bg-gray-200 rounded" />
+                    <div className="h-6 w-20 animate-pulse bg-gray-200 rounded-full" />
+                </div>
+                <div className="flex items-center gap-2">
+                    <div className="h-4 w-4 animate-pulse bg-gray-200 rounded-full" />
+                    <div className="h-4 w-20 animate-pulse bg-gray-200 rounded" />
+                    <div className="h-6 w-20 animate-pulse bg-gray-200 rounded-full" />
+                </div>
+            </div>
+
+            <div className="h-9 w-full sm:w-32 animate-pulse bg-primary/20 rounded-sm" />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

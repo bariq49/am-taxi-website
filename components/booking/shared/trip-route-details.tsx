@@ -45,14 +45,14 @@ export default function TripRouteDetails({
       {showTripMeta ? (
         <div className={cn("mb-4 space-y-1.5", !isHourly && "-ml-9")}>
           <div className="flex items-center justify-between">
-            <span className="text-sm text-muted-foreground font-medium">Trip</span>
-            <span className="text-sm font-medium text-foreground">{tripType || "—"}</span>
+            <span className="text-base text-gray-800 font-semibold">Trip</span>
+            <span className="text-sm font-semibold text-gray-500">{tripType || "—"}</span>
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-sm text-muted-foreground font-medium">
+            <span className="text-base text-gray-800 font-semibold">
               {categoryLabel || (isHourly ? "Duration" : "Outward")}
             </span>
-            <span className="text-sm font-medium text-foreground text-right">{categoryValue || "—"}</span>
+            <span className="text-sm font-semibold text-gray-500 text-right">{categoryValue || "—"}</span>
           </div>
         </div>
       ) : null}
@@ -60,7 +60,7 @@ export default function TripRouteDetails({
       {!isHourly && (
         <div
           className={cn(
-            "absolute left-[10px] bottom-[40px] w-[4px] bg-gray-200 overflow-visible z-0",
+            "absolute left-[14px] bottom-[30px] w-[4px] bg-gray-200 overflow-visible z-0",
             showTripMeta ? "top-[78px]" : "top-[24px]"
           )}
         >
@@ -76,7 +76,7 @@ export default function TripRouteDetails({
       <div className={cn("relative", !isHourly && "mb-8")}>
         {isHourly ? (
           <div className="flex items-start gap-4">
-            <MapPin className="mt-1 h-5 w-5 shrink-0 text-[#00283d]" />
+            <MapPin className="mt-1 h-5 w-5 shrink-0 text-primary" />
             <div className="min-w-0 flex-1">
               <h3 className="text-sm font-bold leading-tight text-gray-900 sm:text-base">
                 {pickup.name || "Pickup location"}
@@ -88,7 +88,7 @@ export default function TripRouteDetails({
           </div>
         ) : (
           <>
-            <div className="absolute -left-[32px] top-[6px] h-4 w-4 rounded-full border-[2.5px] border-[#00283d] bg-white z-10" />
+            <div className="absolute -left-[32px] top-[6px] h-6 w-6 rounded-full border-[4.5px] border-primary bg-white z-10" />
             <div className="flex justify-between items-start gap-4">
               <div className="flex-1 min-w-0">
                 <h3 className="text-sm font-bold leading-tight text-gray-900 sm:text-base truncate">
@@ -98,7 +98,7 @@ export default function TripRouteDetails({
                   {pickup.detail || "Full address not specified"}
                 </p>
               </div>
-              <span className="whitespace-nowrap pt-1 text-sm font-black text-gray-900 italic tracking-tighter">
+              <span className="whitespace-nowrap pt-1 text-sm font-semibold text-gray-500">
                 {showPickupTime ? pickupTime : "—"}
               </span>
             </div>
@@ -136,8 +136,8 @@ export default function TripRouteDetails({
 
       {!isHourly && (
         <div className="relative">
-          <div className="absolute -left-[32.5px] top-[2px] z-10">
-            <MapPin className="h-[20px] w-[20px] text-[#00283d]" strokeWidth={2.5} />
+          <div className="absolute -left-[31px] top-[2px] z-10">
+            <MapPin className="h-6 w-6 text-primary" strokeWidth={2.5} />
           </div>
           <div className="flex justify-between items-start gap-4">
             <div className="min-w-0 flex-1">
@@ -148,7 +148,7 @@ export default function TripRouteDetails({
                 {delivery.detail || "Full address not specified"}
               </p>
             </div>
-            <span className="whitespace-nowrap pt-1 text-sm font-black text-gray-900 italic tracking-tighter shrink-0">
+            <span className="whitespace-nowrap pt-1 text-sm font-semibold text-gray-500">
               {showDeliveryTime ? deliveryTime : "—"}
             </span>
           </div>
