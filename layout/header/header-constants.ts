@@ -30,18 +30,17 @@ export const NAV_LINKS: NavLink[] = [
     title: "SERVICES",
     path: "/services",
     sublinks: [
-      { title: "Point-to-Point", path: "/point-to-point-car-service" },
-      { title: "Hourly Hire", path: "/hourly-hire-service" },
-      { title: "Airport Transfers", path: "/airport-transfer-service" },
-      { title: "As Directed", path: "/as-directed-service" },
+      { title: "Airport Taxi", path: "/airport-taxi" },
+      { title: "Local Taxi", path: "/local-taxi" },
+      { title: "Healthcare Transport", path: "/healthcare-transport" },
+      { title: "Event Transport", path: "/event-transport" },
+      { title: "Business Transport", path: "/business-transport" },
     ],
   },
   { title: "FLEET", path: "/fleet" },
   { title: "ABOUT", path: "/about" },
   { title: "CONTACT", path: "/contact" },
 ];
-
-/** Check if a nav link (or any of its sublinks) is active */
 export function isNavActive(pathname: string | null, link: NavLink): boolean {
   if (!pathname) return false;
   if (link.path && pathname === link.path) return true;

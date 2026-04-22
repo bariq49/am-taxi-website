@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import FooterLinksColumn, { FooterLinkItem } from "./FooterLinksColumn";
 import FooterBottomBar from "./FooterBottomBar";
+import { FacebookIcon, InstagramIcon } from "@/components/icons";
 import {
   COMPANY_ADDRESS,
   COMPANY_DESCRIPTION,
@@ -16,30 +17,30 @@ import {
 export default function Footer() {
   const quickLinks: FooterLinkItem[] = [
     { href: "/", label: "Home" },
+    { href: "/about", label: "About Us" },
     { href: "/fleet", label: "Fleet" },
-    { href: "/services", label: "Services" },
-    { href: "/about", label: "About" },
+    { href: "/partner-with-us", label: "Partner With Us" },
     { href: "/contact", label: "Contact" },
   ];
 
   const airportLinks: FooterLinkItem[] = [
-    { href: "/airport-transfer-service", label: "Airport Transfer Service" },
-    { href: "/newark-airport-service", label: "Newark Airport (EWR)" },
-    { href: "/teterboro-airport-service", label: "Teterboro Airport (TEB)" },
-    { href: "/westchester-airport-service", label: "Westchester County (HPN)" },
-    { href: "/jfk-airport-service", label: "John F. Kennedy Airport (JFK)" },
-    { href: "/laguardia-airport-service", label: "LaGuardia Airport (LGA)" },
+    { href: "/airport-taxi/eindhoven-airport", label: "Eindhoven Airport" },
+    { href: "/airport-taxi/groningen-airport-eelde", label: "Groningen Airport Eelde" },
+    { href: "/airport-taxi/rotterdam-the-hague-airport", label: "Rotterdam Hague Airport" },
+    { href: "/airport-taxi/amsterdam-airport-schiphol", label: "Amsterdam Airport Schiphol" },
+
   ];
 
   const serviceLinks: FooterLinkItem[] = [
-    { href: "/point-to-point-car-service", label: "Point-To-Point" },
-    { href: "/hourly-hire-service", label: "Hourly Hire" },
-    { href: "/airport-transfer-service", label: "Airport Transfers" },
-    { href: "/as-directed-service", label: "As Directed" },
+    { href: "/airport-taxi", label: "Airport Taxi" },
+    { href: "/local-taxi", label: "Local Taxi" },
+    { href: "/healthcare-transport", label: "Healthcare Transport" },
+    { href: "/event-transport", label: "Event Transport" },
+    { href: "/business-transport", label: "Business Transport" },
   ];
 
   return (
-    <footer className="bg-[#252525] text-white">
+    <footer className="bg-primary text-white">
       {/* Main Footer */}
       <div className="container mx-auto px-4 py-12 sm:px-6 sm:py-16 md:px-8">
         <div className="grid grid-cols-1 gap-10 text-left sm:grid-cols-2 lg:grid-cols-12 lg:gap-8 xl:gap-10">
@@ -51,6 +52,26 @@ export default function Footer() {
               </Link>
             </div>
             <p className="max-w-sm text-sm leading-relaxed text-gray-300">{COMPANY_DESCRIPTION}</p>
+            <div className="mt-6 flex items-center gap-4">
+              <a
+                href={SOCIAL_LINKS.facebook}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex h-10 w-10 items-center justify-center rounded-full bg-white/5 transition-all duration-300 hover:bg-[#1877F2]"
+                aria-label="Facebook"
+              >
+                <FacebookIcon className="h-5 w-5 text-gray-300 transition-colors duration-300 group-hover:text-white" />
+              </a>
+              <a
+                href={SOCIAL_LINKS.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex h-10 w-10 items-center justify-center rounded-full bg-white/5 transition-all duration-300 hover:bg-gradient-to-tr hover:from-[#f09433] hover:via-[#dc2743] hover:to-[#bc1888]"
+                aria-label="Instagram"
+              >
+                <InstagramIcon className="h-5 w-5 text-gray-300 transition-colors duration-300 group-hover:text-white" />
+              </a>
+            </div>
           </div>
 
           <div className="lg:col-span-2">
@@ -58,45 +79,49 @@ export default function Footer() {
           </div>
 
           <div className="lg:col-span-2">
-            <FooterLinksColumn title="Services" links={serviceLinks} />
+            <FooterLinksColumn title="Our Services" links={serviceLinks} />
+          </div>
+          <div className="lg:col-span-2">
+            <FooterLinksColumn title="Airports" links={airportLinks} />
           </div>
 
-          <div className="lg:col-span-2">
-            <FooterLinksColumn title="Airports We Serve" links={airportLinks} />
-          </div>
 
           {/* Contact Info */}
           <div className="flex flex-col items-start lg:col-span-2">
-            <h3 className="mb-5 text-sm font-semibold tracking-[0.08em] text-white uppercase">Contact Info</h3>
+            <h3 className="mb-5 text-sm font-semibold tracking-[0.08em] text-white uppercase">
+              Contact Info
+            </h3>
             <div className="space-y-4">
-              <div className="flex items-start gap-3">
-                <MapPin className="w-4 h-4 text-gray-300 mt-1 flex-shrink-0" />
-                <div>
-                  <p className="text-sm leading-relaxed text-gray-300">
-                    {COMPANY_ADDRESS}
-                  </p>
+              {[
+                {
+                  icon: MapPin,
+                  text: COMPANY_ADDRESS,
+                  href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(COMPANY_ADDRESS)}`,
+                },
+                {
+                  icon: Phone,
+                  text: COMPANY_PHONE,
+                  href: COMPANY_PHONE_HREF,
+                },
+                {
+                  icon: Mail,
+                  text: COMPANY_EMAIL,
+                  href: COMPANY_EMAIL_HREF,
+                },
+              ].map((item, index) => (
+                <div key={index} className="group flex items-start gap-3">
+                  <item.icon className="h-4 w-4 shrink-0 text-gray-400 transition-colors duration-300 group-hover:text-secondary" />
+                  <a
+                    href={item.href}
+                    target={item.icon === MapPin ? "_blank" : undefined}
+                    rel={item.icon === MapPin ? "noopener noreferrer" : undefined}
+                    className="text-sm leading-relaxed text-gray-300 transition-colors duration-300 hover:text-secondary"
+                  >
+                    {item.text}
+                  </a>
                 </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <Phone className="w-4 h-4 text-gray-300 flex-shrink-0" />
-                <a
-                  href={COMPANY_PHONE_HREF}
-                  className="text-gray-300 text-sm hover:text-white"
-                >
-                  {COMPANY_PHONE}
-                </a>
-              </div>
-              <div className="flex items-center gap-3">
-                <Mail className="w-4 h-4 text-gray-300 flex-shrink-0" />
-                <a
-                  href={COMPANY_EMAIL_HREF}
-                  className="text-gray-300 text-sm hover:text-white"
-                >
-                  {COMPANY_EMAIL}
-                </a>
-              </div>
+              ))}
             </div>
-
           </div>
         </div>
       </div>
