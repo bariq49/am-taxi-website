@@ -30,18 +30,16 @@ export interface BookingStep1PersistedData {
 }
 
 export interface BookingStep3PersistedData {
-    fullName: string;
+    firstName: string;
+    lastName: string;
     phone: string;
     email: string;
-    state: string;
     pickupDate: string;
     pickupTime: string;
     passengers: number;
     bags: number;
     isReturn: boolean;
     isAirportPickup: boolean;
-    isMeetGreet: boolean;
-    isReturnMeetGreet: boolean;
     childSeats: {
         seatId: string;
         quantity: number;
@@ -50,7 +48,6 @@ export interface BookingStep3PersistedData {
         seatId: string;
         quantity: number;
     }[];
-    instructions: string;
     airlineName?: string;
     flightNumber?: string;
     returnDate?: string;

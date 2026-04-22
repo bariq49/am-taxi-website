@@ -5,10 +5,10 @@ export interface CheckoutPayload {
   category: "one-way" | "hourly" | "return-trip";
   vehicleId: string;
   passengerDetails: {
-    fullName: string;
+    firstName: string;
+    lastName: string;
     phone: string;
     email: string;
-    state: string;
   };
   tripDetails: {
     pickupAddress: string;
@@ -21,24 +21,18 @@ export interface CheckoutPayload {
     returnTime?: string;
     passengers: number;
     bags: number;
-    isReturn: boolean;
-    isAirportPickup: boolean;
     airlineName?: string;
     flightNumber?: string;
-    isMeetGreet: boolean;
-    isReturnMeetGreet: boolean;
     childSeats: { seatId: string; quantity: number }[];
     returnChildSeats?: { seatId: string; quantity: number }[];
-    instructions: string;
   };
   amount: number;
-  pricingBreakdown?: Record<string, unknown>;
 }
 
 
 
-export const createCheckoutSession = async (payload: CheckoutPayload)=> {
-  const response = await api.post(`${API_ROUTES.BOOKINGS}/checkout`,payload);
+export const createCheckoutSession = async (payload: CheckoutPayload) => {
+  const response = await api.post(`${API_ROUTES.BOOKINGS}/checkout`, payload);
   const checkoutUrl = response?.data?.url;
 
   if (!checkoutUrl) {
@@ -48,7 +42,7 @@ export const createCheckoutSession = async (payload: CheckoutPayload)=> {
   return checkoutUrl;
 };
 
-export const getBooking = async (bookingId: string)=> {
+export const getBooking = async (bookingId: string) => {
   const response = await api.get(`${API_ROUTES.BOOKINGS}/status/${bookingId}`);
   return response.data;
 };
