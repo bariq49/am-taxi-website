@@ -1,11 +1,8 @@
 'use client'
 
-import { useEffect } from "react"
+import React, { useEffect, Suspense } from "react"
 import { useSearchParams } from "next/navigation"
-import {
-  Check,
-  WalletCards,
-} from "lucide-react"
+import { Check, WalletCards } from "lucide-react"
 import TripRouteDetails from "@/components/booking/shared/trip-route-details"
 import { useBookingStatus } from "@/hooks/queries/use-booking"
 import type { RouteAddress } from "@/components/booking/shared/trip-route-details"
@@ -24,7 +21,7 @@ const parseAddress = (address?: string): RouteAddress => {
   return { name: address.trim(), detail: "" }
 }
 
-export default function Page() {
+function PaymentSuccessContent() {
   const searchParams = useSearchParams()
   const bookingId = searchParams.get("booking_id") || undefined
   const { data: booking } = useBookingStatus(bookingId)
@@ -216,5 +213,13 @@ export default function Page() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function Page() {
+  return (
+    <Suspense fallback={<div className="flex min-h-screen items-center justify-center bg-gray-50 font-bold text-primary">Loading journey details...</div>}>
+      <PaymentSuccessContent />
+    </Suspense>
   )
 }
