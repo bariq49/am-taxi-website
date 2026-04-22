@@ -22,7 +22,7 @@ export const HeaderMobileMenu = forwardRef<HTMLDivElement, HeaderMobileMenuProps
       aria-modal={isOpen}
       aria-label="Mobile navigation menu"
     >
-      <div className="flex h-full flex-col overflow-hidden bg-secondary">
+      <div className="flex h-full flex-col overflow-hidden bg-primary">
 
         <nav className="flex-1 divide-y divide-border/40 overflow-y-auto px-4 pt-20 sm:px-6" role="menu">
           {NAV_LINKS.map((link) => {
@@ -36,7 +36,7 @@ export const HeaderMobileMenu = forwardRef<HTMLDivElement, HeaderMobileMenuProps
                     onClick={onClose}
                     role="menuitem"
                     className={`block py-4 text-base font-medium transition-colors ${
-                      active ? "text-primary" : "text-background hover:text-primary"
+                      active ? "text-secondary" : "text-background hover:text-secondary-400"
                     }`}
                   >
                     {link.title}
@@ -52,7 +52,7 @@ export const HeaderMobileMenu = forwardRef<HTMLDivElement, HeaderMobileMenuProps
                 <button
                   onClick={() => onToggleDropdown(link.title)}
                   className={`flex w-full items-center justify-between py-4 text-left text-base font-medium transition-colors ${
-                    active ? "text-primary" : "text-background hover:text-primary"
+                    active ? "text-secondary" : "text-background hover:text-secondary-400"
                   }`}
                   aria-expanded={isDropdownOpen}
                   aria-haspopup="true"
@@ -77,7 +77,7 @@ export const HeaderMobileMenu = forwardRef<HTMLDivElement, HeaderMobileMenuProps
                         onClick={onClose}
                         role="menuitem"
                         className={`block py-2 text-sm transition-colors ${
-                          pathname === sub.path ? "text-primary" : "text-background/80 hover:text-primary"
+                          pathname === sub.path ? "text-secondary" : "text-background/80 hover:text-secondary-400"
                         }`}
                       >
                         {sub.title}

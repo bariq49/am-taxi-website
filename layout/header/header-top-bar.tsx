@@ -17,9 +17,9 @@ export const HeaderTopBar = forwardRef<HTMLButtonElement, HeaderTopBarProps>(
       <div className="hidden flex-col items-start gap-1 md:flex">
         <a
           href={COMPANY_PHONE_HREF}
-          className="inline-flex items-center gap-2 text-sm font-medium text-background/90 transition-colors hover:text-primary md:text-base"
+          className="inline-flex items-center gap-2 text-sm font-medium text-background/90 transition-colors hover:text-secondary md:text-base"
         >
-          <Phone className="h-4 w-4 text-primary" />
+          <Phone className="h-4 w-4 text-secondary" />
           <span>{COMPANY_PHONE}</span>
         </a>
       </div>
@@ -43,21 +43,21 @@ export const HeaderTopBar = forwardRef<HTMLButtonElement, HeaderTopBarProps>(
       <div className="ml-auto flex items-center gap-6 md:ml-0 md:gap-4">
         <a
           href={COMPANY_PHONE_HREF}
-          className="inline-flex h-10 items-center justify-center text-white transition-all duration-200 hover:scale-110 hover:text-primary/80 md:hidden"
+          className="inline-flex h-10 items-center justify-center text-background transition-all duration-200 hover:scale-110 hover:text-secondary md:hidden"
           aria-label={`Call ${COMPANY_PHONE}`}
         >
           <Phone className="phone-vibrate h-[22px] w-[22px]" strokeWidth={2.4} />
         </a>
         <Link
           href={isAuthenticated ? "/dashboard" : "/auth/login"}
-          className="inline-flex h-10 items-center justify-center whitespace-nowrap rounded-lg bg-primary px-3.5 text-[11px] font-semibold tracking-wide text-background transition-opacity hover:opacity-90 sm:px-4 sm:text-sm"
+          className="inline-flex h-10 items-center justify-center whitespace-nowrap rounded-lg bg-secondary px-3.5 text-[11px] font-semibold tracking-wide text-white transition-all hover:bg-secondary-600 sm:px-4 sm:text-sm"
         >
           <span className="sm:hidden">{isAuthenticated ? "ACCOUNT" : "SIGN IN"}</span>
           <span className="hidden sm:inline">{isAuthenticated ? "MY ACCOUNT" : "SIGN IN"}</span>
         </Link>
         <button
           ref={mobileToggleRef}
-          className="relative z-10 inline-flex h-10 w-10 items-center justify-center rounded-lg border border-border/60 bg-secondary/30 text-background transition-all duration-200 hover:border-primary/70 hover:text-primary md:hidden"
+          className="relative z-10 inline-flex h-10 w-10 items-center justify-center rounded-lg border border-border/60 bg-primary/30 text-background transition-all duration-200 hover:border-secondary/70 hover:text-secondary md:hidden"
           onClick={onMobileMenuToggle}
 
           aria-label="Toggle menu"

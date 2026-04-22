@@ -8,7 +8,7 @@ export type BookingCategory = 'one-way' | 'hourly' | 'return-trip';
 
 export type Vehicle = FleetByDistance & {
     id: string;
-    price: number;
+    totalPrice: number;
 };
 
 export type Pricing = {
@@ -112,6 +112,16 @@ interface BookingState {
 
 const STORE_VERSION = 1;
 
+const resolveFleetPrice = (fleet: FleetByDistance): number => {
+    return (
+        fleet.calculatedPrice ??
+        fleet.priceBreakdown?.totalPrice ??
+        fleet.priceBreakdown?.displayPrice ??
+        fleet.priceBreakdown?.basePrice ??
+        0
+    );
+};
+
 export const useBookingStore = create<BookingState>()(
     persist(
         (set) => ({
@@ -147,7 +157,7 @@ export const useBookingStore = create<BookingState>()(
                     selectedVehicle: fleet ? {
                         ...fleet,
                         id: fleet._id,
-                        price: fleet.calculatedPrice
+                        totalPrice: resolveFleetPrice(fleet)
                     } : null,
                     step3: null,
                 }),
@@ -196,7 +206,7 @@ export const calculatePricing = (state: BookingState): Pricing | null => {
 
     if (!selectedVehicle || !bookingSettings || !step1) return null;
 
-    let base = selectedVehicle.price;
+    let base = selectedVehicle.totalPrice;
 
     // Stops fee
     if (step1.stops?.length) {
@@ -220,6 +230,14 @@ export const calculatePricing = (state: BookingState): Pricing | null => {
         base += bookingSettings.return.meetAndGreet.price;
     }
 
+    // Return trip fare
+    if (step3?.isReturn) {
+        base +=
+            selectedVehicle.priceBreakdown?.returnPrice ??
+            selectedVehicle.priceBreakdown?.discountedReturnPrice ??
+            0;
+    }
+
     // Child seats
     const calcSeats = (seats?: { seatId: string; quantity: number }[]) => {
         if (!seats) return 0;
@@ -227,7 +245,7 @@ export const calculatePricing = (state: BookingState): Pricing | null => {
         return seats.reduce((sum, seat) => {
             const found = bookingSettings.childSeats.find(s => s._id === seat.seatId);
             if (found && found.isActive) {
-                return sum + found.price * seat.quantity;
+                return sum + (found.price * seat.quantity);
             }
             return sum;
         }, 0);
@@ -253,7 +271,10 @@ export const calculatePricing = (state: BookingState): Pricing | null => {
 // =============== SELECTORS ===============
 
 export const useTotalPrice = () =>
-    useBookingStore((state) => state.pricing?.total ?? 0);
+    useBookingStore((state) => {
+        const calculated = calculatePricing(state);
+        return calculated?.total ?? 0;
+    });
 
 export const useIsBookingReady = () =>
     useBookingStore((state) =>

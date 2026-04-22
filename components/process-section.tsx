@@ -34,7 +34,7 @@ export default function ProcessSection() {
                         <span className="text-primary font-bold tracking-[0.2em] text-[10px] md:text-xs uppercase mb-4 block">
                             PROCESS
                         </span>
-                        <h2 className="text-3xl md:text-[44px] font-extrabold text-secondary mb-6 leading-[1.1] tracking-tight">
+                        <h2 className="text-3xl md:text-[44px] font-extrabold text-primary mb-6 leading-[1.1] tracking-tight">
                             Taxi Transportation In 3 Simple Steps
                         </h2>
                         <p className="text-muted text-base md:text-[17px] font-medium max-w-2xl opacity-80 leading-relaxed">
@@ -55,7 +55,7 @@ export default function ProcessSection() {
                 {/* Steps Container */}
                 <div className="relative">
                     {/* Connecting Line (Desktop) */}
-                    <div className="hidden md:block absolute top-[25%] left-[10%] right-[10%] h-[1px] border-t-2 border-dashed border-gray-200 z-0" />
+                    <div className="hidden md:block absolute top-[25%] left-[10%] right-[10%] h-[1px] border-t-2 border-dashed border-border z-0" />
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16 relative z-10">
                         {STEPS.map((step, index) => {
@@ -64,12 +64,12 @@ export default function ProcessSection() {
                                 <div key={index} className="flex flex-col items-center text-center group">
                                     {/* Icon Circle */}
                                     <div className="relative mb-10">
-                                        <div className="w-36 h-36 md:w-40 md:h-40 rounded-full bg-white shadow-[0_10px_40px_-15px_rgba(0,0,0,0.1)] flex items-center justify-center border border-gray-50 transform transition-transform duration-500 group-hover:scale-105 group-hover:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.15)] bg-white relative z-10">
-                                            <Icon className="w-12 h-12 md:w-14 md:h-14 text-orange-500" strokeWidth={1.5} />
+                                        <div className="w-36 h-36 md:w-40 md:h-40 rounded-full bg-white shadow-xl flex items-center justify-center border border-border transform transition-transform duration-500 group-hover:scale-105 group-hover:shadow-2xl relative z-10">
+                                            <Icon className="w-12 h-12 md:w-14 md:h-14 text-secondary" strokeWidth={1.5} />
                                         </div>
                                         
                                         {/* Step Label */}
-                                        <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-white px-4 py-1.5 rounded-full shadow-sm border border-gray-100 z-20">
+                                        <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-white px-4 py-1.5 rounded-full shadow-sm border border-border z-20">
                                             <span className="text-[11px] font-bold text-muted uppercase tracking-wider">
                                                 {step.id}
                                             </span>
@@ -77,7 +77,7 @@ export default function ProcessSection() {
                                     </div>
 
                                     {/* Content */}
-                                    <h3 className="text-xl md:text-2xl font-bold text-secondary mb-4 tracking-tight">
+                                    <h3 className="text-xl md:text-2xl font-bold text-primary mb-4 tracking-tight">
                                         {step.title}
                                     </h3>
                                     <p className="text-muted text-[15px] md:text-base leading-relaxed opacity-70 max-w-[280px]">

@@ -23,7 +23,7 @@ export const useSidebar = create<SidebarState>()(
             setSidebarType: (value) => set({ sidebarType: value }),
             subMenu: false,
             setSubmenu: (value) => set({ subMenu: value }),
-            sidebarBg: "#111827",
+            sidebarBg: "#001722",
             setSidebarBg: (value) => set({ sidebarBg: value }),
             mobileMenu: false,
             setMobileMenu: (value) => set({ mobileMenu: value }),

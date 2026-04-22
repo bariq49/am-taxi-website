@@ -3,7 +3,7 @@
 import React, { ReactNode } from "react";
 import { Eye, EyeOff, X } from "lucide-react";
 import { useFormContext, ControllerRenderProps, FieldValues } from "react-hook-form";
-import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/form/form";
+import { FormField, FormItem, FormLabel, FormControl } from "@/components/form/form";
 import ReactPhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { DEFAULT_PHONE_COUNTRY } from "@/constants/app-default";
@@ -83,10 +83,10 @@ export const Input: React.FC<InputProps> = ({
     const [showPassword, setShowPassword] = React.useState(false);
 
     const inputBase = cn(
-        "w-full py-2.5 border rounded-lg bg-white text-black appearance-none focus:outline-none focus:ring-0 focus-visible:outline-none",
+        "w-full py-2.5 border border-border rounded-sm bg-white text-black appearance-none focus:outline-none focus:ring-0 focus-visible:outline-none",
         icon ? "pl-10 pr-4" : "px-4"
     );
-    const inputError = (error: boolean) => error ? "border-red-500" : "border-gray-300";
+    const inputError = (error: boolean) => error ? "border-error" : "border-border";
 
     const renderInput = (
         field: ControllerRenderProps<FieldValues, string>,
@@ -98,6 +98,7 @@ export const Input: React.FC<InputProps> = ({
                 return (
                     <textarea
                         {...field}
+                        value={field.value ?? ""}
                         rows={rows}
                         placeholder={placeholder}
                         disabled={disabled}
@@ -113,12 +114,12 @@ export const Input: React.FC<InputProps> = ({
                         onChange={(phone) => field.onChange(phone)}
                         containerClass="!w-full phone-input-container"
                         inputClass={cn(
-                            "!w-full !h-[46px] !pl-12 !pr-4 !border !rounded-lg !bg-white !text-black",
-                            error ? "!border-red-500" : "!border-gray-300"
+                            "!w-full !h-[46px] !pl-12 !pr-4 !border !rounded-sm !bg-white !text-black",
+                            error ? "!border-error" : "!border-gray-300"
                         )}
                         buttonClass={cn(
-                            "!border !border-r !rounded-l-lg !bg-white",
-                            error ? "!border-red-500 !border-r-red-500" : "!border-gray-300 !border-r-gray-300"
+                            "!border !border-r !rounded-l-sm !bg-white",
+                            error ? "!border-error !border-r-error" : "!border-gray-300 !border-r-gray-300"
                         )}
                     />
                 );
@@ -253,6 +254,7 @@ export const Input: React.FC<InputProps> = ({
                     <div className="relative">
                         <input
                             {...field}
+                            value={field.value ?? ""}
                             type={resolvedType}
                             placeholder={placeholder}
                             disabled={disabled}
@@ -304,15 +306,14 @@ export const Input: React.FC<InputProps> = ({
                     return (
                         <FormItem className={cn("flex flex-col", className)}>
                             <div className="flex items-center justify-between gap-3 rounded-lg border border-border bg-background p-3">
-                                <FormLabel>
+                                <FormLabel className={hasError ? "text-error" : undefined}>
                                     {label}
-                                    {required && <span className="text-destructive ml-1">*</span>}
+                                    {required && <span className="text-error ml-1">*</span>}
                                 </FormLabel>
                                 <FormControl>
                                     {renderInput(field, hasError)}
                                 </FormControl>
                             </div>
-                            {/* <FormMessage /> */}
                         </FormItem>
                     );
                 }
@@ -320,14 +321,14 @@ export const Input: React.FC<InputProps> = ({
                 return (
                     <FormItem className={cn("flex flex-col", className)}>
                         {label && (
-                            <FormLabel>
+                            <FormLabel className={hasError ? "text-error" : undefined}>
                                 {label}
-                                {required && <span className="text-destructive ml-1">*</span>}
+                                {required && <span className="text-error ml-1">*</span>}
                             </FormLabel>
                         )}
                         <div className="relative">
                             {icon && type !== "date" && type !== "time" && type !== "counter" && (
-                                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 z-10 pointer-events-none">
+                                <span className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-400 z-10 pointer-events-none">
                                     {icon}
                                 </span>
                             )}

@@ -23,10 +23,10 @@ function CategoryTabs({ activeTab, onTabChange }: CategoryTabsProps) {
                     type="button"
                     onClick={() => onTabChange(tab.value)}
                     className={cn(
-                        'p-2 w-full text-center font-semibold rounded-3xl cursor-pointer transition-colors border',
+                        'p-2 w-full text-center font-semibold rounded-lg cursor-pointer transition-colors border',
                         activeTab === tab.value || (tab.value === 'one-way' && activeTab === 'return-trip')
-                            ? 'bg-primary text-background border-primary'
-                            : 'bg-background text-foreground border-border hover:bg-secondary'
+                            ? 'bg-primary text-white border-primary shadow-md'
+                            : 'bg-background  border-border'
                     )}
                 >
                     {tab.label}

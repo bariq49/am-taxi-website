@@ -48,7 +48,7 @@ export default function Header() {
   return (
     <>
       <header
-        className={`fixed left-0 right-0 top-0 z-[70] border-b text-background transition-all duration-300 ${isSolid ? "border-border/40 bg-secondary shadow-md" : "border-transparent bg-transparent"
+        className={`fixed left-0 right-0 top-0 z-[70] border-b text-background transition-all duration-300 ${isSolid ? "border-border/40 bg-primary shadow-md" : "border-transparent bg-transparent"
           }`}
         role="banner"
       >

@@ -33,7 +33,7 @@ export default function DestinationsSection() {
                         <span className="text-primary font-bold tracking-[0.2em] text-[10px] md:text-xs uppercase mb-4 block">
                             DESTINATIONS
                         </span>
-                        <h2 className="text-3xl md:text-[44px] font-extrabold text-[#0a1f2c] mb-5 leading-[1.1] tracking-tight">
+                        <h2 className="text-3xl md:text-[44px] font-extrabold text-primary mb-5 leading-[1.1] tracking-tight">
                             Explore Popular Airport We cover
                         </h2>
                         <p className="text-muted text-base md:text-[17px] font-medium opacity-90 max-w-xl">

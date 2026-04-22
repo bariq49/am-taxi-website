@@ -29,7 +29,7 @@ export default function TimePicker({
   customTrigger,
 }: TimePickerProps) {
   const [open, setOpen] = useState(false);
-  
+
   const getInitialTime = () => {
     const zoned = toZonedTime(new Date(), timezone);
     const h = parseInt(format(zoned, "h"), 10);
@@ -87,12 +87,12 @@ export default function TimePicker({
 
       {customTrigger ? (
         <div onClick={() => !disabled && setOpen((prev) => !prev)}>
-            {customTrigger(displayVal)}
+          {customTrigger(displayVal)}
         </div>
       ) : (
         <div
-          className={`border rounded-lg px-4 py-3 flex items-center gap-2 transition
-            ${error ? "border-red-500" : "border-gray-300"}
+          className={`border rounded-sm px-4 py-2.5 flex items-center gap-2 transition
+            ${error ? "border-red-500" : "border-border"}
             ${disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}
           `}
           onClick={() => {
@@ -100,7 +100,7 @@ export default function TimePicker({
           }}
         >
           <Clock size={16} />
-  
+
           <span
             className={
               value ? "text-black" : "text-gray-400"
@@ -116,11 +116,11 @@ export default function TimePicker({
             className="fixed inset-0 bg-black/40 z-40"
             onClick={() => setOpen(false)}
           />
-          <div className="fixed sm:absolute z-50 bottom-0 sm:bottom-auto sm:mt-2 inset-x-0 sm:inset-auto w-full sm:w-72 bg-white rounded-t-2xl sm:rounded-xl shadow-2xl sm:shadow-lg overflow-hidden right-0">
-             {/* Mobile Header */}
-             <div className='flex sm:hidden items-center justify-between bg-primary p-4 text-white'>
+          <div className="fixed sm:absolute z-50 bottom-0 sm:bottom-auto sm:mt-2 inset-x-0 sm:inset-auto w-full sm:w-72 bg-white rounded-t-2xl sm:rounded-xl shadow-2xl sm:shadow-lg overflow-hidden sm:left-1/2 sm:-translate-x-1/2">
+            {/* Mobile Header */}
+            <div className='flex sm:hidden items-center justify-between bg-primary p-4 text-white'>
               <span className='font-bold text-lg'>Select Time</span>
-              <button 
+              <button
                 type="button"
                 onClick={() => setOpen(false)}
               >
@@ -163,11 +163,10 @@ export default function TimePicker({
                 type="button"
                 onClick={() => setOpen(false)}
                 disabled={hour === null || minute === null}
-                className={`mt-6 w-full py-3 sm:py-2 rounded-xl sm:rounded-lg text-base sm:text-sm font-bold transition shadow-md ${
-                  hour === null || minute === null
+                className={`mt-6 w-full py-3 sm:py-2 rounded-xl sm:rounded-lg text-base sm:text-sm font-bold transition shadow-md ${hour === null || minute === null
                     ? "bg-slate-200 text-slate-400 cursor-not-allowed"
                     : "bg-primary text-white hover:opacity-90"
-                }`}
+                  }`}
               >
                 Save Time
               </button>

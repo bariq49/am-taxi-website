@@ -17,7 +17,7 @@ function AmberStars({ rating }: { rating: number }) {
             {Array.from({ length: 5 }).map((_, i) => (
                 <span
                     key={i}
-                    className={`w-[19px] h-[19px] rounded-[2px] flex items-center justify-center ${i < rating ? "bg-amber-400" : "bg-gray-200"
+                    className={`w-[19px] h-[19px] rounded-[2px] flex items-center justify-center ${i < rating ? "bg-secondary" : "bg-gray-200"
                         }`}
                 >
                     <Star size={11} fill="white" stroke="none" />
@@ -29,9 +29,9 @@ function AmberStars({ rating }: { rating: number }) {
 
 function VerifiedBadge() {
     return (
-        <span className="flex items-center gap-1 text-[11px] text-gray-500 bg-gray-100 border border-gray-200 rounded-full px-2 py-[2px] whitespace-nowrap">
+        <span className="flex items-center gap-1 text-[11px] text-muted bg-gray-100 border border-border rounded-full px-2 py-[2px] whitespace-nowrap">
             <svg width="9" height="9" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                <polyline points="2,6 5,9 10,3" stroke="#555" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <polyline points="2,6 5,9 10,3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
             VERIFIED
         </span>
@@ -46,8 +46,8 @@ export default function TestimonialCard({ review }: { review: Review }) {
                 <VerifiedBadge />
             </div>
 
-            <p className="text-[15px] font-semibold text-gray-900 mb-2 truncate">{review.author_name}</p>
-            <p className="text-[13px] text-gray-500 leading-[1.55] flex-1 line-clamp-4">{review.text}</p>
+            <p className="text-[15px] font-semibold text-foreground mb-2 truncate">{review.author_name}</p>
+            <p className="text-[13px] text-muted leading-[1.55] flex-1 line-clamp-4">{review.text}</p>
 
             <div className="flex justify-between items-center mt-[18px]">
                 <div className="flex items-center gap-2">
@@ -64,9 +64,9 @@ export default function TestimonialCard({ review }: { review: Review }) {
                             <span className="text-[10px] text-white font-bold">{review.author_name.charAt(0)}</span>
                         </div>
                     )}
-                    <span className="text-[12px] text-gray-500 truncate max-w-[100px]">{review.author_name}</span>
+                    <span className="text-[12px] text-muted truncate max-w-[100px]">{review.author_name}</span>
                 </div>
-                <span className="text-[12px] text-gray-400 shrink-0">{review.relative_time_description}</span>
+                <span className="text-[12px] text-muted-foreground shrink-0">{review.relative_time_description}</span>
             </div>
         </div>
     );

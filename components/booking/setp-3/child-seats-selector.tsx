@@ -33,14 +33,14 @@ export const ChildSeatsSelector = ({
         return (
           <div
             key={seat._id}
-            className="rounded-lg border border-border bg-background p-1 px-2 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between"
+            className="rounded-sm border border-border bg-background p-1 px-2 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between"
           >
             <div className="text-sm  text-foreground">
               {seat.name}
             </div>
 
             <div className="flex w-full items-center gap-3 sm:w-auto">
-              <div className="flex h-[46px] w-full items-center overflow-hidden rounded-lg border border-border bg-white text-black sm:w-auto">
+              <div className="flex h-[46px] w-full items-center overflow-hidden rounded-sm border border-border bg-white text-black sm:w-auto cursor-pointer">
                 <button
                   type="button"
                   onClick={() => onQuantityChange(seat._id, -1)}

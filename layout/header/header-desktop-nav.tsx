@@ -23,7 +23,7 @@ export const HeaderDesktopNav = forwardRef<HTMLElement, HeaderDesktopNavProps>(
               href={link.path || "#"}
               role="menuitem"
               className={`block px-3 py-2 text-[13px] font-semibold tracking-wide transition-colors ${
-                active ? "text-primary" : "text-background/90 hover:text-primary"
+                active ? "text-secondary" : "text-background/90 hover:text-secondary-400"
               }`}
             >
               {link.title}
@@ -42,7 +42,7 @@ export const HeaderDesktopNav = forwardRef<HTMLElement, HeaderDesktopNavProps>(
           >
             <button
               className={`flex items-center px-3 py-2 text-[13px] font-semibold tracking-wide transition-colors ${
-                active ? "text-primary" : "text-background/90 hover:text-primary"
+                active ? "text-secondary" : "text-background/90 hover:text-secondary-400"
               }`}
               aria-haspopup="true"
               aria-expanded={isOpen}
@@ -60,7 +60,7 @@ export const HeaderDesktopNav = forwardRef<HTMLElement, HeaderDesktopNavProps>(
                 onMouseEnter={() => onDropdownOpen(link.title)}
                 onMouseLeave={onDropdownClose}
               >
-                <div className="rounded-md border border-border/40 bg-secondary shadow-lg" role="menu">
+                <div className="rounded-md border border-border bg-background shadow-lg" role="menu">
 
                   <div className="p-2">
                     {link.sublinks.map((sub) => (
@@ -70,8 +70,8 @@ export const HeaderDesktopNav = forwardRef<HTMLElement, HeaderDesktopNavProps>(
                         role="menuitem"
                         className={`block rounded px-3 py-2.5 text-sm font-medium transition-colors ${
                           pathname === sub.path
-                            ? "bg-primary/20 text-primary"
-                            : "text-background/90 hover:bg-primary/10 hover:text-primary"
+                            ? "bg-secondary/10 text-secondary"
+                            : "text-gray-700 hover:bg-gray-50 hover:text-secondary"
                         }`}
                       >
                         {sub.title}

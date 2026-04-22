@@ -112,12 +112,12 @@ export default function DatePicker({
       )}
       {customTrigger ? (
         <div onClick={() => !disabled && setOpen((prev) => !prev)}>
-            {customTrigger(displayValue)}
+          {customTrigger(displayValue)}
         </div>
       ) : (
         <div
-          className={`border rounded-lg px-4 py-3 flex items-center gap-2 transition
-            ${error ? "border-red-500" : "border-gray-300"}
+          className={`border rounded-sm px-4 py-2.5 flex items-center gap-2 transition
+            ${error ? "border-red-500" : "border-border"}
             ${disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}
           `}
           onClick={() => {
@@ -125,7 +125,7 @@ export default function DatePicker({
           }}
         >
           <Calendar size={16} />
-  
+
           <span className={value ? "text-black" : "text-gray-400"}>
             {displayValue}
           </span>
@@ -137,11 +137,11 @@ export default function DatePicker({
             className="fixed inset-0 bg-black/40 z-40"
             onClick={() => setOpen(false)}
           />
-          <div className="fixed sm:absolute z-50 bottom-0 sm:bottom-auto sm:mt-2 inset-x-0 sm:inset-auto w-full sm:w-[320px] bg-white rounded-t-2xl sm:rounded-xl shadow-2xl sm:shadow-lg overflow-hidden left-0">
+          <div className="fixed sm:absolute z-50 bottom-0 sm:bottom-auto sm:mt-2 inset-x-0 sm:inset-auto w-full sm:w-[320px] bg-white rounded-t-2xl sm:rounded-xl shadow-2xl sm:shadow-lg sm:left-0">
             {/* Mobile Header - Primary background */}
             <div className='flex sm:hidden items-center justify-between bg-primary p-4 text-white'>
               <span className='font-bold text-lg'>Select Date</span>
-              <button 
+              <button
                 type="button"
                 onClick={() => setOpen(false)}
               >
@@ -151,7 +151,7 @@ export default function DatePicker({
 
             <div className='p-4'>
               <div className="flex justify-between items-center mb-3">
-                <button 
+                <button
                   type="button"
                   disabled={isSameMonth(currentMonth, new Date())}
                   onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}
@@ -164,7 +164,7 @@ export default function DatePicker({
                   {format(currentMonth, "MMMM yyyy")}
                 </span>
 
-                <button 
+                <button
                   type="button"
                   onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}
                   className='p-1 hover:bg-slate-100 rounded-full transition-colors'
@@ -173,7 +173,7 @@ export default function DatePicker({
                 </button>
               </div>
 
-              <div className="grid grid-cols-7 text-xs text-center mb-2 font-bold text-slate-400">
+              <div className="grid grid-cols-7 text-xs text-center mb-2 font-bold text-slate-500 uppercase tracking-wider">
                 {["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"].map((d) => (
                   <div key={d} className="py-1">{d}</div>
                 ))}
@@ -191,10 +191,10 @@ export default function DatePicker({
                       key={i}
                       onClick={() => !disabledDay && handleSelect(date)}
                       className={`text-center py-2.5 rounded-lg cursor-pointer transition-all
-                        ${disabledDay ? "text-slate-200 cursor-not-allowed pointer-events-none" : ""}
-                        ${inactive ? "text-slate-300" : (disabledDay ? "text-slate-200" : "font-bold text-slate-800")}
-                        ${selected 
-                          ? "bg-primary text-white shadow-md font-bold" 
+                        ${disabledDay ? "text-slate-300 cursor-not-allowed" : ""}
+                        ${inactive ? "text-slate-200" : (disabledDay ? "text-slate-300" : "font-bold text-slate-900")}
+                        ${selected
+                          ? "bg-primary text-white shadow-md font-bold !text-white"
                           : !disabledDay && !inactive ? "hover:bg-slate-100" : ""
                         }
                       `}

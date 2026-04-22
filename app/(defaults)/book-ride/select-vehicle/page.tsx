@@ -24,11 +24,6 @@ function SelectVehiclePage() {
       )}
     >
       <div className="w-full md:max-w-7xl flex flex-col lg:flex-row gap-6">
-        <div className="hidden lg:flex lg:w-1/3 flex-shrink-0 flex-col gap-4 lg:sticky lg:top-24 lg:self-start">
-          {showRouteMap && <AnimatedRouteMap />}
-          <SummaryDetails />
-        </div>
-
         {showRouteMap && (
           <div className="lg:hidden w-full sticky top-16 z-0">
             <AnimatedRouteMap />
@@ -46,7 +41,23 @@ function SelectVehiclePage() {
           <div className="flex justify-center w-full lg:hidden mb-4 -mt-1">
             <div className="w-12 h-1.5 bg-gray rounded-full" />
           </div>
+
+          <div className="mb-4">
+            <button
+              onClick={() => router.push('/')}
+              className="group flex items-center gap-2 text-muted transition-colors hover:text-primary cursor-pointer"
+            >
+              <ArrowLeft size={16} strokeWidth={2} className="transition-transform group-hover:-translate-x-1" />
+              <span className="text-sm font-semibold">Back to Home</span>
+            </button>
+          </div>
+
           <Setp2 />
+        </div>
+
+        <div className="hidden lg:flex lg:w-1/3 flex-shrink-0 flex-col gap-4 lg:sticky lg:top-24 lg:self-start">
+          {showRouteMap && <AnimatedRouteMap />}
+          <SummaryDetails />
         </div>
       </div>
     </div>

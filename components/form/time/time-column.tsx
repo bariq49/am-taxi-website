@@ -1,7 +1,7 @@
 "use client";
 
 import { ChevronUp, ChevronDown } from "lucide-react";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 
 interface TimeColumnProps {
     label: string;
@@ -17,6 +17,7 @@ export default function TimeColumn({
     onSelect,
 }: TimeColumnProps) {
     const ref = useRef<HTMLDivElement>(null);
+    const itemRefs = useRef<{ [key: string]: HTMLButtonElement | null }>({});
 
     const scroll = (dir: "up" | "down") => {
         if (!ref.current) return;
@@ -27,6 +28,15 @@ export default function TimeColumn({
             behavior: "smooth",
         });
     };
+
+    useEffect(() => {
+        if (selected !== null && itemRefs.current[selected]) {
+            itemRefs.current[selected]?.scrollIntoView({
+                block: "center",
+                behavior: "smooth",
+            });
+        }
+    }, [selected]);
 
     return (
         <div className="flex flex-col">
@@ -52,6 +62,7 @@ export default function TimeColumn({
                         return (
                             <button
                                 key={val}
+                                ref={(el) => { itemRefs.current[val] = el }}
                                 type="button"
                                 onClick={() => onSelect(val)}
                                 className={`w-full py-2 text-sm border-b last:border-b-0 transition font-bold ${isSelected
