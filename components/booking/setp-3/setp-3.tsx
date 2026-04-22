@@ -35,8 +35,6 @@ function Step3() {
         category,
         setStep3Data,
         step3,
-        step1,
-        bookingSettings,
     } = useBookingStore();
     const totalPrice = useTotalPrice();
     const isHourly = category === "hourly";
@@ -125,13 +123,13 @@ function Step3() {
                         <ReturnTripSection />
                     )}
 
-                    {step1?.isAirportSelected && (
+                    {/* {step1?.isAirportSelected && (
                         <AirportPickupField
                             form={form}
                             airportPickupBasePrice={bookingSettings?.airportPickup?.price ?? 0}
                             disabled
                         />
-                    )}
+                    )} */}
                     <ChildSeatsField mode="outbound" />
                     <Button
                         type="submit"

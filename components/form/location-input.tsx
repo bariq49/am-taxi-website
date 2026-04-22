@@ -43,7 +43,7 @@ export const LocationInput = React.forwardRef<HTMLInputElement, LocationInputPro
 
                 const instance = new window.google.maps.places.Autocomplete(localInputRef.current, {
                     fields: ["formatted_address", "name", "address_components", "geometry", "types"],
-                    componentRestrictions: { country: "us" },
+                    componentRestrictions: { country: "nl" },
                 })
 
                 autocompleteRef.current = instance

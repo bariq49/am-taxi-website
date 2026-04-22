@@ -39,7 +39,7 @@ export default function VehicleCard({
       className={cn(
         "group relative overflow-visible rounded-sm border transition-all duration-300 cursor-pointer bg-gray-50",
         isSelected
-          ? "border-border"
+          ? "border-border shadow-sm"
           : "border-border"
       )}
     >
@@ -116,7 +116,10 @@ export default function VehicleCard({
 
       </div>
       {isSelected && (
-        <div className="animate-in fade-in slide-in-from-top-2 duration-300">
+        <div
+          onClick={(e) => e.stopPropagation()}
+          className="animate-in fade-in slide-in-from-top-2 duration-300"
+        >
           {/* Inset Dashed Separator */}
           <div className="border-t border-dashed border-border mx-4" />
           <div className="px-4 py-2 flex flex-col sm:flex-row items-center justify-center sm:justify-between gap-4">
@@ -124,7 +127,7 @@ export default function VehicleCard({
               <Counter
                 label="Passenger(s)"
                 icon={<Users size={14} className="sm:size-4" />}
-                value={passengerCount}
+                value={1}
                 min={1}
                 max={fleet.passengers || 4}
                 onChange={setPassengerCount}
@@ -133,7 +136,7 @@ export default function VehicleCard({
               <Counter
                 label="Luggage(s)"
                 icon={<Luggage size={14} className="sm:size-4" />}
-                value={luggageCount}
+                value={0}
                 min={0}
                 max={fleet.suitcases || 4}
                 onChange={setLuggageCount}

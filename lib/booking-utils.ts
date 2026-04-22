@@ -1,4 +1,3 @@
-import { HourlyPricingPackage } from "./api/fleets";
 import { addMinutes, parse, format, isValid, parseISO } from "date-fns";
 
 export function formatPrice(value: number | undefined | null, currencySign: string = "€"): string {
