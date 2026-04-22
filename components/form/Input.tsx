@@ -3,17 +3,17 @@
 import React, { ReactNode } from "react";
 import { Eye, EyeOff, X } from "lucide-react";
 import { useFormContext, ControllerRenderProps, FieldValues } from "react-hook-form";
-import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "./form";
+import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/form/form";
 import ReactPhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
+import { DEFAULT_PHONE_COUNTRY } from "@/constants/app-default";
 import { cn } from "@/lib/utils";
 import { LocationInput } from "./location-input";
-import { Checkbox } from "./checkbox";
-import { Switch } from "./switch";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./select";
-import { DEFAULT_PHONE_COUNTRY } from "@/constants/app-default";
-import TimePicker from "./time/time-picker";
-import DatePicker from "./date/date-picker";
+import { Checkbox } from "@radix-ui/react-checkbox";
+import DatePickerV2 from "./date/date-picker";
+import TimePickerV2 from "./time/time-picker";
+import { Switch } from "@/components/form/switch";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/form/select";
 
 type InputType =
     | "text"
@@ -56,8 +56,6 @@ interface InputProps {
     maxLength?: number;
     inputMode?: React.HTMLAttributes<HTMLInputElement>["inputMode"];
     digitsOnly?: boolean;
-    inputClassName?: string;
-    labelClassName?: string;
 }
 
 export const Input: React.FC<InputProps> = ({
@@ -79,16 +77,14 @@ export const Input: React.FC<InputProps> = ({
     selectValueAsNumber = false,
     maxLength,
     inputMode,
-    digitsOnly = false,
-    inputClassName,
-    labelClassName,
+    digitsOnly = false
 }) => {
     const { control } = useFormContext();
     const [showPassword, setShowPassword] = React.useState(false);
 
     const inputBase = cn(
-        "w-full py-2 border rounded-lg bg-white text-black appearance-none focus:outline-none focus:ring-0 focus-visible:outline-none transition-all",
-        inputClassName
+        "w-full py-2.5 border rounded-lg bg-white text-black appearance-none focus:outline-none focus:ring-0 focus-visible:outline-none",
+        icon ? "pl-10 pr-4" : "px-4"
     );
     const inputError = (error: boolean) => error ? "border-red-500" : "border-gray-300";
 
@@ -197,7 +193,7 @@ export const Input: React.FC<InputProps> = ({
 
             case "date":
                 return (
-                    <DatePicker
+                    <DatePickerV2
                         value={field.value}
                         onChange={field.onChange}
                         placeholder={placeholder}
@@ -208,7 +204,7 @@ export const Input: React.FC<InputProps> = ({
 
             case "time":
                 return (
-                    <TimePicker
+                    <TimePickerV2
                         value={field.value}
                         onChange={field.onChange}
                         placeholder={placeholder}
@@ -316,46 +312,41 @@ export const Input: React.FC<InputProps> = ({
                                     {renderInput(field, hasError)}
                                 </FormControl>
                             </div>
-                            <FormMessage />
+                            {/* <FormMessage /> */}
                         </FormItem>
                     );
                 }
 
                 return (
                     <FormItem className={cn("flex flex-col", className)}>
-                        <div className="flex items-start gap-3">
-                            {icon && (
-                                <div className="mt-1 flex-shrink-0">
+                        {label && (
+                            <FormLabel>
+                                {label}
+                                {required && <span className="text-destructive ml-1">*</span>}
+                            </FormLabel>
+                        )}
+                        <div className="relative">
+                            {icon && type !== "date" && type !== "time" && type !== "counter" && (
+                                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 z-10 pointer-events-none">
                                     {icon}
-                                </div>
+                                </span>
                             )}
-                            <div className="flex flex-col flex-1 min-w-0">
-                                {label && (
-                                    <FormLabel className={cn(
-                                        "text-[10px] uppercase font-bold text-slate-400/80 mb-0.5 tracking-wider",
-                                        labelClassName
-                                    )}>
-                                        {label}
-                                        {required && <span className="text-destructive ml-1">*</span>}
-                                    </FormLabel>
-                                )}
-                                <FormControl>
-                                    {renderInput(field, hasError)}
-                                </FormControl>
-                            </div>
+                            <FormControl>
+                                {renderInput(field, hasError)}
+                            </FormControl>
 
                             {onRemove && (
                                 <button
                                     type="button"
                                     onClick={onRemove}
-                                    className="bg-primary text-white w-5 h-5 rounded-full flex items-center justify-center ml-2"
+                                    className="absolute -top-2 -right-2 bg-primary text-white w-5 h-5 rounded-full flex items-center justify-center"
                                 >
                                     <X size={12} />
                                 </button>
                             )}
                         </div>
 
-                        <FormMessage />
+                        {/* <FormMessage /> */}
                     </FormItem>
                 );
             }}

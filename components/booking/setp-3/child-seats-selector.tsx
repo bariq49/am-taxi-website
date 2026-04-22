@@ -1,4 +1,3 @@
-import { formatBookingAmount } from "@/lib/booking-pricing";
 import { cn } from "@/lib/utils";
 
 export interface ChildSeatSelection {
@@ -37,7 +36,7 @@ export const ChildSeatsSelector = ({
             className="rounded-lg border border-border bg-background p-1 px-2 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between"
           >
             <div className="text-sm  text-foreground">
-              {seat.name} ({formatBookingAmount(seat.price)})
+              {seat.name}
             </div>
 
             <div className="flex w-full items-center gap-3 sm:w-auto">

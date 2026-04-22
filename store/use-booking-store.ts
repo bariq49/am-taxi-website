@@ -24,7 +24,7 @@ export interface BookingStep1PersistedData {
     stops: { address: string }[];
     pickupDate: string;
     pickupTime: string;
-    duration?: string;
+    duration?: any;
     durationValue?: string;
     distanceMiles?: number;
     durationMinutes?: number;
@@ -100,7 +100,7 @@ interface BookingState {
     setCategoryOnly: (category: BookingCategory) => void;
     setStep1Data: (data: BookingStep1PersistedData) => void;
     setStep3Data: (data: BookingStep3PersistedData | null) => void;
-    setSelectedVehicle: (vehicle: Vehicle | null) => void;
+    setSelectedVehicle: (fleet: FleetByDistance | null) => void;
     setBookingSettings: (settings: BookingSettingsSnapshot) => void;
     setPricing: (pricing: Pricing | null) => void;
 
@@ -142,9 +142,13 @@ export const useBookingStore = create<BookingState>()(
 
             setStep3Data: (data) => set({ step3: data }),
 
-            setSelectedVehicle: (vehicle) =>
+            setSelectedVehicle: (fleet) =>
                 set({
-                    selectedVehicle: vehicle,
+                    selectedVehicle: fleet ? {
+                        ...fleet,
+                        id: fleet._id,
+                        price: fleet.calculatedPrice
+                    } : null,
                     step3: null,
                 }),
 

@@ -8,6 +8,11 @@ const nextConfig: NextConfig = {
         hostname: `${sub}.googleusercontent.com`,
         pathname: "/**",
       })),
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+        pathname: "/**",
+      },
     ],
   },
 };

@@ -1,6 +1,6 @@
 import React from "react";
 import { useWatch, type UseFormReturn } from "react-hook-form";
-import { Switch } from "@/components/ui/switch";
+import { Switch } from "@/components/form/switch";
 import { cn } from "@/lib/utils";
 import {
   ChildSeatsSelector,

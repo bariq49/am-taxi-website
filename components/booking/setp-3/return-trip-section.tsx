@@ -1,10 +1,9 @@
 import React from "react";
 import { ArrowRightLeft, Clock } from "lucide-react";
 import { useWatch, type UseFormReturn } from "react-hook-form";
-import { Input } from "@/components/ui/Input";
+import { Input } from "@/components/form/Input";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { formatBookingAmount } from "@/lib/booking-pricing";
 import { type ChildSeatOption } from "./child-seats-selector";
 import { ChildSeatsField } from "./child-seats-field";
 
@@ -66,32 +65,6 @@ export const ReturnTripSection = ({
           >
             <ArrowRightLeft size={16} className="text-background" />
           </div>
-
-          <div className="flex flex-col gap-1 w-full">
-            <div className="text-base md:text-lg font-semibold text-foreground leading-snug">
-              Heading back to {fromLocation}?
-            </div>
-            <div className="text-sm text-foreground/80">
-              Add your return transfer from{" "}
-              <span className="text-foreground font-medium">{toLocation}</span> to{" "}
-              <span className="text-foreground font-medium ">{fromLocation}</span> for an additional{" "}
-              {hasReturnDiscount ? (
-                <span className="inline-flex items-center gap-2">
-                  {/* <span className="text-xs text-muted-foreground line-through">
-                  {formatBookingAmount(returnBasePrice)}
-                </span> */}
-                  <span className="font-semibold text-destructive">
-                    {formatBookingAmount(returnPrice)}
-                  </span>
-                </span>
-              ) : (
-                <span className="font-semibold text-destructive">
-                  {formatBookingAmount(returnPrice)}
-                </span>
-              )}
-              .
-            </div>
-          </div>
         </div>
 
         <div className="flex items-end justify-end w-full sm:w-auto sm:ml-auto self-stretch sm:self-end">
@@ -140,7 +113,7 @@ export const ReturnTripSection = ({
           <Input
             name="isReturnMeetGreet"
             type="toggle"
-            label={`Return Meet & Greet (${formatBookingAmount(meetGreetReturnBasePrice)})`}
+            label={`Return Meet & Greet`}
           />
           <ChildSeatsField
             form={form}

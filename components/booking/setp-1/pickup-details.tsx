@@ -14,12 +14,15 @@ export function PickupDetails() {
   const pickupDate = useWatch({ control, name: 'pickupDate' })
   const pickupTime = useWatch({ control, name: 'pickupTime' })
 
-  const day = pickupDate ? format(new Date(pickupDate), "d") : "--";
-  const monthYear = pickupDate ? format(new Date(pickupDate), "MMM ''yy") : "-------";
-  const weekday = pickupDate ? format(new Date(pickupDate), "EEEE") : "-------";
+  const parsedDate = pickupDate ? parse(pickupDate, 'yyyy-MM-dd', new Date()) : null;
+
+  const day = parsedDate ? format(parsedDate, "d") : "--";
+  const monthYear = parsedDate ? format(parsedDate, "MMM ''yy") : "-------";
+  const weekday = parsedDate ? format(parsedDate, "EEEE") : "-------";
   const time = pickupTime ? pickupTime.toLowerCase() : "--:-- --";
 
-  const isPlaceholder = !pickupDate;
+  const isDatePlaceholder = !pickupDate;
+  const isTimePlaceholder = !pickupTime;
 
   return (
     <div className='flex flex-col gap-1 w-full'>
@@ -40,13 +43,13 @@ export function PickupDetails() {
                 <div className='flex flex-col cursor-pointer group text-left min-w-[70px] select-none'>
                   <span className={cn(
                     'text-[34px] font-bold leading-none mb-1.5 transition-colors',
-                    isPlaceholder ? 'text-slate-200' : 'text-slate-900 group-hover:text-primary'
+                    isDatePlaceholder ? 'text-slate-200' : 'text-slate-900 group-hover:text-primary'
                   )}>
                     {day}
                   </span>
                   <span className={cn(
                     'text-[10px] font-bold uppercase tracking-widest transition-colors',
-                    isPlaceholder ? 'text-slate-200' : 'text-slate-500'
+                    isDatePlaceholder ? 'text-slate-200' : 'text-slate-500'
                   )}>
                     {monthYear}
                   </span>
@@ -71,18 +74,18 @@ export function PickupDetails() {
                   <div className='flex items-center gap-1.5 leading-none mb-2'>
                     <span className={cn(
                       'text-[15px] font-bold transition-colors',
-                      isPlaceholder ? 'text-slate-200' : 'text-slate-900 group-hover:text-primary'
+                      isTimePlaceholder ? 'text-slate-200' : 'text-slate-900 group-hover:text-primary'
                     )}>
                       {weekday}
                     </span>
                     <ChevronDown className={cn(
                       "w-3.5 h-3.5 transition-colors",
-                      isPlaceholder ? 'text-slate-200' : 'text-slate-400'
+                      isTimePlaceholder ? 'text-slate-200' : 'text-slate-400'
                     )} />
                   </div>
                   <span className={cn(
                     'text-sm font-medium leading-none whitespace-nowrap transition-colors',
-                    isPlaceholder ? 'text-slate-200' : 'text-slate-500'
+                    isTimePlaceholder ? 'text-slate-200' : 'text-slate-500'
                   )}>
                     {time}
                   </span>

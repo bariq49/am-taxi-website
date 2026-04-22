@@ -2,6 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { Clock, X } from "lucide-react";
+import { toZonedTime } from "date-fns-tz";
+import { format } from "date-fns";
+import { DEFAULT_TIMEZONE } from "@/constants/app-default";
 import TimeColumn from "./time-column";
 
 interface TimePickerProps {
@@ -11,6 +14,7 @@ interface TimePickerProps {
   disabled?: boolean;
   placeholder?: string;
   error?: boolean;
+  timezone?: string;
   customTrigger?: (value: string) => React.ReactNode;
 }
 
@@ -21,15 +25,32 @@ export default function TimePicker({
   disabled,
   placeholder = "Select time",
   error,
+  timezone = DEFAULT_TIMEZONE,
   customTrigger,
 }: TimePickerProps) {
   const [open, setOpen] = useState(false);
+  
+  const getInitialTime = () => {
+    const zoned = toZonedTime(new Date(), timezone);
+    const h = parseInt(format(zoned, "h"), 10);
+    const m = parseInt(format(zoned, "mm"), 10);
+    const p = format(zoned, "a").toUpperCase() as "AM" | "PM";
+    return { h, m, p };
+  };
+
+  const initial = getInitialTime();
   const [hour, setHour] = useState<number | null>(null);
   const [minute, setMinute] = useState<number | null>(null);
-  const [ampm, setAmPm] = useState<"AM" | "PM">("AM");
+  const [ampm, setAmPm] = useState<"AM" | "PM">(initial.p);
 
   useEffect(() => {
-    if (!value) return;
+    if (!value) {
+      const initial = getInitialTime();
+      setHour(initial.h);
+      setMinute(initial.m);
+      setAmPm(initial.p);
+      return;
+    }
 
     const match = value.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
     if (!match) return;
@@ -41,7 +62,7 @@ export default function TimePicker({
     setHour(h);
     setMinute(m);
     setAmPm(p);
-  }, [value]);
+  }, [value, timezone]);
 
   useEffect(() => {
     if (open && hour !== null && minute !== null) {

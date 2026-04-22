@@ -7,6 +7,8 @@ export interface NavLink {
 
 export const SOLID_HEADER_ROUTES = [
   "/contact",
+  "/book-ride/select-vehicle",
+  "/book-ride/passenger-details",
   "/auth/login",
   "/dashboard",
   "/services",

@@ -9,7 +9,6 @@ import {
 import { useBookingStore } from "@/store/use-booking-store";
 import { addMinutes, parse, format, isValid, parseISO } from "date-fns";
 import Image from "next/image";
-import { calculateCheckoutPricingBreakdown, formatBookingAmount } from "@/lib/booking-pricing";
 import { cn } from "@/lib/utils";
 
 function parseAddress(address: string) {
@@ -27,16 +26,6 @@ function parseAddress(address: string) {
 function SummaryDetails() {
   const { category, step1, step3, selectedVehicle, bookingSettings } = useBookingStore();
   const isHourly = category === "hourly";
-
-  const pricing = useMemo(() => {
-    return calculateCheckoutPricingBreakdown({
-      step1,
-      step3,
-      selectedVehicle,
-      bookingSettings,
-    });
-  }, [step1, step3, selectedVehicle, bookingSettings]);
-
   const pickup = useMemo(() => parseAddress(step1?.pickupAddress || ""), [step1?.pickupAddress]);
   const delivery = useMemo(() => parseAddress(step1?.deliveryAddress || ""), [step1?.deliveryAddress]);
 
@@ -57,8 +46,8 @@ function SummaryDetails() {
     return null;
   }, [step1?.duration, step1?.durationMinutes]);
 
-  const pickupDate = step3?.pickupDate?.trim() ?? "";
-  const pickupTime = step3?.pickupTime?.trim() ?? "";
+  const pickupDate = (step1?.pickupDate || step3?.pickupDate || "").trim();
+  const pickupTime = (step1?.pickupTime || step3?.pickupTime || "").trim();
   const hasPickupDate = Boolean(pickupDate);
   const hasPickupTime = Boolean(pickupTime);
   const formattedPickupDate = useMemo(() => {
@@ -91,7 +80,7 @@ function SummaryDetails() {
   }, [hasPickupTime, pickupTime, step1?.durationMinutes]);
 
   return (
-    <div className="mx-auto w-full rounded-2xl border border-border bg-background p-4 sm:p-5 mb-52">
+    <div className="mx-auto w-full rounded-none lg:rounded-lg border-0 lg:border lg:border-gray bg-background p-4 sm:p-5 mb-52 shadow-none">
       <div className="space-y-4">
         <h2 className="text-xl font-semibold text-foreground">Your Booking</h2>
         <div className="space-y-1.5">
@@ -116,15 +105,13 @@ function SummaryDetails() {
             </span>
           </div>
         </div>
-
-        {/* Route timeline (line + moving dot) only for point-to-point trips; hourly is a single location */}
         <div
-          className={cn("relative pb-1 pt-1", isHourly ? "pl-0" : "pl-7")}
+          className={cn("relative pb-1 pt-1", isHourly ? "pl-0" : "pl-9")}
         >
           {!isHourly && (
-            <div className="absolute bottom-[34px] left-[3px] top-[14px] w-[2px] overflow-visible bg-border">
+            <div className="absolute left-[10px] top-[14px] bottom-[34px] w-[2px] bg-neutral-200 overflow-visible z-0">
               <div
-                className="absolute left-1/2 z-10 h-2 w-2 rounded-full bg-primary shadow-sm"
+                className="absolute left-1/2 -translate-x-1/2 z-10 h-2 w-2 rounded-full bg-primary shadow-sm"
                 style={{ animation: "moveDown 4s ease-in-out infinite" }}
               />
             </div>
@@ -180,16 +167,7 @@ function SummaryDetails() {
                   </span>
                 </div>
                 <div className="mt-2 flex flex-wrap items-center gap-2">
-                  {formattedDuration && (
-                    <div className="rounded-full border border-border bg-secondary px-3 py-1 text-[10px] font-medium text-muted-foreground">
-                      {formattedDuration}
-                    </div>
-                  )}
-                  {formattedDistance && (
-                    <div className="rounded-full border border-border bg-secondary px-3 py-1 text-[10px] font-medium text-muted-foreground">
-                      {formattedDistance}
-                    </div>
-                  )}
+                  {/* Distance and Duration removed as they are now on the map */}
                 </div>
               </>
             )}
@@ -253,42 +231,12 @@ function SummaryDetails() {
           )}
         </div>
 
-        {/* Selected Vehicle Section */}
-        {selectedVehicle && (
-          <div className="mb-2">
-            <h3 className="mb-2 text-base font-semibold text-foreground">Selected Vehicle</h3>
-            <div className="flex items-center gap-2.5 rounded-lg border border-border bg-background p-2">
-              <div className="flex-shrink-0">
-                <Image
-                  src={selectedVehicle.image}
-                  alt={selectedVehicle.name}
-                  width={80}
-                  height={80}
-                  className="h-16 w-16 object-contain"
-                />
-              </div>
-              <div className="flex-1 min-w-0">
-                <h4 className="mb-1 text-sm font-semibold text-foreground sm:text-base">{selectedVehicle.name}</h4>
-                <div className="flex items-center gap-3 text-xs text-muted-foreground sm:text-sm">
-                  <div className="flex items-center gap-1">
-                    <Users size={14} />
-                    <span> {selectedVehicle.passengers} passengers</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Luggage size={14} />
-                    <span>{selectedVehicle.suitcases} suitcases</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
+        {/* Selected Vehicle Section removed */}
 
         {/* Fare Summary */}
-        <div className="pt-2 border-t border-border">
+        {/* <div className="pt-2 border-t border-border">
           <h3 className="mb-2 text-base font-semibold text-foreground">Fare Summary</h3>
           <div className="space-y-1.5">
-            {/* Base Price */}
             <div className="flex items-center justify-between text-sm">
               <span className="text-muted-foreground">
                 {isHourly
@@ -297,40 +245,30 @@ function SummaryDetails() {
               </span>
               <span className="font-medium text-foreground">{formatBookingAmount(pricing.vehicle.oneWay.totalPrice)}</span>
             </div>
-
-            {/* Extra Stops */}
             {pricing.extras.stops.count > 0 && (
               <div className="flex items-center justify-between text-sm">
                 <span className="text-muted-foreground">Extra Stops ({pricing.extras.stops.count})</span>
                 <span className="font-medium text-foreground">{formatBookingAmount(pricing.extras.stops.total)}</span>
               </div>
             )}
-
-            {/* Airport Pickup */}
             {pricing.extras.airportPickup.isSelected && (
               <div className="flex items-center justify-between text-sm">
                 <span className="text-muted-foreground">Airport Pickup</span>
                 <span className="font-medium text-foreground">{formatBookingAmount(pricing.extras.airportPickup.total)}</span>
               </div>
             )}
-
-            {/* Meet & Greet (One-Way) */}
             {pricing.extras.meetAndGreet.outbound.isSelected && (
               <div className="flex items-center justify-between text-sm">
                 <span className="text-muted-foreground">Meet & Greet (One-Way)</span>
                 <span className="font-medium text-foreground">{formatBookingAmount(pricing.extras.meetAndGreet.outbound.total)}</span>
               </div>
             )}
-
-            {/* Meet & Greet (Return) */}
             {pricing.extras.meetAndGreet.return.isSelected && (
               <div className="flex items-center justify-between text-sm">
                 <span className="text-muted-foreground">Meet & Greet (Return)</span>
                 <span className="font-medium text-foreground">{formatBookingAmount(pricing.extras.meetAndGreet.return.total)}</span>
               </div>
             )}
-
-            {/* Child Seats (One-Way) */}
             {pricing.extras.childSeats.items.filter(i => i.tripType === "outbound").length > 0 && (
               <div className="flex items-center justify-between text-sm">
                 <span className="text-muted-foreground">
@@ -341,8 +279,6 @@ function SummaryDetails() {
                 </span>
               </div>
             )}
-
-            {/* Child Seats (Return) */}
             {pricing.extras.childSeats.items.filter(i => i.tripType === "return").length > 0 && (
               <div className="flex items-center justify-between text-sm">
                 <span className="text-muted-foreground">
@@ -353,41 +289,28 @@ function SummaryDetails() {
                 </span>
               </div>
             )}
-
-            {/* Return Trip */}
             {pricing.vehicle.return.isSelected && (
               <div className="flex items-center justify-between text-sm">
                 <span className="text-muted-foreground">Return Trip</span>
                 <span className="font-bold text-foreground">{formatBookingAmount(pricing.vehicle.return.totalPrice)}</span>
               </div>
             )}
-
-            {/* Total */}
             <div className="flex items-center justify-between pt-2 mt-2 border-t border-border">
               <span className="text-base font-bold text-foreground">Total</span>
               <span className="text-lg font-bold text-primary">{formatBookingAmount(pricing.totals.totalAmount)}</span>
             </div>
           </div>
-        </div>
+        </div> */}
 
-        <div className="mb-2 flex flex-wrap gap-2">
-          <div className="flex items-center gap-1.5 rounded-full border border-primary/40 bg-primary/10 px-3 py-1">
-            <Check size={14} className="text-primary" />
-            <span className="text-xs font-medium text-primary">Free 30 minutes waiting time</span>
-          </div>
-          <div className="flex items-center gap-1.5 rounded-full border border-border bg-secondary px-3 py-1">
-            <Check size={14} className="text-foreground" />
-            <span className="text-xs font-medium text-foreground/80">Door-to-door service</span>
-          </div>
-        </div>
+        {/* Service Highlight Badges removed */}
       </div>
 
       <style>{`
         @keyframes moveDown {
-          0% { top: 0%; opacity: 0; transform: translateX(-50%) scale(0.6); }
-          10% { opacity: 1; transform: translateX(-50%) scale(1); }
-          90% { opacity: 1; transform: translateX(-50%) scale(1); }
-          100% { top: 100%; opacity: 0; transform: translateX(-50%) scale(0.6); }
+          0% { top: 0%; opacity: 0; transform: scale(0.6); }
+          10% { opacity: 1; transform: scale(1); }
+          90% { opacity: 1; transform: scale(1); }
+          100% { top: 100%; opacity: 0; transform: scale(0.6); }
         }
         @keyframes pulseAtDestination {
           0% { transform: scale(1); opacity: 0.8; }
