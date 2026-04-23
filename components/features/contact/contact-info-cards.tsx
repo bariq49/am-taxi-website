@@ -5,8 +5,9 @@ import { Phone, Mail, MapPin, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { COMPANY_PHONE, COMPANY_EMAIL, COMPANY_ADDRESS, COMPANY_PHONE_HREF, COMPANY_EMAIL_HREF } from "@/constants/app-default";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper/modules";
+import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
+import "swiper/css/pagination";
 
 const CONTACT_CARDS = [
     {
@@ -41,7 +42,7 @@ export default function ContactInfoCards() {
             <div className="container mx-auto px-4">
                 <div className="relative">
                     <Swiper
-                        modules={[Autoplay]}
+                        modules={[Autoplay, Pagination]}
                         spaceBetween={24}
                         slidesPerView={1}
                         loop={true}
@@ -50,6 +51,7 @@ export default function ContactInfoCards() {
                             disableOnInteraction: false,
                             pauseOnMouseEnter: false,
                         }}
+                        pagination={{ clickable: true }}
                         breakpoints={{
                             640: { slidesPerView: 2 },
                             1024: { slidesPerView: 3 },

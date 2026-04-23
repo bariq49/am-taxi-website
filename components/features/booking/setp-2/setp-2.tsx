@@ -10,22 +10,28 @@ import { VehicleCardSkeleton } from "../../skeletons/VehicleCardSkeleton";
 
 function Step2() {
     const router = useRouter();
-    const { category, step1, setSelectedVehicle, selectedVehicle } = useBookingStore();
+    const { category, step1, setSelectedVehicle, selectedVehicle, setStep3Data, step3 } = useBookingStore();
     const [loadingVehicleId, setLoadingVehicleId] = React.useState<string | null>(null);
 
     const { data: fleets = [], isLoading } = useFleetsByDistance(
-        step1?.distanceMiles ?? 0,
+        step1?.distance ?? 0,
         category === "hourly" && step1?.duration ? {
             packageType: step1.duration.packageType,
             duration: step1.duration.duration
         } : undefined,
-        { enabled: category === "hourly" ? !!step1?.duration : (step1?.distanceMiles ?? 0) >= 0 }
+        { enabled: category === "hourly" ? !!step1?.duration : (step1?.distance ?? 0) >= 0 }
     );
 
-    const handleContinue = (fleet: FleetByDistance) => {
+    const handleContinue = (fleet: FleetByDistance, passengers: number, luggage: number) => {
         if (loadingVehicleId) return;
         setLoadingVehicleId(fleet._id);
         setSelectedVehicle(fleet);
+        setStep3Data({
+            ...(step3 || {}),
+            passengers,
+            bags: luggage,
+        } as any);
+
         router.push("/book-ride/passenger-details");
     };
 

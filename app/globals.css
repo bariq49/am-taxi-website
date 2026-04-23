@@ -98,6 +98,34 @@
 }
 
 /* =========================
+   AUTOFILL OVERRIDES
+========================= */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+   -webkit-text-fill-color: inherit !important;
+   -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+   background-color: transparent !important;
+   background-clip: content-box !important;
+   transition: background-color 5000s ease-in-out 0s !important;
+}
+
+/* Specific fix for white text inputs (like Newsletter) when autofilled */
+.newsletter-input:-webkit-autofill,
+.newsletter-input:-webkit-autofill:hover,
+.newsletter-input:-webkit-autofill:focus,
+.newsletter-input:-webkit-autofill:active {
+   -webkit-text-fill-color: white !important;
+}
+
+/* =========================
    ROOT VARIABLES
 ========================= */
 :root {
@@ -113,4 +141,62 @@ body {
    color: var(--foreground);
    font-family: var(--font-sans);
    -webkit-font-smoothing: antialiased;
+}
+
+/* =========================
+   SWIPER – COMMON LAYOUT
+========================= */
+.swiper .swiper-wrapper {
+   align-items: stretch;
+}
+
+.swiper .swiper-slide {
+   height: auto;
+   display: flex;
+}
+
+/* =========================
+   SWIPER – PAGINATION DOTS
+========================= */
+.swiper-pagination {
+   position: relative !important;
+   bottom: auto !important;
+   margin-top: 24px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   gap: 6px;
+}
+
+.swiper-pagination-bullet {
+   width: 12px !important;
+   height: 8px !important;
+   border-radius: 9999px !important;
+   background: var(--color-secondary-500) !important;
+   opacity: 0.35 !important;
+   transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+   cursor: pointer;
+}
+
+.swiper-pagination-bullet:hover {
+   opacity: 0.6 !important;
+}
+
+.swiper-pagination-bullet-active {
+   width: 32px !important;
+   opacity: 1 !important;
+   background: var(--color-secondary-500) !important;
+}
+
+/* Dark-section variant (add class "swiper-dark" to the Swiper) */
+.swiper-dark .swiper-pagination-bullet {
+   background: var(--color-secondary-500) !important;
+}
+
+.swiper-dark .swiper-pagination-bullet:hover {
+   background: var(--color-secondary-500) !important;
+}
+
+.swiper-dark .swiper-pagination-bullet-active {
+   background: var(--color-secondary-500) !important;
 }

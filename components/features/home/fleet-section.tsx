@@ -1,8 +1,9 @@
 "use client";
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper/modules";
+import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
+import "swiper/css/pagination";
 import Link from "next/link";
 import { useFleets } from "@/hooks/queries/use-fleet";
 import FleetSkeleton from "../skeletons/fleet-skeleton";
@@ -43,7 +44,7 @@ export default function FleetSection() {
 
                 <div className="relative">
                     <Swiper
-                        modules={[Autoplay]}
+                        modules={[Autoplay, Pagination]}
                         spaceBetween={24}
                         slidesPerView={1}
                         loop={true}
@@ -52,6 +53,7 @@ export default function FleetSection() {
                             disableOnInteraction: false,
                             pauseOnMouseEnter: false,
                         }}
+                        pagination={{ clickable: true }}
                         breakpoints={{
                             640: { slidesPerView: 1.5 },
                             768: { slidesPerView: 2.5 },
@@ -75,16 +77,6 @@ export default function FleetSection() {
                     </Swiper>
                 </div>
             </div>
-
-            <style jsx global>{`
-                .fleets-swiper .swiper-wrapper {
-                    align-items: stretch;
-                }
-                .fleets-swiper .swiper-slide {
-                    height: auto;
-                    display: flex;
-                }
-            `}</style>
         </section>
     );
 }

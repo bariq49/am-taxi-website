@@ -3,8 +3,9 @@
 import React from "react";
 import { Car, Clock, MapPin, ShieldCheck } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper/modules";
+import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
+import "swiper/css/pagination";
 
 const STATS = [
     {
@@ -38,7 +39,7 @@ export default function FleetStatsSection() {
         <section className="bg-[#0A0A0A] py-10">
             <div className="container mx-auto px-4">
                 <Swiper
-                    modules={[Autoplay]}
+                    modules={[Autoplay, Pagination]}
                     spaceBetween={24}
                     slidesPerView={1}
                     loop={true}
@@ -47,11 +48,12 @@ export default function FleetStatsSection() {
                         delay: 0,
                         disableOnInteraction: false,
                     }}
+                    pagination={{ clickable: true }}
                     breakpoints={{
                         640: { slidesPerView: 2 },
                         1024: { slidesPerView: 4 },
                     }}
-                    className="fleet-stats-swiper linear-swiper"
+                    className="fleet-stats-swiper swiper-dark linear-swiper"
                 >
                     {STATS.map((stat, index) => (
                         <SwiperSlide key={index}>

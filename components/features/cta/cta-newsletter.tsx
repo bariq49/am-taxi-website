@@ -43,7 +43,7 @@ export default function CtaNewsletter() {
                             </div>
 
                             <Link
-                                href="/locations"
+                                href="/blogs"
                                 className="inline-flex items-center gap-2 px-6 py-3 bg-secondary hover:bg-secondary-600 text-white rounded-full font-bold text-xs transition-all duration-300 w-fit z-10 mt-6"
                             >
                                 Start Exploring
@@ -109,7 +109,7 @@ export default function CtaNewsletter() {
                                                 type="email"
                                                 placeholder="Enter your email address here..."
                                                 required
-                                                inputClassName="!bg-transparent !border-0 !text-white !placeholder:text-white/40 !h-12 !px-6 !py-0 !shadow-none !ring-0 focus:!ring-0"
+                                                inputClassName="newsletter-input !bg-transparent !border-0 !text-white !placeholder:text-white/40 !h-12 !px-6 !py-0 !shadow-none !ring-0 focus:!ring-0"
                                                 className="w-full"
                                             />
                                         </div>

@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { Luggage, Users } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight, Luggage, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface Fleet {
@@ -51,9 +52,11 @@ export default function FleetCard({ fleet }: { fleet: Fleet }) {
                     </div>
                 </div>
 
-                <Button className="bg-secondary text-white px-4 py-2 rounded-full font-bold text-[10px] md:text-xs hover:bg-secondary-600 transition-all duration-300 active:scale-95 whitespace-nowrap">
-                    Book Now
-                </Button>
+                <Link href="/">
+                    <Button className="bg-secondary text-white px-4 py-2 rounded-full font-bold text-[10px] md:text-xs hover:bg-secondary-600 transition-all duration-300 active:scale-95 whitespace-nowrap">
+                        Book Now <ArrowRight className="w-4 h-4 ml-1" />
+                    </Button>
+                </Link>
             </div>
         </div>
     );

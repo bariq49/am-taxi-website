@@ -10,6 +10,9 @@ export const COMPANY_PHONE_HREF = "tel:+31202503111";
 export const COMPANY_EMAIL = "info@amsairporttaxi.com";
 export const COMPANY_EMAIL_HREF = `mailto:${COMPANY_EMAIL}`;
 
+export const COMPANY_WHATSAPP = "+31202503111";
+export const COMPANY_WHATSAPP_HREF = `https://wa.me/${COMPANY_WHATSAPP}`;
+
 export const COMPANY_ADDRESS = "Amsterdam, Netherlands";
 
 export const SOCIAL_LINKS = {

@@ -24,7 +24,7 @@ export interface BookingStep1PersistedData {
     pickupTime: string;
     duration?: any;
     durationValue?: string;
-    distanceMiles?: number;
+    distance?: number;
     durationMinutes?: number;
     isAirportSelected?: boolean;
 }

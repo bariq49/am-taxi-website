@@ -65,7 +65,10 @@ function AnimatedRouteMap() {
   const deliveryAddress = step1?.deliveryAddress ?? "";
   const stops = step1?.stops ?? EMPTY_STOPS;
 
-  const estDistance = step1?.distanceMiles ? `${step1.distanceMiles.toFixed(1)} mi` : null;
+  const estDistance = useMemo(() => {
+    if (!step1?.distance) return null;
+    return `${step1.distance.toFixed(1)} km`;
+  }, [step1?.distance]);
   const estTime = useMemo(() => {
     if (step1?.duration?.trim()) return step1.duration.trim();
     if (typeof step1?.durationMinutes === "number") {
@@ -155,9 +158,9 @@ function AnimatedRouteMap() {
 
             const progress = Math.min((time - startedAt) / animationDurationMs, 1);
             const targetIdx = Math.floor(progress * lastIndex);
-            
+
             if (points[targetIdx]) animatedMarkerRef.current.setPosition(points[targetIdx]);
-            
+
             if (progress >= 1) startedAt = time;
             animationFrameRef.current = requestAnimationFrame(animate);
           };
@@ -189,7 +192,7 @@ function AnimatedRouteMap() {
           <div className="flex items-center gap-1.5 whitespace-nowrap">
             <MapPin size={14} className="text-secondary" />
             <span className="text-sm font-semibold text-gray-700 tabular-nums">
-              {estDistance || "0.0 mi"}
+              {estDistance || "0.0 km"}
             </span>
           </div>
           <div className="w-px h-3 bg-gray-300" />

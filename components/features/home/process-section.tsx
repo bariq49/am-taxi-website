@@ -3,10 +3,11 @@
 import { MapPin, Car, CreditCard, MoveRight, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper/modules";
+import { Autoplay, Pagination } from "swiper/modules";
 
 // Import Swiper styles
 import "swiper/css";
+import "swiper/css/pagination";
 
 const STEPS = [
     {
@@ -64,7 +65,7 @@ export default function ProcessSection() {
 
                     <div className="relative z-10 w-full">
                         <Swiper
-                            modules={[Autoplay]}
+                            modules={[Autoplay, Pagination]}
                             spaceBetween={24}
                             slidesPerView={1}
                             loop={true}
@@ -73,6 +74,7 @@ export default function ProcessSection() {
                                 disableOnInteraction: false,
                                 pauseOnMouseEnter: false,
                             }}
+                            pagination={{ clickable: true }}
                             breakpoints={{
                                 640: { slidesPerView: 2 },
                                 1024: {

@@ -14,7 +14,7 @@ export interface CheckoutPayload {
     pickupAddress: string;
     deliveryAddress: string;
     stops: { address: string }[];
-    distanceMiles: number;
+    distance: number;
     pickupDate: string;
     pickupTime: string;
     returnDate?: string;

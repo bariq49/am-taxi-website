@@ -13,7 +13,7 @@ interface VehicleCardProps {
   isSelected?: boolean;
   isLoading: boolean;
   onSelect: (fleet: FleetByDistance) => void;
-  onContinue: (fleet: FleetByDistance) => void;
+  onContinue: (fleet: FleetByDistance, passengers: number, luggage: number) => void;
 }
 
 const formatAmount = (value: number) => value.toFixed(2);
@@ -25,8 +25,8 @@ export default function VehicleCard({
   onSelect,
   onContinue,
 }: VehicleCardProps) {
-  const [passengerCount, setPassengerCount] = useState(fleet.passengers || 2);
-  const [luggageCount, setLuggageCount] = useState(fleet.suitcases || 2);
+  const [passengerCount, setPassengerCount] = useState(1);
+  const [luggageCount, setLuggageCount] = useState(0);
 
   const totalPrice = fleet.priceBreakdown?.totalPrice ?? 0;
   const displayPrice = fleet.priceBreakdown?.displayPrice ?? 0;
@@ -127,18 +127,18 @@ export default function VehicleCard({
               <Counter
                 label="Passenger(s)"
                 icon={<Users size={14} className="sm:size-4" />}
-                value={1}
+                value={passengerCount}
                 min={1}
-                max={fleet.passengers || 4}
+                max={fleet.passengers}
                 onChange={setPassengerCount}
                 className="scale-90 sm:scale-100 origin-left"
               />
               <Counter
                 label="Luggage(s)"
                 icon={<Luggage size={14} className="sm:size-4" />}
-                value={0}
+                value={luggageCount}
                 min={0}
-                max={fleet.suitcases || 4}
+                max={fleet.suitcases}
                 onChange={setLuggageCount}
                 className="scale-90 sm:scale-100 origin-left"
               />
@@ -149,7 +149,7 @@ export default function VehicleCard({
               className="rounded-sm w-full md:w-fit h-8.5 text-xs sm:text-sm"
               onClick={(e) => {
                 e.stopPropagation();
-                onContinue(fleet);
+                onContinue(fleet, passengerCount, luggageCount);
               }}
             >
               CONTINUE

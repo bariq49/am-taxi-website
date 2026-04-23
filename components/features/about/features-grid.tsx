@@ -3,8 +3,9 @@
 import React from "react";
 import { LucideIcon, MapPin, ShieldCheck, PhoneCall, Car } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper/modules";
+import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
+import "swiper/css/pagination";
 
 interface FeatureItem {
     icon: LucideIcon;
@@ -71,7 +72,7 @@ export default function FeaturesGrid({
 
                 <div className="relative">
                     <Swiper
-                        modules={[Autoplay]}
+                        modules={[Autoplay, Pagination]}
                         spaceBetween={20}
                         slidesPerView={1}
                         loop={true}
@@ -79,6 +80,7 @@ export default function FeaturesGrid({
                             delay: 4000,
                             disableOnInteraction: false,
                         }}
+                        pagination={{ clickable: true }}
                         breakpoints={{
                             640: { slidesPerView: 2 },
                             1024: { slidesPerView: 4 },

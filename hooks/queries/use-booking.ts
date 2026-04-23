@@ -40,7 +40,7 @@ export const useCreateCheckoutSession = () => {
                     pickupAddress: booking.step1.pickupAddress,
                     deliveryAddress: booking.step1.deliveryAddress?.trim?.(),
                     stops: booking.step1.stops ?? [],
-                    distanceMiles: booking.step1.distanceMiles || 0,
+                    distance: booking.step1.distance || 0,
                     pickupDate: booking.step1.pickupDate,
                     pickupTime: booking.step1.pickupTime,
                     returnDate: booking.step3.returnDate,

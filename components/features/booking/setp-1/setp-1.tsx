@@ -136,7 +136,7 @@ function Step1() {
         pickupDate: data.pickupDate,
         pickupTime: data.pickupTime,
         duration: category === 'hourly' && data.duration ? JSON.parse(data.duration) : undefined,
-        distanceMiles: routeResult?.totalDistanceMiles,
+        distance: routeResult?.totalDistanceKm,
         durationMinutes: routeResult?.totalDurationMinutes,
         isAirportSelected: addresses.some(isAirportAddress),
       })

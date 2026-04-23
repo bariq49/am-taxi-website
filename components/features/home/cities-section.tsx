@@ -1,8 +1,9 @@
 "use client";
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper/modules";
+import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
+import "swiper/css/pagination";
 import Link from "next/link";
 import { IMAGES } from "@/constants/image-constants";
 import DestinationCard from "../destinations/destination-card";
@@ -60,7 +61,7 @@ export default function CitiesSection() {
 
                 <div className="relative">
                     <Swiper
-                        modules={[Autoplay]}
+                        modules={[Autoplay, Pagination]}
                         spaceBetween={24}
                         slidesPerView={1}
                         loop={true}
@@ -69,11 +70,12 @@ export default function CitiesSection() {
                             disableOnInteraction: false,
                             pauseOnMouseEnter: false,
                         }}
+                        pagination={{ clickable: true }}
                         breakpoints={{
                             640: { slidesPerView: 2 },
                             1024: { slidesPerView: 4 },
                         }}
-                        className="destinations-swiper !p-1"
+                        className="cities-swiper swiper-dark !p-1"
                     >
                         {CITIES.map((city, index) => (
                             <SwiperSlide key={index} className="!h-auto !flex">
@@ -83,16 +85,6 @@ export default function CitiesSection() {
                     </Swiper>
                 </div>
             </div>
-
-            <style jsx global>{`
-                .destinations-swiper .swiper-wrapper {
-                    align-items: stretch;
-                }
-                .destinations-swiper .swiper-slide {
-                    height: auto;
-                    display: flex;
-                }
-            `}</style>
         </section>
     );
 }

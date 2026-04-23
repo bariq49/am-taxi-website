@@ -1,9 +1,10 @@
 "use client";
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper/modules";
+import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
-import { ArrowUpRight } from "lucide-react";
+import "swiper/css/pagination";
+import { ArrowUpRight, Star } from "lucide-react";
 import ReviewCard from "@/components/features/testimonial/testimonial-card";
 import TestimonialSkeleton from "../skeletons/testimonial-skeleton";
 import { useReviewsQuery } from "@/hooks/queries/use-reviews";
@@ -47,9 +48,9 @@ export default function Testimonials() {
                     </a>
                 </p>
             </div>
-            <div className="container mx-auto relative group">
+            <div className="container mx-auto px-4 relative group">
                 <Swiper
-                    modules={[Autoplay]}
+                    modules={[Autoplay, Pagination]}
                     spaceBetween={24}
                     slidesPerView={1}
                     loop={true}
@@ -58,6 +59,7 @@ export default function Testimonials() {
                         disableOnInteraction: false,
                         pauseOnMouseEnter: false,
                     }}
+                    pagination={{ clickable: true }}
                     breakpoints={{
                         640: { slidesPerView: 2 },
                         1024: { slidesPerView: 4 },
@@ -71,57 +73,43 @@ export default function Testimonials() {
                     ))}
                 </Swiper>
             </div>
-            <div className="container mx-auto hidden md:block">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center mt-14">
-                    <div className="flex flex-col items-center gap-6">
-                        <div className="flex flex-col gap-1">
-                            <div className="text-4xl md:text-5xl font-extrabold text-[#003048] tracking-tight">
-                                <AnimatedCounter end={500} suffix="+" />
-                            </div>
-                            <span className="text-xs md:text-sm font-bold text-gray-500 uppercase tracking-[0.2em]">
-                                Happy Customer
-                            </span>
+            <div className="container mx-auto px-4">
+                <div className="flex items-center justify-center mt-14 gap-0">
+                    <div className="flex-1 flex flex-col items-center gap-1 px-2 md:px-8">
+                        <div className="text-2xl md:text-5xl font-extrabold text-primary tracking-tight">
+                            <AnimatedCounter end={500} suffix="+" />
                         </div>
+                        <span className="text-[10px] md:text-sm font-bold text-gray-400 uppercase tracking-wider whitespace-nowrap">
+                            Happy Customers
+                        </span>
                     </div>
 
-                    <div className="flex flex-col gap-6 justify-end">
-                        <div className="flex flex-col gap-1">
-                            <div className="text-4xl md:text-5xl font-extrabold text-[#003048] tracking-tight">
-                                <AnimatedCounter end={4} prefix="0" suffix=" +" />
-                            </div>
-                            <span className="text-xs md:text-sm font-bold text-gray-500 uppercase tracking-[0.2em]">
-                                Countries Covered
-                            </span>
+                    <div className="w-px h-10 md:h-14 bg-gray-200 shrink-0" />
+
+                    <div className="flex-1 flex flex-col items-center gap-1 px-2 md:px-8">
+                        <div className="text-2xl md:text-5xl font-extrabold text-primary tracking-tight">
+                            <AnimatedCounter end={4} prefix="0" suffix="+" />
                         </div>
+                        <span className="text-[10px] md:text-sm font-bold text-gray-400 uppercase tracking-wider whitespace-nowrap">
+                            Countries
+                        </span>
                     </div>
 
-                    <div className="flex flex-col gap-6 justify-end">
-                        <div className="flex flex-col gap-1">
-                            <div className="flex items-center justify-center gap-3">
-                                <div className="text-4xl md:text-5xl font-extrabold text-[#003048] tracking-tight">
-                                    <AnimatedCounter end={4.9} decimals={1} />
-                                </div>
-                                <span className="text-4xl md:text-5xl">⭐</span>
+                    <div className="w-px h-10 md:h-14 bg-gray-200 shrink-0" />
+
+                    <div className="flex-1 flex flex-col items-center gap-1 px-2 md:px-8">
+                        <div className="flex items-center justify-center gap-1 md:gap-2">
+                            <div className="text-2xl md:text-5xl font-extrabold text-primary tracking-tight">
+                                <AnimatedCounter end={4.9} decimals={1} />
                             </div>
-                            <span className="text-xs md:text-sm font-bold text-gray-500 uppercase tracking-[0.2em]">
-                                Average Rating
-                            </span>
+                            <Star className="w-7 h-7 text-secondary fill-secondary" />
                         </div>
+                        <span className="text-[10px] md:text-sm font-bold text-gray-400 uppercase tracking-wider whitespace-nowrap">
+                            Avg Rating
+                        </span>
                     </div>
                 </div>
             </div>
-
-            {/* Fix equal height cards */}
-            <style jsx global>{`
-                .testimonial-swiper .swiper-wrapper {
-                    align-items: stretch;
-                }
-
-                .testimonial-swiper .swiper-slide {
-                    height: auto;
-                    display: flex;
-                }
-            `}</style>
         </div>
     );
 }
