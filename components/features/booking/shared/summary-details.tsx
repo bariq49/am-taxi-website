@@ -1,28 +1,23 @@
 "use client";
 
 import { useMemo } from "react";
-import {
-  Users,
-  Check,
-  Luggage,
-  Clock,
-} from "lucide-react";
 import { useBookingStore } from "@/store/use-booking-store";
-import { addMinutes, parse, format, isValid, parseISO } from "date-fns";
-import Image from "next/image";
 import TripRouteDetails from "./trip-route-details";
+import { parseAddress, calculateArrivalTime, formatTripDate } from "@/lib/booking-utils";
+import { Check, CheckCircle2, Plane, UserCircle } from "lucide-react";
+import { cn } from "@/lib/utils";
 
-function parseAddress(address: string) {
-  if (!address) return { name: "", detail: "" };
-  const parts = address.split(",");
-  if (parts.length > 1) {
-    return {
-      name: parts[0].trim(),
-      detail: parts.slice(1).join(",").trim(),
-    };
-  }
-  return { name: address, detail: "" };
-}
+const FeatureTag = ({ label, variant, icon }: { label: string; variant?: "success"; icon: React.ReactNode }) => (
+  <div className={cn(
+    "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] sm:text-xs font-semibold border transition-colors",
+    variant === "success" 
+      ? "bg-emerald-50 text-emerald-600 border-emerald-200" 
+      : "bg-gray-50 text-gray-700 border-gray-200"
+  )}>
+    {icon}
+    {label}
+  </div>
+);
 
 function SummaryDetails() {
   const { category, step1, step3 } = useBookingStore();
@@ -37,36 +32,10 @@ function SummaryDetails() {
 
   const pickupDate = (step1?.pickupDate || step3?.pickupDate || "").trim();
   const pickupTime = (step1?.pickupTime || step3?.pickupTime || "").trim();
-  const hasPickupDate = Boolean(pickupDate);
   const hasPickupTime = Boolean(pickupTime);
-  const formattedPickupDate = useMemo(() => {
-    if (!hasPickupDate) return "—";
-    try {
-      const isoDate = parseISO(pickupDate);
-      if (isValid(isoDate)) return format(isoDate, "MM/dd/yyyy");
-      const fallbackDate = parse(pickupDate, "yyyy-MM-dd", new Date());
-      if (isValid(fallbackDate)) return format(fallbackDate, "MM/dd/yyyy");
-      return pickupDate;
-    } catch {
-      return pickupDate;
-    }
-  }, [hasPickupDate, pickupDate]);
+  const formattedPickupDate = useMemo(() => formatTripDate(pickupDate), [pickupDate]);
 
-  const deliveryTime = useMemo(() => {
-    if (!hasPickupTime || !pickupTime || typeof step1?.durationMinutes !== "number") return "—";
-    try {
-      let date = parse(pickupTime, "hh:mm a", new Date());
-      if (!isValid(date)) {
-        date = parse(pickupTime, "HH:mm", new Date());
-      }
-      if (!isValid(date)) return "—";
-
-      const arrivalDate = addMinutes(date, step1.durationMinutes);
-      return format(arrivalDate, "hh:mm a");
-    } catch (e) {
-      return "—";
-    }
-  }, [hasPickupTime, pickupTime, step1?.durationMinutes]);
+  const deliveryTime = useMemo(() => calculateArrivalTime(pickupTime, step1?.durationMinutes), [pickupTime, step1?.durationMinutes]);
   const tripTypeLabel =
     category === "hourly"
       ? "Hourly"
@@ -91,6 +60,14 @@ function SummaryDetails() {
           pickupTime={hasPickupTime ? pickupTime : undefined}
           deliveryTime={hasPickupTime ? deliveryTime : undefined}
         />
+
+        <div className="pt-6 border-t border-dashed border-border mt-6 flex flex-wrap gap-2">
+          <FeatureTag label="Free cancellation" variant="success" icon={<CheckCircle2 size={14} />} />
+          <FeatureTag label="Door-to-door service" icon={<Check size={14} />} />
+          <FeatureTag label="Meet & Greet" icon={<Check size={14} />} />
+          <FeatureTag label="Flight tracking" icon={<Plane size={14} />} />
+          <FeatureTag label="Licensed chauffeurs" icon={<UserCircle size={14} />} />
+        </div>
       </div>
     </div>
   );
