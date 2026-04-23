@@ -28,10 +28,10 @@ export const HeaderTopBar = forwardRef<HTMLButtonElement, HeaderTopBarProps>(
       <div className="flex items-center md:absolute md:left-1/2 md:-translate-x-1/2">
         <Link
           href="/"
-          className="relative h-11 w-24 cursor-pointer transition-all duration-300 hover:scale-105 md:h-16 md:w-20"
+          className="relative h-16 w-32 cursor-pointer transition-all duration-300 hover:scale-105 md:h-16 md:w-20"
         >
           <Image
-            src="/assets/brand/logo.png"
+            src="/assets/logo/logo.png"
             alt="AMS Airport Transfer"
             fill
             sizes="(max-width: 767px) 96px, 80px"
@@ -46,18 +46,18 @@ export const HeaderTopBar = forwardRef<HTMLButtonElement, HeaderTopBarProps>(
           className="inline-flex h-10 items-center justify-center text-background transition-all duration-200 hover:scale-110 hover:text-secondary md:hidden"
           aria-label={`Call ${COMPANY_PHONE}`}
         >
-          <Phone className="phone-vibrate h-[22px] w-[22px]" strokeWidth={2.4} />
+          <Phone className="h-6 w-6" strokeWidth={2.4} />
         </a>
         <Link
           href={isAuthenticated ? "/dashboard" : "/auth/login"}
-          className="inline-flex h-10 items-center justify-center whitespace-nowrap rounded-lg bg-secondary px-3.5 text-[11px] font-semibold tracking-wide text-white transition-all hover:bg-secondary-600 sm:px-4 sm:text-sm"
+          className="inline-flex h-10 items-center justify-center whitespace-nowrap rounded-sm bg-secondary px-3.5 text-[11px] font-semibold tracking-wide text-white transition-all hover:bg-secondary-600 sm:px-4 sm:text-sm"
         >
           <span className="sm:hidden">{isAuthenticated ? "ACCOUNT" : "SIGN IN"}</span>
           <span className="hidden sm:inline">{isAuthenticated ? "MY ACCOUNT" : "SIGN IN"}</span>
         </Link>
         <button
           ref={mobileToggleRef}
-          className="relative z-10 inline-flex h-10 w-10 items-center justify-center rounded-lg border border-border/60 bg-primary/30 text-background transition-all duration-200 hover:border-secondary/70 hover:text-secondary md:hidden"
+          className="relative z-10 inline-flex h-10 w-10 items-center justify-center rounded-sm border border-border/60 bg-primary/30 text-background transition-all duration-200 hover:border-secondary/70 hover:text-secondary md:hidden"
           onClick={onMobileMenuToggle}
 
           aria-label="Toggle menu"

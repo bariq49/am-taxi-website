@@ -48,7 +48,7 @@ export default function Footer() {
           <div className="flex flex-col items-start lg:col-span-4">
             <div className="mb-5">
               <Link href="/">
-                <Image src="/assets/brand/logo.png" alt="Logo" width={96} height={80} className="h-[72px] w-auto sm:h-[80px]" />
+                <Image src="/assets/logo/logo.png" alt="Logo" width={96} height={80} className="h-[72px] w-auto sm:h-[80px]" />
               </Link>
             </div>
             <p className="max-w-sm text-sm leading-relaxed text-gray-300">{COMPANY_DESCRIPTION}</p>

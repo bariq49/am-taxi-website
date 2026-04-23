@@ -22,9 +22,8 @@ export const HeaderDesktopNav = forwardRef<HTMLElement, HeaderDesktopNavProps>(
               key={link.title}
               href={link.path || "#"}
               role="menuitem"
-              className={`block px-3 py-2 text-[13px] font-semibold tracking-wide transition-colors ${
-                active ? "text-secondary" : "text-background/90 hover:text-secondary-400"
-              }`}
+              className={`block px-3 py-2 text-base font-semibold tracking-wide transition-colors ${active ? "text-secondary" : "text-background/90 hover:text-secondary-400"
+                }`}
             >
               {link.title}
             </Link>
@@ -41,9 +40,8 @@ export const HeaderDesktopNav = forwardRef<HTMLElement, HeaderDesktopNavProps>(
             onMouseLeave={onDropdownClose}
           >
             <button
-              className={`flex items-center px-3 py-2 text-[13px] font-semibold tracking-wide transition-colors ${
-                active ? "text-secondary" : "text-background/90 hover:text-secondary-400"
-              }`}
+              className={`flex items-center px-3 py-2 text-base font-semibold tracking-wide transition-colors ${active ? "text-secondary" : "text-background/90 hover:text-secondary-400"
+                }`}
               aria-haspopup="true"
               aria-expanded={isOpen}
               role="menuitem"
@@ -56,23 +54,24 @@ export const HeaderDesktopNav = forwardRef<HTMLElement, HeaderDesktopNavProps>(
 
             {isOpen && (
               <div
-                className="absolute left-0 top-full w-64 pt-2"
+                className="absolute left-0 top-full w-60 pt-2 animate-in fade-in slide-in-from-top-2 duration-200"
                 onMouseEnter={() => onDropdownOpen(link.title)}
                 onMouseLeave={onDropdownClose}
               >
-                <div className="rounded-md border border-border bg-background shadow-lg" role="menu">
+                <div className="relative rounded-md border border-border bg-background shadow-2xl" role="menu">
+                  {/* Dropdown Arrow */}
+                  <div className="absolute -top-1.5 left-8 h-3 w-3 rotate-45 border-l border-t border-border bg-background" />
 
-                  <div className="p-2">
+                  <div className="relative z-10 p-2">
                     {link.sublinks.map((sub) => (
                       <Link
                         key={sub.path}
                         href={sub.path}
                         role="menuitem"
-                        className={`block rounded px-3 py-2.5 text-sm font-medium transition-colors ${
-                          pathname === sub.path
-                            ? "bg-secondary/10 text-secondary"
-                            : "text-gray-700 hover:bg-gray-50 hover:text-secondary"
-                        }`}
+                        className={`block rounded px-3 py-2.5 text-sm font-medium transition-colors ${pathname === sub.path
+                          ? "bg-secondary/10 text-secondary"
+                          : "text-gray-700 hover:bg-gray-50 hover:text-secondary"
+                          }`}
                       >
                         {sub.title}
                       </Link>

@@ -3,10 +3,10 @@
 import React, { useEffect, Suspense } from "react"
 import { useSearchParams } from "next/navigation"
 import { Check, WalletCards } from "lucide-react"
-import TripRouteDetails from "@/components/booking/shared/trip-route-details"
+import TripRouteDetails from "@/components/features/booking/shared/trip-route-details"
 import { useBookingStatus } from "@/hooks/queries/use-booking"
 import { formatPrice, parseAddress, formatTripDate } from "@/lib/booking-utils"
-import { PaymentSuccessSkeleton } from "@/components/skeletons/payment-success-skeleton"
+import { PaymentSuccessSkeleton } from "@/components/features/skeletons/payment-success-skeleton"
 
 function PaymentSuccessContent() {
   const searchParams = useSearchParams()

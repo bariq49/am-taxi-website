@@ -3,9 +3,9 @@
 import React from 'react'
 import { useRouter } from 'next/navigation'
 import { ArrowLeft, Info } from 'lucide-react'
-import Setp2 from '@/components/booking/setp-2/setp-2'
-import AnimatedRouteMap from '@/components/booking/shared/animated-route-map'
-import SummaryDetails from '@/components/booking/shared/summary-details'
+import Setp2 from '@/components/features/booking/setp-2/setp-2'
+import AnimatedRouteMap from '@/components/features/booking/shared/animated-route-map'
+import SummaryDetails from '@/components/features/booking/shared/summary-details'
 import { useBookingStore } from '@/store/use-booking-store'
 import { cn } from '@/lib/utils'
 
