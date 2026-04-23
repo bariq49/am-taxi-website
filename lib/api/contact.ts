@@ -3,15 +3,15 @@ import { api } from "./client";
 
 
 export interface ContactPayload {
-    name: string;
+    firstName: string;
+    lastName: string;
     email: string;
     phone: string;
-    company: string;
     subject: string;
     message: string;
 }
 
-export const contactUs = async () => {
-    const response = await api.get(`${API_ROUTES.CONTACT}`);
+export const contactUs = async (payload: ContactPayload) => {
+    const response = await api.post(`${API_ROUTES.CONTACT}`, payload);
     return response.data;
 };

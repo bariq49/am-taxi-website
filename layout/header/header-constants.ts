@@ -6,7 +6,6 @@ export interface NavLink {
 
 
 export const SOLID_HEADER_ROUTES = [
-  "/contact",
   "/book-ride/select-vehicle",
   "/book-ride/passenger-details",
   "/book-ride/payment-success",
@@ -39,7 +38,7 @@ export const NAV_LINKS: NavLink[] = [
   },
   { title: "FLEET", path: "/fleet" },
   { title: "ABOUT", path: "/about" },
-  { title: "CONTACT", path: "/contact" },
+  { title: "CONTACT", path: "/contact-us" },
 ];
 export function isNavActive(pathname: string | null, link: NavLink): boolean {
   if (!pathname) return false;

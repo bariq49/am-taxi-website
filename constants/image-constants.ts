@@ -1,6 +1,7 @@
 export const IMAGES = {
     HOME_BANNER: "/assets/images/banner/home.banner.png",
     ABOUT_BANNER: "/assets/images/banner/about.banner.png",
+    CONTACT_BANNER: "/assets/images/banner/contact.banner.png",
     CTA_IMAGE: "/assets/images/cta/cta-image-1.png",
     DESTINATIONS: {
         SCHIPHOL: "/assets/images/destinations/schiphol-1.png",

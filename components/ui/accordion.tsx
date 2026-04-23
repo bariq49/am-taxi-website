@@ -47,11 +47,19 @@ const AccordionItemContext = React.createContext<{ value: string } | null>(null)
 
 const AccordionItem = React.forwardRef<HTMLDivElement, AccordionItemProps>(
   ({ value, className, ...props }, ref) => {
+    const context = React.useContext(AccordionContext)
+    if (!context) throw new Error("AccordionItem must be used within Accordion")
+
+    const isOpen = context.type === "multiple" 
+      ? (context.value as string[]).includes(value)
+      : context.value === value
+
     return (
       <AccordionItemContext.Provider value={{ value }}>
         <div
           ref={ref}
           className={cn("border-b", className)}
+          data-state={isOpen ? "open" : "closed"}
           {...props}
         />
       </AccordionItemContext.Provider>
@@ -97,14 +105,19 @@ const AccordionTrigger = React.forwardRef<
         type="button"
         onClick={onClick}
         className={cn(
-          "flex flex-1 items-center justify-between py-4 font-medium transition-all hover:underline [&[data-state=open]>svg]:rotate-180",
+          "flex flex-1 items-center justify-between font-medium transition-all group outline-none",
           className
         )}
         data-state={isOpen ? "open" : "closed"}
         {...props}
       >
         {children}
-        <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200" />
+        <div className={cn(
+          "flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ml-4",
+          isOpen ? "bg-secondary text-white rotate-180" : "bg-gray-100 text-gray-400 group-hover:bg-secondary/10 group-hover:text-secondary"
+        )}>
+          <ChevronDown className="h-4 w-4 shrink-0" />
+        </div>
       </button>
     </div>
   )
@@ -128,14 +141,16 @@ const AccordionContent = React.forwardRef<
     <div
       ref={ref}
       className={cn(
-        "overflow-hidden text-sm transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down",
+        "grid transition-all duration-300 ease-in-out overflow-hidden",
+        isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0",
         className
       )}
-      style={{ display: isOpen ? "block" : "none" }}
       data-state={isOpen ? "open" : "closed"}
       {...props}
     >
-      <div className="pb-4 pt-0">{children}</div>
+      <div className="min-h-0">
+        <div className="pb-4 pt-0">{children}</div>
+      </div>
     </div>
   )
 })

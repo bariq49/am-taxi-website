@@ -36,7 +36,7 @@ export default function RecruitmentCTA({
     className = "",
 }: RecruitmentCTAProps) {
     return (
-        <section className={`py-16 ${className}`}>
+        <section className={`py-16 px-4 ${className}`}>
             <div className="container mx-auto">
                 <div className="relative w-full min-h-[450px] md:min-h-[500px] rounded-lg overflow-hidden">
                     <Image
@@ -53,7 +53,7 @@ export default function RecruitmentCTA({
                         {tagText && (
                             <div className="inline-flex items-center gap-2 bg-black/40 backdrop-blur-md border border-border px-4 py-1.5 rounded-full mb-8 self-start">
                                 <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                                <span className="text-gray-400 text-sm font-semibold uppercase">
+                                <span className="text-gray-400 text-xs md:text-sm font-semibold uppercase">
                                     {tagText}
                                 </span>
                             </div>
@@ -81,7 +81,7 @@ export default function RecruitmentCTA({
                         <div className="flex flex-col sm:flex-row items-start sm:items-center">
                             <Link
                                 href="/locations"
-                                className="inline-flex items-center gap-2 px-6 py-3 bg-secondary hover:bg-secondary-600 text-white rounded-full font-bold text-base transition-all duration-300 w-fit z-10 mt-6"
+                                className="inline-flex items-center gap-2 px-6 py-2 bg-secondary hover:bg-secondary-600 text-white rounded-full font-bold text-base transition-all duration-300 w-fit  mt-6"
                             >
                                 Start Exploring
                                 <ArrowRight className="w-4 h-4" />
