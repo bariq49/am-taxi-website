@@ -1,8 +1,21 @@
 import API_ROUTES from "@/config/routes";
 import { api } from "./client";
 
+export interface FleetListResponse {
+    success: boolean;
+    data: Fleet[];
+    meta: {
+        total: number;
+        page: number;
+        limit: number;
+        totalPages: number;
+        pages: number;
+    };
+}
+
 export interface FleetPricingListResponse {
-    data: [];
+    success: boolean;
+    data: Fleet[];
     meta: {
         total: number;
         page: number;
@@ -116,6 +129,7 @@ export interface Fleet {
     passengers: number;
     suitcases: number;
     timePeriod?: string;
+    category?: any;
     carType?: string;
     isActive: boolean;
     allowRequestQuote?: boolean;
@@ -135,9 +149,16 @@ export const getFleetsByDistance = async (distance: number, params?: QueryParams
     return response.data;
 };
 
-export const getFleets = async (params?: QueryParams): Promise<any> => {
-    const response = await api.get(API_ROUTES.FLEET, { params: { isActive: true } });
-    return response.data;
+export const getFleets = async (params?: QueryParams): Promise<FleetListResponse> => {
+    const response = await api.get(API_ROUTES.FLEET, {
+        params: { isActive: true, ...params }
+    });
+    return response as any;
+};
+
+export const getFleetCategories = async (): Promise<any> => {
+    const response = await api.get(API_ROUTES.FLEET_CATEGORIES);
+    return response;
 };
 
 export const getBookingSettings = async (): Promise<any> => {

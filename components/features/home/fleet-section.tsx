@@ -12,7 +12,8 @@ import { ArrowUpRight } from "lucide-react";
 
 export default function FleetSection() {
     const { data: fleetsData, isLoading } = useFleets();
-    console.log(fleetsData)
+    console.log(fleetsData, "fleetData")
+    const fleets = fleetsData?.data;
 
     return (
         <section className="bg-white py-16 overflow-hidden">
@@ -65,7 +66,7 @@ export default function FleetSection() {
                                 </SwiperSlide>
                             ))
                         ) : (
-                            fleetsData?.map((fleet: Fleet, index: number) => (
+                            fleets?.map((fleet: Fleet, index: number) => (
                                 <SwiperSlide key={fleet?._id || index} className="!h-auto !flex">
                                     <FleetCard fleet={fleet} />
                                 </SwiperSlide>

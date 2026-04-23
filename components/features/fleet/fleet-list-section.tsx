@@ -1,76 +1,58 @@
 "use client";
 
-import React, { useState } from "react";
-import { useFleets } from "@/hooks/queries/use-fleet";
+import React, { useState, useMemo } from "react";
+import { useFleets, useFleetCategories } from "@/hooks/queries/use-fleet";
 import { Fleet } from "@/lib/api/fleets";
 import FleetCard from "./fleet-card";
-import { SlidersHorizontal, RefreshCw } from "lucide-react";
-import { cn } from "@/lib/utils";
+import FleetFilterBar from "./fleet-filter-bar";
+import FleetSkeleton from "../skeletons/fleet-skeleton";
+import { SlidersHorizontal, RefreshCw, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-const CATEGORIES = [
-    "All",
-    "SUV",
-    "MPV",
-    "Minivan",
-    "Sedan",
-    "Hatchback",
-    "Luxury",
-    "Sports"
-];
-
 export default function FleetListSection() {
-    const [selectedCategory, setSelectedCategory] = useState("All");
-    const { data: fleets, isLoading, error, refetch } = useFleets();
+    const [selectedCategoryId, setSelectedCategoryId] = useState<string>("All");
+    const [limit, setLimit] = useState(10);
 
-    const filteredFleets = fleets?.filter((fleet: Fleet) => {
-        if (selectedCategory === "All") return true;
+    const { data: categoriesData } = useFleetCategories();
+    const categories = useMemo(() => {
+        const cats = categoriesData?.data || [];
+        return [{ _id: "All", name: "All" }, ...cats];
+    }, [categoriesData]);
 
-        const carType = fleet.carType?.toLowerCase() || "";
-        const name = fleet.name?.toLowerCase() || "";
-        const category = selectedCategory.toLowerCase();
-
-        return carType.includes(category) || name.includes(category);
+    const { data: fleetsData, isLoading, isFetching } = useFleets({
+        category: selectedCategoryId === "All" ? undefined : selectedCategoryId,
+        limit: limit,
+        page: 1
     });
+    const fleets = fleetsData?.data || [];
+    const hasMore = (fleetsData?.meta?.page ?? 0) < (fleetsData?.meta?.pages ?? 0);
+
+    const handleLoadMore = () => {
+        setLimit(prev => prev + 10);
+    };
+
+    const handleCategoryChange = (id: string) => {
+        setSelectedCategoryId(id);
+        setLimit(10);
+    };
 
     return (
         <section className="py-16 md:py-24 bg-white">
             <div className="container mx-auto px-6">
-
-                {/* Filter Tabs */}
-                <div className="flex items-center justify-between gap-6 mb-12 flex-wrap sm:flex-nowrap">
-                    <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-2 sm:pb-0 -mx-6 px-6 sm:mx-0 sm:px-0 w-full sm:w-auto">
-                        {CATEGORIES.map((category) => (
-                            <button
-                                key={category}
-                                onClick={() => setSelectedCategory(category)}
-                                className={cn(
-                                    "px-6 py-2.5 rounded-full text-sm font-bold transition-all whitespace-nowrap",
-                                    selectedCategory === category
-                                        ? "bg-secondary text-white shadow-lg shadow-secondary/20"
-                                        : "bg-gray-50 text-gray-400 hover:bg-gray-100"
-                                )}
-                            >
-                                {category}
-                            </button>
-                        ))}
-                    </div>
-
-                    <button className="w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-gray-100 transition-colors shrink-0">
-                        <SlidersHorizontal className="w-5 h-5" />
-                    </button>
-                </div>
-
-                {/* Grid */}
+                <FleetFilterBar
+                    categories={categories}
+                    selectedCategoryId={selectedCategoryId}
+                    onCategoryChange={handleCategoryChange}
+                />
                 {isLoading ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                        {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-                            <div key={i} className="aspect-[16/20] bg-gray-50 animate-pulse rounded-3xl" />
+                        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => (
+                            <FleetSkeleton key={i} />
                         ))}
                     </div>
-                ) : filteredFleets.length > 0 ? (
+                ) : fleets.length > 0 ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                        {filteredFleets.map((fleet: Fleet) => (
+                        {fleets.map((fleet: Fleet) => (
                             <FleetCard key={fleet._id} fleet={fleet} />
                         ))}
                     </div>
@@ -85,7 +67,7 @@ export default function FleetListSection() {
                         </p>
                         <Button
                             variant="outline"
-                            onClick={() => setSelectedCategory("All")}
+                            onClick={() => handleCategoryChange("All")}
                             className="rounded-xl border-gray-200"
                         >
                             Reset Filters
@@ -94,14 +76,22 @@ export default function FleetListSection() {
                 )}
 
                 {/* Load More */}
-                {filteredFleets.length > 0 && (
+                {hasMore && fleets.length > 0 && (
                     <div className="mt-20 flex justify-center">
                         <Button
                             variant="outline"
+                            onClick={handleLoadMore}
+                            disabled={isFetching}
                             className="h-14 px-10 rounded-full border-gray-200 font-bold text-[#003048] hover:bg-gray-50 gap-3 group"
                         >
-                            LOAD MORE VEHICLES
-                            <RefreshCw className="w-4 h-4 group-hover:rotate-180 transition-transform duration-500" />
+                            {isFetching ? (
+                                <Loader2 className="w-4 h-4 animate-spin" />
+                            ) : (
+                                <>
+                                    LOAD MORE VEHICLES
+                                    <RefreshCw className="w-4 h-4 group-hover:rotate-180 transition-transform duration-500" />
+                                </>
+                            )}
                         </Button>
                     </div>
                 )}

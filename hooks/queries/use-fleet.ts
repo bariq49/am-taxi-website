@@ -1,4 +1,4 @@
-import { getBookingSettings, getFleets, getFleetsByDistance, getHourlyPricings, QueryParams } from "@/lib/api/fleets";
+import { getBookingSettings, getFleets, getFleetCategories, getFleetsByDistance, getHourlyPricings, QueryParams } from "@/lib/api/fleets";
 import { getPackageSelectOptions } from "@/lib/booking-utils";
 import { useQuery } from "@tanstack/react-query";
 
@@ -37,5 +37,12 @@ export const useBookingSettings = () => {
     return useQuery({
         queryKey: ["booking-settings"],
         queryFn: getBookingSettings,
+    });
+};
+
+export const useFleetCategories = () => {
+    return useQuery({
+        queryKey: ["fleet-categories"],
+        queryFn: getFleetCategories,
     });
 };

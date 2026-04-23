@@ -6,7 +6,7 @@ import { useBookingStore } from "@/store/use-booking-store";
 import { useFleetsByDistance } from "@/hooks/queries/use-fleet";
 import { FleetByDistance } from "@/lib/api/fleets";
 import VehicleCard from "./VehicleCard";
-import { VehicleCardSkeleton } from "./VehicleCardSkeleton";
+import { VehicleCardSkeleton } from "../../skeletons/VehicleCardSkeleton";
 
 function Step2() {
     const router = useRouter();
@@ -15,9 +15,9 @@ function Step2() {
 
     const { data: fleets = [], isLoading } = useFleetsByDistance(
         step1?.distanceMiles ?? 0,
-        category === "hourly" && step1?.duration ? { 
-            packageType: step1.duration.packageType, 
-            duration: step1.duration.duration 
+        category === "hourly" && step1?.duration ? {
+            packageType: step1.duration.packageType,
+            duration: step1.duration.duration
         } : undefined,
         { enabled: category === "hourly" ? !!step1?.duration : (step1?.distanceMiles ?? 0) >= 0 }
     );
