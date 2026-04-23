@@ -3,13 +3,12 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import "swiper/css";
-import { Star, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import ReviewCard from "@/components/testimonial-card";
 import TestimonialSkeleton from "./skeletons/testimonial-skeleton";
 import { useReviewsQuery } from "@/hooks/queries/use-reviews";
 import { GoogleIcon, StarsIcon } from "@/components/icons";
-
-
+import AnimatedCounter from "@/components/ui/animated-counter";
 
 export default function Testimonials() {
     const { data: reviewsData, isLoading } = useReviewsQuery();
@@ -18,55 +17,37 @@ export default function Testimonials() {
         return <TestimonialSkeleton />;
     }
 
-    if (!reviewsData?.reviews?.length) {
-        return null;
-    }
-
     const reviews = reviewsData.reviews;
-    const rating = reviewsData.rating || 0;
-    const totalRatings = reviewsData.totalRatings || 0;
     const googleReviewsUrl = reviewsData.googleReviewsUrl;
 
     return (
-        <div className="bg-white px-4 md:px-8 pt-20">
-            {/* Header */}
-            <div className="text-center mb-8">
-                <h2 className="text-2xl md:text-3xl font-bold text-gray-900 flex items-center justify-center gap-3 mb-6">
+        <div className="bg-white py-16">
+            <div className="text-center mb-8 md:mb-10">
+                <h2 className="text-2xl md:text-3xl font-bold text-gray-900 flex items-center justify-center gap-3 mb-3">
                     <StarsIcon className="shrink-0" />
-                    What Our customers say
+                    What Our Customers Say
                 </h2>
-                {/* Rating bar */}
-                <div className="inline-flex items-center gap-3 flex-wrap justify-center">
-                    <span className="text-sm font-medium text-gray-700">Our customers say</span>
-                    <div className="flex gap-[3px]">
-                        {Array.from({ length: 5 }).map((_, i) => (
-                            <span key={i} className="w-[22px] h-[22px] bg-amber-400 rounded-[3px] flex items-center justify-center">
-                                <Star size={14} fill="white" stroke="none" />
-                            </span>
-                        ))}
-                    </div>
-                    <span className="text-base font-bold text-gray-900 tracking-wide uppercase">Excellent</span>
-                    <span className="text-base text-gray-500">
-                        Rated <strong>{rating.toFixed(1)}</strong> / 5
-                        based on <strong>{totalRatings.toLocaleString()}</strong> reviews
-                    </span>
+                <p className="text-sm md:text-base text-gray-500 mx-auto leading-relaxed">
+                    Trusted by thousands of riders for reliable, comfortable, and professional journeys — every single day.
                     <a
                         href={googleReviewsUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 hover:opacity-80 transition-opacity"
+                        className="inline-flex items-center gap-1.5 ml-2 align-middle hover:opacity-80 transition-opacity"
                     >
-                        <div className="flex items-center gap-1.5 border-l border-gray-200 pl-3">
-                            <GoogleIcon />
-                            <span className="text-sm font-semibold text-gray-500">Google</span>
-                        </div>
-                        <ArrowUpRight size={16} />
-                    </a>
-                </div>
-            </div>
+                        <span className="h-4 w-4 flex items-center justify-center">
+                            <GoogleIcon className="h-4 w-4" />
+                        </span>
 
-            {/* Cards Slider */}
-            <div className="container mx-auto mb-8 relative group">
+                        <span className="text-sm font-medium text-gray-500 leading-none">
+                            Google
+                        </span>
+
+                        <ArrowUpRight size={14} className="text-gray-400" />
+                    </a>
+                </p>
+            </div>
+            <div className="container mx-auto relative group">
                 <Swiper
                     modules={[Autoplay]}
                     spaceBetween={24}
@@ -81,26 +62,66 @@ export default function Testimonials() {
                         640: { slidesPerView: 2 },
                         1024: { slidesPerView: 4 },
                     }}
-                    className="testimonial-swiper !p-4"
+                    className="testimonial-swiper !p-1"
                 >
                     {reviews.map((r: any, i: number) => (
-                        <SwiperSlide key={i} className="pb-8 !h-auto !flex">
+                        <SwiperSlide key={i} className="!h-auto !flex">
                             <ReviewCard review={r} />
                         </SwiperSlide>
                     ))}
                 </Swiper>
             </div>
-            <style jsx global>{`
-        .testimonial-swiper .swiper-wrapper {
-          align-items: stretch;
-        }
+            <div className="container mx-auto hidden md:block">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center mt-14">
+                    <div className="flex flex-col items-center gap-6">
+                        <div className="flex flex-col gap-1">
+                            <div className="text-4xl md:text-5xl font-extrabold text-[#003048] tracking-tight">
+                                <AnimatedCounter end={500} suffix="+" />
+                            </div>
+                            <span className="text-xs md:text-sm font-bold text-gray-500 uppercase tracking-[0.2em]">
+                                Happy Customer
+                            </span>
+                        </div>
+                    </div>
 
-        .testimonial-swiper .swiper-slide {
-          height: auto;
-          display: flex;
-        }
-      `}</style>
+                    <div className="flex flex-col gap-6 justify-end">
+                        <div className="flex flex-col gap-1">
+                            <div className="text-4xl md:text-5xl font-extrabold text-[#003048] tracking-tight">
+                                <AnimatedCounter end={4} prefix="0" suffix=" +" />
+                            </div>
+                            <span className="text-xs md:text-sm font-bold text-gray-500 uppercase tracking-[0.2em]">
+                                Countries Covered
+                            </span>
+                        </div>
+                    </div>
+
+                    <div className="flex flex-col gap-6 justify-end">
+                        <div className="flex flex-col gap-1">
+                            <div className="flex items-center justify-center gap-3">
+                                <div className="text-4xl md:text-5xl font-extrabold text-[#003048] tracking-tight">
+                                    <AnimatedCounter end={4.9} decimals={1} />
+                                </div>
+                                <span className="text-4xl md:text-5xl">⭐</span>
+                            </div>
+                            <span className="text-xs md:text-sm font-bold text-gray-500 uppercase tracking-[0.2em]">
+                                Average Rating
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Fix equal height cards */}
+            <style jsx global>{`
+                .testimonial-swiper .swiper-wrapper {
+                    align-items: stretch;
+                }
+
+                .testimonial-swiper .swiper-slide {
+                    height: auto;
+                    display: flex;
+                }
+            `}</style>
         </div>
     );
 }
-

@@ -51,37 +51,34 @@ const FEATURES = [
 
 export default function WhyChooseUs() {
     return (
-        <section className="bg-white py-24 md:py-32">
-            <div className="mx-auto max-w-screen-2xl w-full px-4 sm:px-6 md:px-8 lg:px-10">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-                    
+        <section className="bg-white py-16">
+            <div className="container mx-auto px-4">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+
                     {/* Content Column */}
                     <div>
-                        <div className="mb-12">
-                            <span className="text-primary font-bold tracking-[0.2em] text-[10px] md:text-xs uppercase mb-4 block">
-                                WHY CHOOSE US
-                            </span>
-                            <h2 className="text-3xl md:text-[44px] font-extrabold text-secondary mb-6 leading-[1.1] tracking-tight">
+                        <div className="mb-10">
+                            <h2 className="text-2xl md:text-4xl font-bold text-primary mb-3">
                                 We Offer the Best Experience With Our Taxi Transportation Deals
                             </h2>
-                            <p className="text-muted text-base md:text-[17px] font-medium max-w-2xl opacity-80 leading-relaxed">
+                            <p className="text-sm md:text-base text-gray-500 leading-relaxed max-w-2xl">
                                 We are dedicated to providing the best value for your money. With transparent pricing and no hidden fees, you can drive with confidence.
                             </p>
                         </div>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-10">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-8">
                             {FEATURES.map((feature, index) => {
                                 const Icon = feature.icon;
                                 return (
-                                    <div key={index} className="flex gap-5 group/item">
-                                        <div className={`shrink-0 w-12 h-12 ${feature.bgColor} rounded-xl flex items-center justify-center transition-transform duration-300 group-hover/item:scale-110 shadow-sm`}>
-                                            <Icon className={`w-6 h-6 ${feature.iconColor}`} strokeWidth={2} />
+                                    <div key={index} className="flex gap-4 group/item">
+                                        <div className={`shrink-0 w-10 h-10 ${feature.bgColor} rounded-lg flex items-center justify-center transition-transform duration-300 group-hover/item:scale-110 shadow-sm`}>
+                                            <Icon className={`w-5 h-5 ${feature.iconColor}`} strokeWidth={2} />
                                         </div>
-                                        <div className="flex flex-col gap-2">
-                                            <h3 className="text-[17px] font-bold text-secondary tracking-tight">
+                                        <div className="flex flex-col gap-1">
+                                            <h3 className="text-base font-bold text-primary tracking-tight">
                                                 {feature.title}
                                             </h3>
-                                            <p className="text-muted text-sm leading-relaxed opacity-70">
+                                            <p className="text-gray-500 text-sm leading-relaxed">
                                                 {feature.description}
                                             </p>
                                         </div>
@@ -93,21 +90,21 @@ export default function WhyChooseUs() {
 
                     {/* Image Column */}
                     <div className="relative group">
-                        <div className="relative aspect-[4/3] md:aspect-[1.1/1] rounded-[40px] overflow-hidden shadow-2xl transition-all duration-700 hover:shadow-primary/10">
+                        <div className="relative aspect-[4/3] md:aspect-[1.1/1] rounded-md overflow-hidden transition-all duration-700 hover:shadow-primary/10">
                             <Image
                                 src={IMAGES.WHY_CHOOSE_US}
                                 alt="Why Choose Us"
                                 fill
-                                className="object-cover transition-transform duration-1000 group-hover:scale-110"
+                                className="object-cover"
                             />
                             {/* Glassmorphism Badge Overlay */}
                             <div className="absolute bottom-8 left-8 right-8">
-                                <div className="backdrop-blur-xl bg-black/30 border border-white/20 p-6 rounded-[24px] flex items-center gap-5 shadow-2xl">
-                                    <div className="w-14 h-14 bg-gradient-to-br from-orange-400 to-orange-600 rounded-full flex items-center justify-center shadow-lg">
-                                        <Trophy className="text-white w-7 h-7" />
+                                <div className="backdrop-blur-xl bg-black/30 border border-white/20 p-4 md:p-6 rounded-md flex items-center gap-5 shadow-2xl">
+                                    <div className="w-10 h-10 md:w-14 md:h-14 bg-gradient-to-br from-orange-400 to-orange-600 rounded-full flex items-center justify-center shadow-lg">
+                                        <Trophy className="text-white w-5 h-5 md:w-7 md:h-7" />
                                     </div>
                                     <div>
-                                        <h4 className="text-white font-bold text-xl leading-tight">#1 Taxi Booking Service</h4>
+                                        <h4 className="text-white font-bold text-base md:text-xl leading-tight">#1 Taxi Booking Service</h4>
                                         <p className="text-white/80 text-sm font-medium">Rated by 10k+ Happy Customers</p>
                                     </div>
                                 </div>

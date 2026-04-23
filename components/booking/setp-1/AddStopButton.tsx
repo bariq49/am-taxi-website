@@ -25,10 +25,10 @@ export const AddStopButton: React.FC<AddStopButtonProps> = ({
             )}
             aria-label="Add a stop to your journey"
         >
-            <div className="w-5 h-5 flex items-center justify-center bg-primary text-white rounded-full group-hover:scale-110 transition-transform shadow-sm">
+            <div className="w-5 h-5 flex items-center justify-center bg-black text-white rounded-full group-hover:scale-110 transition-transform shadow-sm">
                 <Plus className="w-3.5 h-3.5 stroke-[3]" />
             </div>
-            <span className="text-primary font-bold text-sm tracking-wide group-hover:translate-x-1 transition-transform uppercase">
+            <span className="text-black font-bold text-sm tracking-wide group-hover:translate-x-1 transition-transform uppercase">
                 {displayLabel}
             </span>
         </button>

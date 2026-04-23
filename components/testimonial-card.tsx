@@ -1,5 +1,7 @@
 import Image from "next/image";
-import { Star } from "lucide-react";
+import { Star, CheckCircle2 } from "lucide-react";
+import { GoogleIcon } from "@/components/icons";
+import { cn } from "@/lib/utils";
 
 export interface Review {
     author_name: string;
@@ -27,48 +29,46 @@ function AmberStars({ rating }: { rating: number }) {
     );
 }
 
-function VerifiedBadge() {
-    return (
-        <span className="flex items-center gap-1 text-[11px] text-muted bg-gray-100 border border-border rounded-full px-2 py-[2px] whitespace-nowrap">
-            <svg width="9" height="9" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                <polyline points="2,6 5,9 10,3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-            VERIFIED
-        </span>
-    );
-}
-
 export default function TestimonialCard({ review }: { review: Review }) {
     return (
-        <div className="bg-white rounded-2xl p-5 flex flex-col min-h-[250px] h-full w-full shadow-sm hover:shadow-md transition-shadow">
-            <div className="flex items-center gap-2 mb-3">
+        <div className="bg-white rounded-md p-6 flex flex-col h-full w-full shadow-sm hover:shadow-md transition-shadow border border-gray-100">
+            <div className="mb-4">
                 <AmberStars rating={review.rating} />
-                <VerifiedBadge />
             </div>
-
-            <p className="text-[15px] font-semibold text-foreground mb-2 truncate">{review.author_name}</p>
-            <p className="text-[13px] text-muted leading-[1.55] flex-1 line-clamp-4">{review.text}</p>
-
-            <div className="flex justify-between items-center mt-[18px]">
-                <div className="flex items-center gap-2">
+            <p className="text-[14px] md:text-[15px] text-gray-600 leading-[1.6] flex-1 italic mb-6">
+                "{review.text}"
+            </p>
+            <div className="flex items-center gap-3 mt-auto pt-4 border-t border-gray-50">
+                <div className="relative">
                     {review.profile_photo_url ? (
                         <Image
                             src={review.profile_photo_url}
                             alt={review.author_name}
-                            width={24}
-                            height={24}
-                            className="rounded-full shrink-0"
+                            width={40}
+                            height={40}
+                            className="rounded-full shrink-0 aspect-square object-cover"
                         />
                     ) : (
-                        <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center shrink-0">
-                            <span className="text-[10px] text-white font-bold">{review.author_name.charAt(0)}</span>
+                        <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center shrink-0">
+                            <span className="text-xs text-white font-bold">{review.author_name.charAt(0)}</span>
                         </div>
                     )}
-                    <span className="text-[12px] text-muted truncate max-w-[100px]">{review.author_name}</span>
+                    <div className="absolute -bottom-1 -right-1 bg-white rounded-full p-0.5 shadow-sm border border-gray-100">
+                        <GoogleIcon size={12} />
+                    </div>
                 </div>
-                <span className="text-[12px] text-muted-foreground shrink-0">{review.relative_time_description}</span>
+
+                <div className="flex flex-col min-w-0">
+                    <div className="flex items-center gap-1.5">
+                        <span className="text-sm font-bold text-gray-900 truncate">{review.author_name}</span>
+                        <CheckCircle2 className="w-3.5 h-3.5 text-green-500 fill-green-500/10 shrink-0" />
+                    </div>
+                    <span className="text-base text-gray-400 font-medium">{review.relative_time_description}</span>
+                </div>
             </div>
         </div>
     );
 }
+
+
 

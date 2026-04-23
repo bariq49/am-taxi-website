@@ -2,6 +2,11 @@
 
 import { MapPin, Car, CreditCard, MoveRight } from "lucide-react";
 import Link from "next/link";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
+
+// Import Swiper styles
+import "swiper/css";
 
 const STEPS = [
     {
@@ -26,66 +31,86 @@ const STEPS = [
 
 export default function ProcessSection() {
     return (
-        <section className="bg-white py-24 md:py-32 overflow-hidden">
-            <div className="mx-auto max-w-screen-2xl w-full px-4 sm:px-6 md:px-8 lg:px-10">
+        <section className="bg-white py-16 overflow-hidden">
+            <div className="container mx-auto px-4">
                 {/* Header */}
-                <div className="flex flex-col md:flex-row md:items-start justify-between gap-8 mb-20 md:mb-28">
-                    <div className="max-w-3xl">
-                        <span className="text-primary font-bold tracking-[0.2em] text-[10px] md:text-xs uppercase mb-4 block">
-                            PROCESS
-                        </span>
-                        <h2 className="text-3xl md:text-[44px] font-extrabold text-primary mb-6 leading-[1.1] tracking-tight">
+                <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+                    <div className="max-w-4xl">
+                        <h2 className="text-2xl md:text-4xl font-bold text-primary mb-3">
                             Taxi Transportation In 3 Simple Steps
                         </h2>
-                        <p className="text-muted text-base md:text-[17px] font-medium max-w-2xl opacity-80 leading-relaxed">
+                        <p className="text-sm md:text-base text-gray-500 leading-relaxed">
                             We streamlined the taxi transportation process to get you on the road faster. No paperwork, no hidden fees, just pure driving pleasure.
                         </p>
                     </div>
-                    <div className="shrink-0 pt-2">
+                    <div className="md:pb-2  hidden lg:block">
                         <Link
                             href="/booking"
-                            className="inline-flex items-center gap-3 px-8 py-3.5 rounded-full border-2 border-secondary/10 hover:border-secondary text-secondary font-bold text-sm transition-all duration-300 group shadow-sm bg-white"
+                            className="inline-flex flex-col group"
                         >
-                            Start Booking
-                            <MoveRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                            <span className="text-sm font-semibold text-secondary">
+                                Start Booking
+                            </span>
+                            <div className="h-[2px] w-full bg-secondary mt-[6px] group-hover:w-[110%] transition-all duration-300" />
                         </Link>
                     </div>
                 </div>
 
                 {/* Steps Container */}
                 <div className="relative">
-                    {/* Connecting Line (Desktop) */}
-                    <div className="hidden md:block absolute top-[25%] left-[10%] right-[10%] h-[1px] border-t-2 border-dashed border-border z-0" />
+                    {/* Connecting Line (Desktop Only) */}
+                    <div className="hidden md:block absolute top-[56px] left-0 right-0 h-[1px] border-t border-dashed border-gray-200 z-0" />
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16 relative z-10">
-                        {STEPS.map((step, index) => {
-                            const Icon = step.icon;
-                            return (
-                                <div key={index} className="flex flex-col items-center text-center group">
-                                    {/* Icon Circle */}
-                                    <div className="relative mb-10">
-                                        <div className="w-36 h-36 md:w-40 md:h-40 rounded-full bg-white shadow-xl flex items-center justify-center border border-border transform transition-transform duration-500 group-hover:scale-105 group-hover:shadow-2xl relative z-10">
-                                            <Icon className="w-12 h-12 md:w-14 md:h-14 text-secondary" strokeWidth={1.5} />
-                                        </div>
-                                        
-                                        {/* Step Label */}
-                                        <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-white px-4 py-1.5 rounded-full shadow-sm border border-border z-20">
-                                            <span className="text-[11px] font-bold text-muted uppercase tracking-wider">
-                                                {step.id}
-                                            </span>
-                                        </div>
-                                    </div>
+                    <div className="relative z-10 w-full">
+                        <Swiper
+                            modules={[Autoplay]}
+                            spaceBetween={24}
+                            slidesPerView={1}
+                            loop={true}
+                            autoplay={{
+                                delay: 5000,
+                                disableOnInteraction: false,
+                                pauseOnMouseEnter: false,
+                            }}
+                            breakpoints={{
+                                640: { slidesPerView: 2 },
+                                1024: {
+                                    slidesPerView: 3,
+                                    spaceBetween: 0,
+                                    allowTouchMove: false
+                                },
+                            }}
+                            className="process-swiper"
+                        >
+                            {STEPS.map((step, index) => {
+                                const Icon = step.icon;
+                                return (
+                                    <SwiperSlide key={index}>
+                                        <div className="flex flex-col items-center text-center group md:px-4 py-4">
+                                            {/* Icon Container */}
+                                            <div className="relative mb-10">
+                                                <div className="w-24 h-24 md:w-28 md:h-28 rounded-full bg-white flex items-center justify-center border border-gray-100 relative z-10 transform transition-all duration-500 group-hover:border-secondary/20 group-hover:scale-105 shadow-sm">
+                                                    <Icon className="w-8 h-8 md:w-10 md:h-10 text-secondary" strokeWidth={1.5} />
+                                                </div>
+                                                <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-white px-4 py-1 rounded-full border border-gray-200 shadow-sm z-20">
+                                                    <span className="text-[10px] md:text-xs font-bold text-primary whitespace-nowrap">
+                                                        {step.id}
+                                                    </span>
+                                                </div>
+                                            </div>
 
-                                    {/* Content */}
-                                    <h3 className="text-xl md:text-2xl font-bold text-primary mb-4 tracking-tight">
-                                        {step.title}
-                                    </h3>
-                                    <p className="text-muted text-[15px] md:text-base leading-relaxed opacity-70 max-w-[280px]">
-                                        {step.description}
-                                    </p>
-                                </div>
-                            );
-                        })}
+                                            {/* Content */}
+                                            <h3 className="text-xl font-bold text-primary mb-3 tracking-tight">
+                                                {step.title}
+                                            </h3>
+                                            <p className="text-gray-500 text-sm md:text-base leading-relaxed max-w-[320px]">
+                                                {step.description}
+                                            </p>
+                                        </div>
+                                    </SwiperSlide>
+                                );
+                            })}
+                        </Swiper>
                     </div>
                 </div>
             </div>

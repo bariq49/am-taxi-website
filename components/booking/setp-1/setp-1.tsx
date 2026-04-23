@@ -166,19 +166,19 @@ function Step1() {
     <div
       className='flex flex-col w-full max-w-screen-sm mx-auto'
     >
-      <div className='relative z-10 -mb-2'>
+      <div className='relative z-20 mt-10'>
         <CategoryTabs activeTab={category} onTabChange={handleTabChange} />
       </div>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className='px-4 py-6 md:rounded-lg bg-white flex flex-col items-stretch gap-4 mt-0 shadow-xl'
+          className='px-4 py-8 md:rounded-b-2xl rounded-none bg-white flex flex-col items-stretch gap-6 mt-0 relative z-10'
         >
           <div className='relative mb-2 md:mb-0 space-y-4 flex-1'>
             <div className='absolute left-[8px] top-[36px] bottom-[20px] w-1 bg-border' />
 
             <div className='flex items-center gap-1'>
-              <div className='w-5 h-5 rounded-full border-4 border-primary bg-white z-10 flex-shrink-0' />
+              <div className='w-5 h-5 rounded-full border-4 border-black bg-white z-10 flex-shrink-0' />
               <div className='flex items-end gap-1 flex-1'>
                 <Input
                   name='pickupAddress'
@@ -218,7 +218,7 @@ function Step1() {
 
             {(category === 'one-way' || category === 'return-trip') && (
               <div className='flex items-center gap-1'>
-                <MapPinIcon className='w-5 h-5 text-primary z-10 flex-shrink-0' />
+                <MapPinIcon className='w-5 h-5 text-black z-10 flex-shrink-0' />
                 <Input
                   name='deliveryAddress'
                   type='location'
@@ -231,7 +231,7 @@ function Step1() {
 
             {category === 'hourly' && (
               <div className='flex items-center gap-1'>
-                <Clock className='w-5 h-5 text-primary z-10 flex-shrink-0' />
+                <Clock className='w-5 h-5 text-black z-10 flex-shrink-0' />
                 <Input
                   name='duration'
                   type='select'
@@ -264,6 +264,7 @@ function Step1() {
           </div>
           <Button
             type='submit'
+            className='bg-black'
             loading={isLoading || (category === 'hourly' && isLoadingHourly) || calculateRoute.isPending}
           >
             Find My Ride

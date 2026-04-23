@@ -15,7 +15,7 @@ export const SwapButton: React.FC<SwapButtonProps> = ({ onSwap, isSwapping, clas
             type="button"
             onClick={onSwap}
             className={cn(
-                "p-1 hover:bg-secondary rounded transition-all duration-300 focus-visible:outline-primary",
+                "p-1 rounded transition-all duration-300 focus-visible:outline-primary cursor-pointer",
                 className
             )}
             aria-label="Swap locations"

@@ -18,7 +18,7 @@ export const StopItem: React.FC<StopItemProps> = ({
         <div className="flex items-start gap-1">
             <div className="flex flex-col items-center h-full">
                 <div className="h-[25px]" />
-                <div className="w-5 h-5 rounded-full border-4 border-primary bg-white z-10 flex-shrink-0" />
+                <div className="w-5 h-5 rounded-full border-4 border-black bg-white z-10 flex-shrink-0" />
             </div>
             <div className="flex-1 min-w-0">
                 <div className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1 ml-1">

@@ -1,51 +1,54 @@
 "use client";
 
-import Image from "next/image";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
+import "swiper/css";
 import Link from "next/link";
 import { IMAGES } from "@/constants/image-constants";
+import DestinationCard from "./destination-card";
 
 const DESTINATIONS = [
     {
         name: "Amsterdam Airport Schiphol",
+        description: "Primary international hub with 24/7 premium taxi services.",
         image: IMAGES.DESTINATIONS.SCHIPHOL,
     },
     {
         name: "Rotterdam The Hague Airport",
+        description: "Quick business transfers and regional travel connections.",
         image: IMAGES.DESTINATIONS.ROTTERDAM,
     },
     {
         name: "Eindhoven Airport",
+        description: "Reliable transport for the technology and design capital.",
         image: IMAGES.DESTINATIONS.EINDHOVEN,
     },
     {
         name: "Groningen Airport Eelde",
+        description: "Convenient airport transfers serving the northern regions.",
         image: IMAGES.DESTINATIONS.GRONINGEN,
     },
 ];
 
 export default function DestinationsSection() {
     return (
-        <section className="bg-gray py-20 pb-32">
-            <div className="mx-auto max-w-screen-2xl w-full px-4 sm:px-6 md:px-8 lg:px-10">
-                {/* Header */}
-                <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
-                    <div className="max-w-3xl">
-                        <span className="text-primary font-bold tracking-[0.2em] text-[10px] md:text-xs uppercase mb-4 block">
-                            DESTINATIONS
-                        </span>
-                        <h2 className="text-3xl md:text-[44px] font-extrabold text-primary mb-5 leading-[1.1] tracking-tight">
+        <section className="bg-gray-50 py-16">
+            <div className="container mx-auto px-4">
+                <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-6">
+                    <div className="max-w-4xl">
+                        <h2 className="text-2xl md:text-4xl font-bold text-gray-900 mb-3">
                             Explore Popular Airport We cover
                         </h2>
-                        <p className="text-muted text-base md:text-[17px] font-medium opacity-90 max-w-xl">
+                        <p className="text-sm md:text-base text-gray-500 leading-relaxed">
                             Discover the best taxi transportation deals in airport destinations.
                         </p>
                     </div>
-                    <div className="shrink-0 pb-2">
+                    <div className="md:pb-2 hidden lg:block">
                         <Link
                             href="/locations"
                             className="inline-flex flex-col group"
                         >
-                            <span className="text-sm font-extrabold text-secondary tracking-tight">
+                            <span className="text-sm font-semibold text-secondary">
                                 View All Locations
                             </span>
                             <div className="h-[2px] w-full bg-secondary mt-[6px] group-hover:w-[110%] transition-all duration-300" />
@@ -53,32 +56,41 @@ export default function DestinationsSection() {
                     </div>
                 </div>
 
-                {/* Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-                    {DESTINATIONS.map((destination, index) => (
-                        <div
-                            key={index}
-                            className="relative h-[260px] md:h-[320px] rounded-[24px] overflow-hidden group cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500"
-                        >
-                            <Image
-                                src={destination.image}
-                                alt={destination.name}
-                                fill
-                                className="object-cover transition-transform duration-1000 ease-out group-hover:scale-110"
-                            />
-                            {/* Overlay - Premium gradient from bottom */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
-
-                            {/* Text content with subtle slide up on hover */}
-                            <div className="absolute bottom-0 left-0 right-0 p-8 transform transition-transform duration-300 group-hover:-translate-y-1">
-                                <h3 className="text-white font-bold text-[19px] leading-[1.3] tracking-tight drop-shadow-md">
-                                    {destination.name}
-                                </h3>
-                            </div>
-                        </div>
-                    ))}
+                <div className="relative">
+                    <Swiper
+                        modules={[Autoplay]}
+                        spaceBetween={24}
+                        slidesPerView={1}
+                        loop={true}
+                        autoplay={{
+                            delay: 4000,
+                            disableOnInteraction: false,
+                            pauseOnMouseEnter: false,
+                        }}
+                        breakpoints={{
+                            640: { slidesPerView: 2 },
+                            1024: { slidesPerView: 4 },
+                        }}
+                        className="destinations-swiper !p-1"
+                    >
+                        {DESTINATIONS.map((destination, index) => (
+                            <SwiperSlide key={index} className="!h-auto !flex">
+                                <DestinationCard destination={destination} />
+                            </SwiperSlide>
+                        ))}
+                    </Swiper>
                 </div>
             </div>
+
+            <style jsx global>{`
+                .destinations-swiper .swiper-wrapper {
+                    align-items: stretch;
+                }
+                .destinations-swiper .swiper-slide {
+                    height: auto;
+                    display: flex;
+                }
+            `}</style>
         </section>
     );
 }
