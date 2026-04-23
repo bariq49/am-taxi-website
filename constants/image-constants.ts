@@ -2,6 +2,7 @@ export const IMAGES = {
     HOME_BANNER: "/assets/images/banner/home.banner.png",
     ABOUT_BANNER: "/assets/images/banner/about.banner.png",
     CONTACT_BANNER: "/assets/images/banner/contact.banner.png",
+    FLEETS_BANNER: "/assets/images/banner/fleets.banner.png",
     CTA_IMAGE: "/assets/images/cta/cta-image-1.png",
     DESTINATIONS: {
         SCHIPHOL: "/assets/images/destinations/schiphol-1.png",
@@ -20,6 +21,6 @@ export const IMAGES = {
     FEATURED_BG: "/assets/images/home/featured-bg-1.png",
     ABOUT_US: {
         STORY_IMAGE: "/assets/images/about/about-story-1.png",
-        STORY_IMAGE_2: "/assets/images/about/about-story-1.png",
+        STORY_IMAGE_2: "/assets/images/about/about-story-2.png",
     }
 } as const;

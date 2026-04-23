@@ -80,10 +80,10 @@ export default function RecruitmentCTA({
                         </div>
                         <div className="flex flex-col sm:flex-row items-start sm:items-center">
                             <Link
-                                href="/locations"
+                                href={buttonHref}
                                 className="inline-flex items-center gap-2 px-6 py-2 bg-secondary hover:bg-secondary-600 text-white rounded-full font-bold text-base transition-all duration-300 w-fit  mt-6"
                             >
-                                Start Exploring
+                                {buttonText}
                                 <ArrowRight className="w-4 h-4" />
                             </Link>
                         </div>

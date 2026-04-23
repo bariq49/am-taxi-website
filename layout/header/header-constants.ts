@@ -12,15 +12,6 @@ export const SOLID_HEADER_ROUTES = [
   "/book-ride/payment-cancel",
   "/auth/login",
   "/dashboard",
-  "/services",
-  "/hourly-hire-service",
-  "/airport-transfer-service",
-  "/as-directed-service",
-  "/jfk-airport-service",
-  "/newark-airport-service",
-  "/laguardia-airport-service",
-  "/teterboro-airport-service",
-  "/westchester-airport-service",
 ];
 
 export const NAV_LINKS: NavLink[] = [
@@ -36,7 +27,7 @@ export const NAV_LINKS: NavLink[] = [
       { title: "Business Transport", path: "/business-transport" },
     ],
   },
-  { title: "FLEET", path: "/fleet" },
+  { title: "FLEETS", path: "/fleets" },
   { title: "ABOUT", path: "/about" },
   { title: "CONTACT", path: "/contact-us" },
 ];
