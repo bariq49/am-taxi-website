@@ -41,10 +41,8 @@ export default function Footer() {
 
   return (
     <footer className="bg-primary text-white">
-      {/* Main Footer */}
-      <div className="container mx-auto px-4 py-12 sm:px-6 sm:py-16 md:px-8">
-        <div className="grid grid-cols-1 gap-10 text-left sm:grid-cols-2 lg:grid-cols-12 lg:gap-8 xl:gap-10">
-          {/* Logo + About */}
+      <div className="container mx-auto py-12 sm:px-6 sm:py-16">
+        <div className="grid grid-cols-1 gap-10 text-left sm:grid-cols-2 lg:grid-cols-12">
           <div className="flex flex-col items-start lg:col-span-4">
             <div className="mb-5">
               <Link href="/">

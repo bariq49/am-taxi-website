@@ -1,5 +1,7 @@
 export const IMAGES = {
     HOME_BANNER: "/assets/images/banner/home.banner.png",
+    ABOUT_BANNER: "/assets/images/banner/about.banner.png",
+    CTA_IMAGE: "/assets/images/cta/cta-image-1.png",
     DESTINATIONS: {
         SCHIPHOL: "/assets/images/destinations/schiphol-1.png",
         ROTTERDAM: "/assets/images/destinations/rotterdam-1.png",
@@ -15,4 +17,8 @@ export const IMAGES = {
     WHY_CHOOSE_US: "/assets/images/home/why-choose-us-1.png",
     NEWSLETTER_BG: "/assets/images/home/newsletter-bg-1.png",
     FEATURED_BG: "/assets/images/home/featured-bg-1.png",
+    ABOUT_US: {
+        STORY_IMAGE: "/assets/images/about/about-story-1.png",
+        STORY_IMAGE_2: "/assets/images/about/about-story-1.png",
+    }
 } as const;
