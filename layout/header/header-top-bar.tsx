@@ -30,10 +30,10 @@ export const HeaderTopBar = forwardRef<HTMLButtonElement, HeaderTopBarProps>(
       <div className="flex items-center md:absolute md:left-1/2 md:-translate-x-1/2">
         <Link
           href="/"
-          className="relative h-16 w-32 cursor-pointer transition-all duration-300 hover:scale-105 md:h-16 md:w-20"
+          className="relative h-12 w-32 cursor-pointer transition-all duration-300 hover:scale-105 md:h-14"
         >
           <Image
-            src="/assets/logo/logo.png"
+            src="/assets/logo/logo-1.png"
             alt="AMS Airport Transfer"
             fill
             sizes="(max-width: 767px) 96px, 80px"
@@ -72,8 +72,8 @@ export const HeaderTopBar = forwardRef<HTMLButtonElement, HeaderTopBarProps>(
             className="group inline-flex h-9 w-9 items-center justify-center rounded-full bg-white text-gray-700 shadow-sm transition-all duration-300 hover:scale-110 hover:text-white hover:shadow-md"
             aria-label="Follow on Instagram"
           >
-            <div className="absolute inset-0 rounded-full opacity-0 transition-opacity duration-300 group-hover:opacity-100" 
-                 style={{ background: 'radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%)' }} 
+            <div className="absolute inset-0 rounded-full opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+              style={{ background: 'radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%)' }}
             />
             <InstagramIcon className="relative h-5 w-5 transition-colors duration-300 group-hover:text-white" />
           </a>

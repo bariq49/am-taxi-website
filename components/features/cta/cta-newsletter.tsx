@@ -8,16 +8,22 @@ import { CompassIcon } from "../../icons";
 import { useForm, FormProvider } from "react-hook-form";
 import { Input } from "../form/Input";
 import { Button } from "../../ui/button";
+import { useNewsletter } from "@/hooks/queries/use-newsletter";
 
 export default function CtaNewsletter() {
+    const { mutate, isPending } = useNewsletter();
     const methods = useForm({
         defaultValues: {
             email: ""
         }
     });
 
-    const onSubmit = (data: any) => {
-        console.log("Newsletter Subscribe:", data);
+    const onSubmit = (data: { email: string }) => {
+        mutate(data, {
+            onSuccess: () => {
+                methods.reset();
+            }
+        });
     };
 
     return (
@@ -115,9 +121,10 @@ export default function CtaNewsletter() {
                                         </div>
                                         <Button
                                             type="submit"
+                                            disabled={isPending}
                                             className="px-8 bg-secondary hover:bg-secondary-600 text-white rounded-full font-bold text-sm transition-all duration-500 shadow-xl active:scale-95 whitespace-nowrap h-12"
                                         >
-                                            Subscribe
+                                            {isPending ? "Subscribing..." : "Subscribe"}
                                         </Button>
                                     </div>
                                 </form>
