@@ -1,0 +1,202 @@
+@import "tailwindcss";
+
+@theme {
+   /* =========================
+     PRIMARY (Blue Scale)
+  ========================= */
+   --color-primary-50: #e6eef2;
+   --color-primary-100: #ccdce5;
+   --color-primary-200: #99b9cb;
+   --color-primary-300: #6696b1;
+   --color-primary-400: #33657a;
+   --color-primary-500: #003048;
+   /* base */
+   --color-primary-600: #002a3f;
+   --color-primary-700: #002435;
+   --color-primary-800: #001d2c;
+   --color-primary-900: #001722;
+
+   --color-primary: var(--color-primary-500);
+
+   /* =========================
+     SECONDARY (Orange Scale)
+  ========================= */
+   --color-secondary-50: #fff7ed;
+   --color-secondary-100: #ffedd5;
+   --color-secondary-200: #fed7aa;
+   --color-secondary-300: #fdba74;
+   --color-secondary-400: #fb923c;
+   --color-secondary-500: #f97316;
+   /* base */
+   --color-secondary-600: #ea580c;
+   --color-secondary-700: #c2410c;
+   --color-secondary-800: #9a3412;
+   --color-secondary-900: #7c2d12;
+
+   --color-secondary: var(--color-secondary-500);
+
+   /* =========================
+     NEUTRALS / GRAYS
+  ========================= */
+   --color-gray-50: #f9fafb;
+   --color-gray-100: #f3f4f6;
+   --color-gray-200: #e5e7eb;
+   --color-gray-300: #d1d5db;
+   --color-gray-400: #9ca3af;
+   --color-gray-500: #6b7280;
+   --color-gray-600: #4b5563;
+   --color-gray-700: #374151;
+   --color-gray-800: #1f2937;
+   --color-gray-900: #111827;
+
+   --color-gray: var(--color-gray-200);
+   --color-muted: var(--color-gray-400);
+
+   /* =========================
+     SEMANTIC TOKENS
+  ========================= */
+   --color-background: #ffffff;
+   --color-foreground: #171717;
+
+   --color-border: var(--color-gray-200);
+   --color-input: var(--color-gray-100);
+   --color-ring: var(--color-primary-400);
+
+   /* =========================
+     STATES
+  ========================= */
+   --color-success: #16a34a;
+   --color-warning: #f59e0b;
+   --color-error: #dc2626;
+
+   /* =========================
+     GRADIENTS
+  ========================= */
+   --background-image-brand-gradient: linear-gradient(135deg,
+         var(--color-primary-500) 0%,
+         var(--color-primary-300) 100%);
+
+   --background-image-accent-gradient: linear-gradient(135deg,
+         var(--color-secondary-500) 0%,
+         var(--color-secondary-300) 100%);
+
+   /* =========================
+     TYPOGRAPHY
+  ========================= */
+   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+   /* =========================
+     RADIUS & SHADOWS
+  ========================= */
+   --radius-sm: 7px;
+   --radius-md: 10px;
+   --radius-lg: 14px;
+
+   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* =========================
+   AUTOFILL OVERRIDES
+========================= */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+   -webkit-text-fill-color: inherit !important;
+   -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+   background-color: transparent !important;
+   background-clip: content-box !important;
+   transition: background-color 5000s ease-in-out 0s !important;
+}
+
+/* Specific fix for white text inputs (like Newsletter) when autofilled */
+.newsletter-input:-webkit-autofill,
+.newsletter-input:-webkit-autofill:hover,
+.newsletter-input:-webkit-autofill:focus,
+.newsletter-input:-webkit-autofill:active {
+   -webkit-text-fill-color: white !important;
+}
+
+/* =========================
+   ROOT VARIABLES
+========================= */
+:root {
+   --background: var(--color-background);
+   --foreground: var(--color-foreground);
+}
+
+/* =========================
+   BASE STYLES
+========================= */
+body {
+   background: var(--background);
+   color: var(--foreground);
+   font-family: var(--font-sans);
+   -webkit-font-smoothing: antialiased;
+}
+
+/* =========================
+   SWIPER – COMMON LAYOUT
+========================= */
+.swiper .swiper-wrapper {
+   align-items: stretch;
+}
+
+.swiper .swiper-slide {
+   height: auto;
+   display: flex;
+}
+
+/* =========================
+   SWIPER – PAGINATION DOTS
+========================= */
+.swiper-pagination {
+   position: relative !important;
+   bottom: auto !important;
+   margin-top: 24px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   gap: 6px;
+}
+
+.swiper-pagination-bullet {
+   width: 12px !important;
+   height: 8px !important;
+   border-radius: 9999px !important;
+   background: var(--color-secondary-500) !important;
+   opacity: 0.35 !important;
+   transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+   cursor: pointer;
+}
+
+.swiper-pagination-bullet:hover {
+   opacity: 0.6 !important;
+}
+
+.swiper-pagination-bullet-active {
+   width: 32px !important;
+   opacity: 1 !important;
+   background: var(--color-secondary-500) !important;
+}
+
+/* Dark-section variant (add class "swiper-dark" to the Swiper) */
+.swiper-dark .swiper-pagination-bullet {
+   background: var(--color-secondary-500) !important;
+}
+
+.swiper-dark .swiper-pagination-bullet:hover {
+   background: var(--color-secondary-500) !important;
+}
+
+.swiper-dark .swiper-pagination-bullet-active {
+   background: var(--color-secondary-500) !important;
+}
