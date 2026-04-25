@@ -40,7 +40,7 @@ export default function HeroSection() {
                                 {[
                                     "Taxi In 15 Mints",
                                     "Book your taxi online and save up to 75%",
-                                    "Your Trusted Schiphol Taxi — Office at Schiphol Airport",
+                                    "Your Trusted Schiphol Taxi Office at Schiphol Airport",
                                 ].map((item, index) => (
                                     <div key={index} className="flex items-start gap-3 md:gap-4 max-w-sm md:max-w-none">
                                         <div className="flex h-5 w-5 items-center justify-center rounded-full md:h-7 md:w-7 bg-white/20 backdrop-blur-md border border-white/30 shrink-0 mt-0.5 md:mt-0">
