@@ -2,38 +2,10 @@
 
 @theme {
    /* =========================
-     PRIMARY (Blue Scale)
+     BRAND COLORS
   ========================= */
-   --color-primary-50: #e6eef2;
-   --color-primary-100: #ccdce5;
-   --color-primary-200: #99b9cb;
-   --color-primary-300: #6696b1;
-   --color-primary-400: #33657a;
-   --color-primary-500: #003048;
-   /* base */
-   --color-primary-600: #002a3f;
-   --color-primary-700: #002435;
-   --color-primary-800: #001d2c;
-   --color-primary-900: #001722;
-
-   --color-primary: var(--color-primary-500);
-
-   /* =========================
-     SECONDARY (Orange Scale)
-  ========================= */
-   --color-secondary-50: #fff7ed;
-   --color-secondary-100: #ffedd5;
-   --color-secondary-200: #fed7aa;
-   --color-secondary-300: #fdba74;
-   --color-secondary-400: #fb923c;
-   --color-secondary-500: #f97316;
-   /* base */
-   --color-secondary-600: #ea580c;
-   --color-secondary-700: #c2410c;
-   --color-secondary-800: #9a3412;
-   --color-secondary-900: #7c2d12;
-
-   --color-secondary: var(--color-secondary-500);
+   --color-primary: #000000;
+   --color-secondary: #f9b233;
 
    /* =========================
      NEUTRALS / GRAYS
@@ -60,7 +32,7 @@
 
    --color-border: var(--color-gray-200);
    --color-input: var(--color-gray-100);
-   --color-ring: var(--color-primary-400);
+   --color-ring: #00000080;
 
    /* =========================
      STATES
@@ -73,12 +45,12 @@
      GRADIENTS
   ========================= */
    --background-image-brand-gradient: linear-gradient(135deg,
-         var(--color-primary-500) 0%,
-         var(--color-primary-300) 100%);
+         var(--color-primary) 0%,
+         #333333 100%);
 
    --background-image-accent-gradient: linear-gradient(135deg,
-         var(--color-secondary-500) 0%,
-         var(--color-secondary-300) 100%);
+         var(--color-secondary) 0%,
+         #ffc140 100%);
 
    /* =========================
      TYPOGRAPHY

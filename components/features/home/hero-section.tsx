@@ -34,22 +34,22 @@ export default function HeroSection() {
             <div className="relative z-20">
                 <div className="mx-auto grid max-w-screen-2xl gap-6 pt-16 lg:grid-cols-2 lg:px-5 lg:pt-32 lg:pb-32 xl:grid-cols-3">
                     <div className="flex h-full w-full flex-col items-center justify-center gap-6 max-lg:px-3 md:items-start lg:gap-8 xl:col-span-2">
-                        <div className="flex flex-col items-center gap-2 md:items-start">
-                            <h1 className="text-center text-4xl font-extrabold text-white md:text-left md:text-6xl">
-                                Taxi service throughout <br />
-                                <span className="text-center md:text-left md:text-6xl lg:text-7xl xl:text-8xl">The Netherlands</span>
+                        <div className="flex flex-col items-start gap-2 md:items-start px-4 md:px-0">
+                            <h1 className="text-left text-3xl sm:text-4xl font-extrabold text-white md:text-left md:text-6xl">
+                                {/* Taxi service throughout <br /> */}
+                                <span className="text-left md:text-left md:text-6xl lg:text-7xl xl:text-8xl">Private Taxi To & From Schiphol</span>
                             </h1>
-                            <div className="flex flex-row items-center justify-center gap-y-4 gap-x-6 mt-6 flex-wrap md:items-start md:justify-start md:flex-col md:ml-2">
+                            <div className="flex flex-col items-start gap-4 mt-6 md:mt-8 md:ml-2">
                                 {[
-                                    "Fixed Taxi prices",
-                                    "Secure online payment",
-                                    "Premium Vehicles at Economy Prices",
+                                    "Taxi In 15 Mints",
+                                    "Book your taxi online and save up to 75%",
+                                    "Your Trusted Schiphol Taxi — Office at Schiphol Airport",
                                 ].map((item, index) => (
-                                    <div key={index} className="flex items-center gap-2 md:gap-4">
-                                        <div className="flex h-5 w-5 items-center justify-center rounded-full md:h-7 md:w-7 bg-white/20 backdrop-blur-md border border-white/30 ">
+                                    <div key={index} className="flex items-start gap-3 md:gap-4 max-w-sm md:max-w-none">
+                                        <div className="flex h-5 w-5 items-center justify-center rounded-full md:h-7 md:w-7 bg-white/20 backdrop-blur-md border border-white/30 shrink-0 mt-0.5 md:mt-0">
                                             <Check className="h-3 w-3 text-white md:h-4 md:w-4 drop-shadow-sm" />
                                         </div>
-                                        <span className="text-sm font-medium text-white/90 md:text-lg">
+                                        <span className="text-sm font-medium text-white/90 md:text-lg text-left leading-tight md:leading-normal">
                                             {item}
                                         </span>
                                     </div>

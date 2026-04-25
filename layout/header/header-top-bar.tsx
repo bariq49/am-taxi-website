@@ -33,7 +33,7 @@ export const HeaderTopBar = forwardRef<HTMLButtonElement, HeaderTopBarProps>(
           className="relative h-12 w-32 cursor-pointer transition-all duration-300 hover:scale-105 md:h-14"
         >
           <Image
-            src="/assets/logo/logo-1.png"
+            src="/assets/logo/logo-white.png"
             alt="AMS Airport Transfer"
             fill
             sizes="(max-width: 767px) 96px, 80px"
@@ -45,10 +45,10 @@ export const HeaderTopBar = forwardRef<HTMLButtonElement, HeaderTopBarProps>(
       <div className="ml-auto flex items-center gap-2 md:ml-0 md:gap-4">
         <a
           href={COMPANY_PHONE_HREF}
-          className="inline-flex h-10 items-center justify-center text-background transition-all duration-200 hover:scale-110 hover:text-secondary md:hidden"
+          className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-secondary text-white shadow-sm transition-all duration-300 hover:scale-110 hover:shadow-md md:hidden"
           aria-label={`Call ${COMPANY_PHONE}`}
         >
-          <Phone className="h-6 w-6" strokeWidth={2.4} />
+          <Phone className="h-5 w-5" strokeWidth={2.5} />
         </a>
 
         {/* Social Icons Container */}
@@ -69,13 +69,14 @@ export const HeaderTopBar = forwardRef<HTMLButtonElement, HeaderTopBarProps>(
             href={SOCIAL_LINKS.instagram}
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex h-9 w-9 items-center justify-center rounded-full bg-white text-gray-700 shadow-sm transition-all duration-300 hover:scale-110 hover:text-white hover:shadow-md"
+            className="relative group inline-flex h-9 w-9 items-center justify-center rounded-full text-white shadow-sm transition-all duration-300 hover:scale-110 hover:shadow-md overflow-hidden"
             aria-label="Follow on Instagram"
           >
-            <div className="absolute inset-0 rounded-full opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+            <div
+              className="absolute inset-0 rounded-full"
               style={{ background: 'radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%)' }}
             />
-            <InstagramIcon className="relative h-5 w-5 transition-colors duration-300 group-hover:text-white" />
+            <InstagramIcon className="relative h-5 w-5" />
           </a>
         </div>
 

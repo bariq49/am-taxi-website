@@ -11,6 +11,7 @@ interface Fleet {
     image: string;
     passengers: number;
     suitcases: number;
+    carType?: string;
 }
 
 export default function FleetCard({ fleet }: { fleet: Fleet }) {
@@ -33,8 +34,8 @@ export default function FleetCard({ fleet }: { fleet: Fleet }) {
                 <h3 className="text-base md:text-lg font-bold text-primary mb-1">
                     {fleet.name}
                 </h3>
-                <p className="text-gray-500 text-sm leading-relaxed mb-4">
-                    {fleet.description}
+                <p className="text-xs sm:text-sm text-gray-500 line-clamp-1 mb-2">
+                    {fleet.carType || "Cadillac CT6, Lynq or similar"}
                 </p>
             </div>
 
@@ -53,7 +54,7 @@ export default function FleetCard({ fleet }: { fleet: Fleet }) {
                 </div>
 
                 <Link href="/">
-                    <Button className="bg-secondary text-white px-4 py-2 rounded-full font-bold text-[10px] md:text-xs hover:bg-secondary-600 transition-all duration-300 active:scale-95 whitespace-nowrap">
+                    <Button className="bg-secondary text-white px-4 py-0 rounded-full font-semibold text-[10px] md:text-xs hover:bg-secondary-600 transition-all duration-300 active:scale-95 whitespace-nowrap">
                         Book Now <ArrowRight className="w-4 h-4 ml-1" />
                     </Button>
                 </Link>

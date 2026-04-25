@@ -41,7 +41,7 @@ export default function TripRouteDetails({
   const showDeliveryTime = Boolean(deliveryTime?.trim());
 
   return (
-    <div className={cn("relative pb-1 pt-1", isHourly ? "pl-0" : "pl-9", className)}>
+    <div className={cn("relative", isHourly ? "pl-0" : "pl-9", className)}>
       {showTripMeta ? (
         <div className={cn("mb-4 space-y-1.5", !isHourly && "-ml-9")}>
           <div className="flex items-center justify-between">
@@ -88,7 +88,7 @@ export default function TripRouteDetails({
           </div>
         ) : (
           <>
-            <div className="absolute -left-[32px] top-[6px] h-6 w-6 rounded-full border-[4.5px] border-primary bg-white z-10" />
+            <div className="absolute -left-[30px] top-[6px] h-5 w-5 rounded-full border-[4.5px] border-primary bg-white z-10" />
             <div className="flex justify-between items-start gap-4">
               <div className="flex-1 min-w-0">
                 <h3 className="text-sm font-bold leading-tight text-gray-900 sm:text-base truncate">

@@ -10,13 +10,20 @@ export default function FooterBottomBar() {
 
         <p className="text-xs text-gray-400 sm:text-sm">
           Developed by,
-          <a href="https://thedevsquare.com/" target="_blank" rel="noopener noreferrer" className="font-bold text-secondary transition-colors hover:text-primary/80">
+          <a href="https://thedevsquare.com/" target="_blank" rel="noopener noreferrer" className="font-bold text-secondary transition-colors hover:text-white">
             {" "}
             The DevSquare
           </a>
-          {" | "}
-          <Link href="/privacy-policy" className="transition-colors hover:text-white">
+          <Link href="/privacy-policy" className="transition-colors hover:text-white ml-2">
             Privacy Policy
+          </Link>
+          {" | "}
+          <Link href="/terms-and-conditions" className="transition-colors hover:text-white">
+            Terms and Conditions
+          </Link>
+          {" | "}
+          <Link href="/disclaimer" className="transition-colors hover:text-white">
+            Disclaimer
           </Link>
         </p>
       </div>

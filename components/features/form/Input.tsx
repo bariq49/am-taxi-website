@@ -14,6 +14,7 @@ import DatePickerV2 from "./date/date-picker";
 import TimePickerV2 from "./time/time-picker";
 import { Switch } from "@/components/features/form/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/features/form/select";
+import { Counter } from "./counter";
 
 type InputType =
     | "text"
@@ -31,8 +32,8 @@ type InputType =
     | "time"
     | "select";
 
-interface SelectOption {
-    label: string;
+export interface SelectOption {
+    label: ReactNode;
     value: string | number;
 }
 
@@ -57,6 +58,9 @@ interface InputProps {
     inputMode?: React.HTMLAttributes<HTMLInputElement>["inputMode"];
     digitsOnly?: boolean;
     inputClassName?: string;
+    minSelectableDate?: Date | null;
+    excludeDate?: Date | null;
+    timezone?: string;
 }
 
 export const Input: React.FC<InputProps> = ({
@@ -79,14 +83,17 @@ export const Input: React.FC<InputProps> = ({
     maxLength,
     inputMode,
     digitsOnly = false,
-    inputClassName
+    inputClassName,
+    minSelectableDate,
+    excludeDate,
+    timezone
 }) => {
     const { control } = useFormContext();
     const [showPassword, setShowPassword] = React.useState(false);
     const fieldRadiusClass = "rounded-sm";
 
     const inputBase = cn(
-        "w-full py-2.5 border border-border bg-white text-black appearance-none focus:outline-none focus:ring-0 focus-visible:outline-none",
+        "w-full py-2.5 border border-border bg-white text-black text-sm md:text-base placeholder:text-sm md:placeholder:text-base appearance-none focus:outline-none focus:ring-0 focus-visible:outline-none",
         fieldRadiusClass,
         icon ? "pl-10 pr-4" : "px-4"
     );
@@ -142,43 +149,16 @@ export const Input: React.FC<InputProps> = ({
                 );
 
             case "counter":
-                const resolvedMin = min ?? 0;
-                const resolvedMax = max ?? 999;
-                const parsedValue = Number(field.value);
-                const value = Number.isNaN(parsedValue)
-                    ? resolvedMin
-                    : Math.min(resolvedMax, Math.max(resolvedMin, parsedValue));
-
                 return (
-                    <div className={cn(
-                        "flex h-[46px] items-center border bg-white text-black overflow-hidden",
-                        fieldRadiusClass,
-                        inputError(error)
-                    )}>
-                        <button
-                            type="button"
-                            onClick={() => field.onChange(Math.max(resolvedMin, value - step))}
-                            disabled={disabled || value <= resolvedMin}
-                            className="h-full w-12 shrink-0 flex items-center justify-center border-r border-gray-200 text-base font-semibold hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
-                            aria-label={`Decrease ${label || name}`}
-                        >
-                            -
-                        </button>
-
-                        <span className="flex-1 text-center py-2.5 text-sm font-semibold tabular-nums">
-                            {value}
-                        </span>
-
-                        <button
-                            type="button"
-                            onClick={() => field.onChange(Math.min(resolvedMax, value + step))}
-                            disabled={disabled || value >= resolvedMax}
-                            className="h-full w-12 shrink-0 flex items-center justify-center border-l border-gray-200 text-base font-semibold hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
-                            aria-label={`Increase ${label || name}`}
-                        >
-                            +
-                        </button>
-                    </div>
+                    <Counter
+                        value={Number(field.value)}
+                        onChange={field.onChange}
+                        min={min}
+                        max={max}
+                        step={step}
+                        disabled={disabled}
+                        className={inputError(error)}
+                    />
                 );
 
             case "checkbox":
@@ -207,6 +187,9 @@ export const Input: React.FC<InputProps> = ({
                         placeholder={placeholder}
                         disabled={disabled}
                         error={error}
+                        minSelectableDate={minSelectableDate}
+                        excludeDate={excludeDate}
+                        timezone={timezone}
                     />
                 );
 
@@ -218,6 +201,7 @@ export const Input: React.FC<InputProps> = ({
                         placeholder={placeholder}
                         disabled={disabled}
                         error={error}
+                        timezone={timezone}
                     />
                 );
 
@@ -330,14 +314,17 @@ export const Input: React.FC<InputProps> = ({
                 return (
                     <FormItem className={cn("flex flex-col", className)}>
                         {label && (
-                            <FormLabel className={hasError ? "text-error" : undefined}>
+                            <FormLabel className={cn("text-sm font-semibold text-gray-700", hasError ? "text-error" : undefined)}>
                                 {label}
                                 {required && <span className="text-error ml-1">*</span>}
                             </FormLabel>
                         )}
                         <div className="relative">
                             {icon && type !== "date" && type !== "time" && type !== "counter" && (
-                                <span className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-400 z-10 pointer-events-none">
+                                <span className={cn(
+                                    "absolute left-3 text-gray-400 z-10 pointer-events-none",
+                                    type === "textarea" ? "top-3" : "top-1/2 -translate-y-1/2"
+                                )}>
                                     {icon}
                                 </span>
                             )}

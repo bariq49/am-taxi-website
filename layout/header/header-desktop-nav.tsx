@@ -58,23 +58,25 @@ export const HeaderDesktopNav = forwardRef<HTMLElement, HeaderDesktopNavProps>(
                 onMouseEnter={() => onDropdownOpen(link.title)}
                 onMouseLeave={onDropdownClose}
               >
-                <div className="relative rounded-md border border-border bg-background shadow-2xl" role="menu">
+                <div className="relative rounded-md border border-white/10 bg-primary shadow-2xl" role="menu">
                   {/* Dropdown Arrow */}
-                  <div className="absolute -top-1.5 left-8 h-3 w-3 rotate-45 border-l border-t border-border bg-background" />
+                  <div className="absolute -top-1.5 left-8 h-3 w-3 rotate-45 border-l border-t border-white/10 bg-primary" />
 
-                  <div className="relative z-10 p-2">
+                  <div className="relative z-10 p-1.5">
                     {link.sublinks.map((sub) => (
                       <Link
                         key={sub.path}
                         href={sub.path}
                         role="menuitem"
-                        className={`group flex items-center gap-2 rounded px-3 py-2.5 text-sm font-medium transition-colors ${pathname === sub.path
-                          ? "bg-secondary/10 text-secondary"
-                          : "text-gray-700 hover:bg-gray-50 hover:text-secondary"
+                        className={`group flex items-center gap-3 rounded-sm px-3.5 py-3 text-sm font-medium transition-all duration-300 ${pathname === sub.path
+                          ? "bg-secondary/20 text-secondary"
+                          : "text-white/80 hover:bg-white/5 hover:text-secondary"
                           }`}
                       >
-                        <ArrowRight className="h-3.5 w-3.5 text-gray-400 transition-all duration-200 group-hover:translate-x-1 group-hover:text-secondary" />
-                        <span className="transition-all duration-200 group-hover:translate-x-1">{sub.title}</span>
+                        <div className="flex h-5 w-5 items-center justify-center rounded-full bg-white/5 transition-all duration-300 group-hover:bg-secondary/20 shrink-0">
+                          <ArrowRight className="h-3 w-3 text-gray-500 transition-all duration-300 group-hover:translate-x-0.5 group-hover:text-secondary" />
+                        </div>
+                        <span className="transition-all duration-300 group-hover:translate-x-0.5">{sub.title}</span>
                       </Link>
                     ))}
                   </div>

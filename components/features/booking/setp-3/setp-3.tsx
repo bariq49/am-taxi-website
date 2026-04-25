@@ -10,8 +10,11 @@ import { Form } from "@/components/features/form/form";
 import { Input } from "@/components/features/form/Input";
 import { ReturnTripSection } from "./return-trip-section";
 import { ChildSeatsField } from "./child-seats-field";
+import { DriverNotesField } from "./driver-notes-field";
+import { BookingOptionsButtons } from "./booking-options-buttons";
 import { AirportPickupField } from "./airport-pickup-field";
 import { formatPrice } from "@/lib/booking-utils";
+import { cn } from "@/lib/utils";
 
 interface PassengerDetailsFormValues {
     firstName: string;
@@ -20,7 +23,6 @@ interface PassengerDetailsFormValues {
     email: string;
     isReturn: boolean;
     isAirportPickup: boolean;
-    airlineName: string;
     flightNumber: string;
     returnDate: string;
     returnTime: string;
@@ -28,6 +30,10 @@ interface PassengerDetailsFormValues {
     returnChildSeatsEnabled: boolean;
     childSeats: { seatId: string; quantity: number }[];
     returnChildSeats: { seatId: string; quantity: number }[];
+    notes: string;
+    returnNotes: string;
+    notesEnabled: boolean;
+    returnNotesEnabled: boolean;
 }
 
 function Step3() {
@@ -35,6 +41,8 @@ function Step3() {
         category,
         setStep3Data,
         step3,
+        step1,
+        bookingSettings,
     } = useBookingStore();
     const totalPrice = useTotalPrice();
     const isHourly = category === "hourly";
@@ -47,8 +55,7 @@ function Step3() {
             phone: "",
             email: "",
             isReturn: false,
-            isAirportPickup: false,
-            airlineName: "",
+            isAirportPickup: step1?.isAirportSelected ?? false,
             flightNumber: "",
             returnDate: "",
             returnTime: "",
@@ -56,6 +63,10 @@ function Step3() {
             returnChildSeatsEnabled: false,
             childSeats: [],
             returnChildSeats: [],
+            notes: "",
+            returnNotes: "",
+            notesEnabled: false,
+            returnNotesEnabled: false,
         },
     });
     const lastSyncedSnapshotRef = React.useRef<string>(JSON.stringify(step3 ?? null));
@@ -79,24 +90,32 @@ function Step3() {
     };
 
     return (
-        <div className="flex flex-col gap-6 animate-in fade-in duration-500">
+        <div className="flex flex-col animate-in fade-in duration-500 md:border border-border rounded-lg md:shadow-md p-2 md:p-4">
             <Form {...form}>
                 <form
                     onSubmit={form.handleSubmit(handleSubmit)}
-                    className="p-4 rounded-sm bg-background flex flex-col gap-6 border border-gray-100 shadow-sm"
+                    className="flex flex-col"
                 >
-                    <div className="space-y-4">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {step1?.isAirportSelected && (
+                        <AirportPickupField
+                            form={form}
+                            airportPickupBasePrice={bookingSettings?.airportPickup?.price ?? 0}
+                        />
+                    )}
+
+                    <div className="mt-4">
+                        <h3 className="text-lg font-semibold text-gray-900">Passenger Details</h3>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2">
                             <Input
                                 name="firstName"
-                                label="First Name"
+                                // label="First Name"
                                 placeholder="First Name"
                                 icon={<User size={16} className="text-gray-400" />}
                                 required
                             />
                             <Input
                                 name="lastName"
-                                label="Last Name"
+                                // label="Last Name"
                                 placeholder="Last Name"
                                 icon={<User size={16} className="text-gray-400" />}
                                 required
@@ -104,7 +123,7 @@ function Step3() {
                             <Input
                                 name="email"
                                 type="email"
-                                label="Email"
+                                // label="Email"
                                 placeholder="Email address"
                                 icon={<Mail size={16} className="text-gray-400" />}
                                 required
@@ -112,27 +131,34 @@ function Step3() {
                             <Input
                                 name="phone"
                                 type="phone"
-                                label="Phone"
+                                // label="Phone"
                                 placeholder="Phone number"
                                 required
                             />
                         </div>
                     </div>
-
                     {!isHourly && (
                         <ReturnTripSection />
                     )}
 
-                    {/* {step1?.isAirportSelected && (
-                        <AirportPickupField
-                            form={form}
-                            airportPickupBasePrice={bookingSettings?.airportPickup?.price ?? 0}
-                            disabled
-                        />
-                    )} */}
-                    <ChildSeatsField mode="outbound" />
+                    <BookingOptionsButtons />
+
+
+                    {form.watch("childSeatsEnabled") && (
+                        <div className="space-y-6 pt-2">
+                            <ChildSeatsField mode="outbound" />
+                        </div>
+                    )}
+
+                    {form.watch("notesEnabled") && (
+                        <div className="space-y-6 pt-4 border-t border-gray-50">
+                            <DriverNotesField mode="outbound" />
+                        </div>
+                    )}
+
                     <Button
                         type="submit"
+                        className="mt-4 rounded-full"
                         loading={isPending}
                     >
                         Proceed to Pay — {formatPrice(totalPrice)}
