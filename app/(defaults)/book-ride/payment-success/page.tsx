@@ -115,61 +115,77 @@ function PaymentSuccessContent() {
             </div>
           </div>
 
-          <div className="rounded-xl border border-secondary-200 bg-gradient-to-br from-background via-secondary-50 to-secondary-100 p-4 sm:p-5 shadow-sm">
-            <h2 className="text-xl sm:text-2xl font-semibold text-foreground">Payment Summary</h2>
-            <div className="mt-4 space-y-2.5">
-              <div className="flex items-center justify-between text-sm sm:text-base">
-                <p className="text-gray-500">BASE FARE</p>
-                <p className="font-semibold text-foreground">{formatPrice(fare, "€")}</p>
+          <div className="rounded-xl border border-border bg-background shadow-sm overflow-hidden">
+            <div className="bg-gray-50/80 border-b border-border px-5 py-4 flex items-center justify-between">
+              <h2 className="text-lg font-bold text-foreground flex items-center gap-2">
+                <WalletCards className="h-5 w-5 text-secondary" />
+                Payment Summary
+              </h2>
+              <span className="text-[10px] font-bold uppercase tracking-widest text-muted bg-white border border-border px-2 py-0.5 rounded-full">
+                Receipt
+              </span>
+            </div>
+
+            <div className="p-5 space-y-4">
+              <div className="flex items-center justify-between">
+                <p className="text-sm font-medium text-gray-500">Base Fare</p>
+                <p className="font-bold text-foreground text-lg">{formatPrice(fare, "€")}</p>
               </div>
 
-              <div className="border-t border-secondary-200 pt-3">
-                <p className="text-xs text-muted mb-2">Additional Services</p>
-                <div className="space-y-1.5">
-                  {(booking?.tripDetails?.childSeats?.length || 0) > 0 && (
-                    <div className="text-sm text-gray-500">
-                      <p className="font-medium text-xs text-gray-400 uppercase tracking-tight mb-0.5">Outbound Child Seats</p>
-                      {booking.tripDetails.childSeats.map((seat: any, i: number) => (
-                        <div key={i} className="flex justify-between items-center">
-                          <span>{seat.seatId?.name || "Child Seat"} (x{seat.quantity})</span>
+              {((booking?.tripDetails?.childSeats?.length || 0) > 0 ||
+                (booking?.tripDetails?.returnChildSeats?.length || 0) > 0 ||
+                (booking?.pricingBreakdown?.extras?.airportPickup?.total > 0)) && (
+                  <div className="pt-4 border-t border-border space-y-3">
+                    <p className="text-[11px] font-bold text-muted uppercase tracking-wider">Additional Services</p>
+
+                    <div className="space-y-2">
+                      {booking?.tripDetails?.childSeats?.map((seat: any, i: number) => (
+                        <div key={`out-${i}`} className="flex justify-between items-center text-sm">
+                          <span className="text-gray-600 flex items-center gap-2">
+                            <div className="h-1 w-1 rounded-full bg-secondary" />
+                            {seat.seatId?.name || "Child Seat"} <span className="text-[11px] text-muted">x{seat.quantity} (Outward)</span>
+                          </span>
+                          <span className="font-medium text-foreground">Included</span>
                         </div>
                       ))}
-                    </div>
-                  )}
 
-                  {(booking?.tripDetails?.returnChildSeats?.length || 0) > 0 && (
-                    <div className="text-sm text-gray-500 pt-1">
-                      <p className="font-medium text-xs text-gray-400 uppercase tracking-tight mb-0.5">Return Trip Child Seats</p>
-                      {booking.tripDetails.returnChildSeats.map((seat: any, i: number) => (
-                        <div key={i} className="flex justify-between items-center">
-                          <span>{seat.seatId?.name || "Child Seat"} (x{seat.quantity})</span>
+                      {booking?.tripDetails?.returnChildSeats?.map((seat: any, i: number) => (
+                        <div key={`ret-${i}`} className="flex justify-between items-center text-sm">
+                          <span className="text-gray-600 flex items-center gap-2">
+                            <div className="h-1 w-1 rounded-full bg-secondary" />
+                            {seat.seatId?.name || "Child Seat"} <span className="text-[11px] text-muted">x{seat.quantity} (Return)</span>
+                          </span>
+                          <span className="font-medium text-foreground">Included</span>
                         </div>
                       ))}
-                    </div>
-                  )}
 
-                  {booking?.pricingBreakdown?.extras?.airportPickup?.total > 0 && (
-                    <div className="flex justify-between items-center text-sm text-gray-500 pt-1">
-                      <span>Airport Pickup Service</span>
-                      <span className="font-medium">{formatPrice(booking.pricingBreakdown.extras.airportPickup.total, "€")}</span>
+                      {booking?.pricingBreakdown?.extras?.airportPickup?.total > 0 && (
+                        <div className="flex justify-between items-center text-sm">
+                          <span className="text-gray-600 flex items-center gap-2">
+                            <div className="h-1 w-1 rounded-full bg-secondary" />
+                            Airport Pickup Service
+                          </span>
+                          <span className="font-medium text-foreground">{formatPrice(booking.pricingBreakdown.extras.airportPickup.total, "€")}</span>
+                        </div>
+                      )}
                     </div>
-                  )}
+                  </div>
+                )}
 
-                  {!(booking?.tripDetails?.childSeats?.length || 0) &&
-                    !(booking?.tripDetails?.returnChildSeats?.length || 0) &&
-                    !(booking?.pricingBreakdown?.extras?.airportPickup?.total > 0) && (
-                      <p className="text-sm text-gray-500">No additional services</p>
-                    )}
+              <div className="pt-6 border-t border-dashed border-border-200">
+                <div className="flex items-end justify-between">
+                  <div>
+                    <p className="text-base font-bold text-muted uppercase tracking-widest mb-1">Total Paid</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-3xl font-black text-secondary leading-none">
+                      {formatPrice(totalPaid, "€")}
+                    </p>
+                  </div>
                 </div>
-              </div>
-
-              <div className="border-t border-secondary-200 pt-3 flex items-center justify-between">
-                <p className="text-xl sm:text-2xl font-semibold text-foreground">Total Paid</p>
-                <p className="text-3xl sm:text-2xl font-bold text-secondary">{formatPrice(totalPaid, "€")}</p>
               </div>
             </div>
           </div>
-
         </div>
 
         <div className="space-y-4">

@@ -199,13 +199,13 @@ export const calculatePricing = (state: BookingState): Pricing | null => {
     // Stops fee
     if (step1.stops?.length) {
         const stopFee = bookingSettings.stopFee;
-        if (stopFee.isActive) {
+        if (stopFee?.isActive) {
             base += stopFee.price * step1.stops.length;
         }
     }
 
     // Airport pickup
-    if (step1.isAirportSelected && bookingSettings.airportPickup.isActive) {
+    if (step1.isAirportSelected && bookingSettings.airportPickup?.isActive) {
         base += bookingSettings.airportPickup.price;
     }
 
@@ -223,7 +223,7 @@ export const calculatePricing = (state: BookingState): Pricing | null => {
 
         return seats.reduce((sum, seat) => {
             const found = bookingSettings.childSeats.find(s => s._id === seat.seatId);
-            if (found && found.isActive) {
+            if (found && found?.isActive) {
                 return sum + (found.price * seat.quantity);
             }
             return sum;

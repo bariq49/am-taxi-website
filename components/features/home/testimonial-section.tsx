@@ -66,7 +66,7 @@ export default function Testimonials() {
                     }}
                     className="testimonial-swiper !p-1"
                 >
-                    {reviews.map((r: any, i: number) => (
+                    {reviews?.map((r: any, i: number) => (
                         <SwiperSlide key={i} className="!h-auto !flex">
                             <ReviewCard review={r} />
                         </SwiperSlide>
