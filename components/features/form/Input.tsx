@@ -32,6 +32,11 @@ type InputType =
     | "time"
     | "select";
 
+export interface SelectOption {
+    label: ReactNode;
+    value: string | number;
+}
+
 interface InputProps {
     name: string;
     type?: InputType;
