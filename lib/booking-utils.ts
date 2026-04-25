@@ -65,7 +65,7 @@ export const getPackageSelectOptions = (hourlyData: any) => {
   const scoreMap: Record<string, number> = { hourly: 1, day: 2, week: 3 };
 
   [...rawData]
-    .filter((p: any) => p.isActive)
+    .filter((p: any) => p?.isActive)
     .sort((a: any, b: any) => {
       const typeScore = scoreMap[a.packageType] || 4;
       const bScore = scoreMap[b.packageType] || 4;

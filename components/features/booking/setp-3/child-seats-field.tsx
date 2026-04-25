@@ -21,7 +21,7 @@ export const ChildSeatsField = ({
 
   const childSeatOptions =
     bookingSettings?.childSeats
-      ?.filter((seat) => seat.isActive)
+      ?.filter((seat) => seat?.isActive)
       .map((seat) => ({
         _id: seat._id,
         name: seat.name,

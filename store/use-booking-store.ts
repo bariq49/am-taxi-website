@@ -101,11 +101,12 @@ interface BookingState {
 const STORE_VERSION = 1;
 
 const resolveFleetPrice = (fleet: FleetByDistance): number => {
+    if (!fleet) return 0;
     return (
-        fleet.calculatedPrice ??
-        fleet.priceBreakdown?.totalPrice ??
-        fleet.priceBreakdown?.displayPrice ??
-        fleet.priceBreakdown?.basePrice ??
+        fleet?.calculatedPrice ??
+        fleet?.priceBreakdown?.totalPrice ??
+        fleet?.priceBreakdown?.displayPrice ??
+        fleet?.priceBreakdown?.basePrice ??
         0
     );
 };
@@ -194,37 +195,38 @@ export const calculatePricing = (state: BookingState): Pricing | null => {
 
     if (!selectedVehicle || !bookingSettings || !step1) return null;
 
-    let base = selectedVehicle.totalPrice;
+    let base = selectedVehicle?.totalPrice ?? 0;
 
     // Stops fee
-    if (step1.stops?.length) {
-        const stopFee = bookingSettings.stopFee;
+    if (step1?.stops?.length) {
+        const stopFee = bookingSettings?.stopFee;
         if (stopFee?.isActive) {
-            base += stopFee.price * step1.stops.length;
+            base += (stopFee?.price || 0) * (step1?.stops?.length || 0);
         }
     }
 
     // Airport pickup
-    if (step1.isAirportSelected && bookingSettings.airportPickup?.isActive) {
-        base += bookingSettings.airportPickup.price;
+    if (step1?.isAirportSelected && bookingSettings?.airportPickup?.isActive) {
+        base += (bookingSettings?.airportPickup?.price || 0);
     }
 
     // Return trip fare
     if (step3?.isReturn) {
         base +=
-            selectedVehicle.priceBreakdown?.returnPrice ??
-            selectedVehicle.priceBreakdown?.discountedReturnPrice ??
+            selectedVehicle?.priceBreakdown?.returnPrice ??
+            selectedVehicle?.priceBreakdown?.discountedReturnPrice ??
             0;
     }
 
     // Child seats
     const calcSeats = (seats?: { seatId: string; quantity: number }[]) => {
-        if (!seats) return 0;
+        if (!seats || !bookingSettings?.childSeats) return 0;
 
         return seats.reduce((sum, seat) => {
-            const found = bookingSettings.childSeats.find(s => s._id === seat.seatId);
-            if (found && found?.isActive) {
-                return sum + (found.price * seat.quantity);
+            if (!seat?.seatId) return sum;
+            const found = bookingSettings.childSeats.find(s => s?._id === seat.seatId);
+            if (found?.isActive) {
+                return sum + ((found?.price || 0) * (seat?.quantity || 0));
             }
             return sum;
         }, 0);
@@ -233,11 +235,9 @@ export const calculatePricing = (state: BookingState): Pricing | null => {
     base += calcSeats(step3?.childSeats);
     base += calcSeats(step3?.returnChildSeats);
 
-    const total = base;
-
     return {
         base,
-        total,
+        total: base,
     };
 };
 
