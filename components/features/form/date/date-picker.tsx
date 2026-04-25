@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useCallback, useEffect } from "react";
+import { useState, useMemo, useCallback } from "react";
 import {
   format,
   addMonths,
@@ -44,17 +44,6 @@ export default function DatePicker({
   customTrigger,
 }: DatePickerProps) {
   const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    if (open) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [open]);
 
   // Today in the target timezone
   const todayZoned = useMemo(() => startOfDay(toZonedTime(new Date(), timezone)), [timezone]);
@@ -124,7 +113,7 @@ export default function DatePicker({
       )}
 
       {customTrigger ? (
-        <div onClick={(e) => { e.stopPropagation(); !disabled && setOpen((prev) => !prev); }}>
+        <div onClick={() => !disabled && setOpen((prev) => !prev)}>
           {customTrigger(displayValue)}
         </div>
       ) : (
@@ -133,8 +122,7 @@ export default function DatePicker({
             ${error ? "border-red-500 bg-red-50/10" : "border-border hover:border-gray-400"}
             ${disabled ? "opacity-50 cursor-not-allowed bg-gray-50" : "cursor-pointer bg-white"}
           `}
-          onClick={(e) => {
-            e.stopPropagation();
+          onClick={() => {
             if (!disabled) setOpen((prev) => !prev);
           }}
         >
@@ -206,9 +194,6 @@ export default function DatePicker({
                       `}
                     >
                       {date.getDate()}
-                      {isSameDay(date, todayZoned) && !selected && (
-                        <span className="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-1 h-1 bg-black rounded-full" />
-                      )}
                     </button>
                   );
                 })}

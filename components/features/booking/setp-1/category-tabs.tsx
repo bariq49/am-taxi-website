@@ -28,7 +28,7 @@ function CategoryTabs({ activeTab, onTabChange }: CategoryTabsProps) {
                             isActive
                                 ? 'bg-white text-black z-10 rounded-t-2xl'
                                 : cn(
-                                    'bg-black text-white/70 hover:text-white z-0',
+                                    'bg-black text-white hover:text-white z-0',
                                     idx === 0 ? 'rounded-tl-2xl' : 'rounded-tr-2xl'
                                 ),
                         )}

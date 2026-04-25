@@ -7,7 +7,7 @@ export const IMAGES = {
     CITY_RIDES_BANNER: "/assets/images/banner/city-rides.banner.png",
     AIRPORT_RIDE_BANNER: "/assets/images/banner/airport-ride.banner-1.png",
     HOURLY_RIDES_BANNER: "/assets/images/banner/hourly-rides.banner.png",
-    CARGO_CREW_TRANSPORTATION_BANNER: "/assets/images/banner/cargo-crew-transportation.banner.png",
+    CARGO_CREW_TRANSPORTATION_BANNER: "/assets/images/banner/cargo-crew-transportation.banner-1.png",
     PRIVATE_JET_TRANSFER_BANNER: "/assets/images/banner/private-jet-transfer.banner.png",
     AMSTERDAM_SCHIPHOL_AIRPORT_BANNER: "/assets/images/banner/amsterdam-schiphol-airport.banner.png",
     CTA_IMAGE: "/assets/images/cta/cta-image-1.png",
@@ -48,8 +48,8 @@ export const IMAGES = {
             STORY_IMAGE: "/assets/images/services/hourly-rides/hourly-rides-story-1.png",
         },
         CARGO_CREW_TRANSPORTATION: {
-            STORY_IMAGE: "/assets/images/services/cargo-crew-transportation/cargo-crew-transportation-story-1.png",
-            STORY_IMAGE_2: "/assets/images/services/cargo-crew-transportation/cargo-crew-transportation-story-2.png",
+            STORY_IMAGE: "/assets/images/services/cargo-crew-transportation/cargo-crew-transportation-story-3.png",
+            STORY_IMAGE_2: "/assets/images/services/cargo-crew-transportation/cargo-crew-transportation-story-4.png",
         },
         PRIVATE_JET_TRANSFER: {
             STORY_IMAGE: "/assets/images/services/private-jet-transfer/private-jet-transfer-story-1.png",
