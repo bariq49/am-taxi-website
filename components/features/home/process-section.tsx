@@ -46,7 +46,7 @@ export default function ProcessSection() {
                     </div>
                     <div className="md:pb-2  hidden lg:block">
                         <Link
-                            href="/booking"
+                            href="/"
                             className="inline-flex flex-col group"
                         >
                             <span className="flex items-center gap-2 text-sm font-semibold text-secondary">
