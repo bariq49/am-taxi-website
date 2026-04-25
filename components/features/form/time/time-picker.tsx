@@ -31,6 +31,17 @@ export default function TimePicker({
 }: TimePickerProps) {
   const [open, setOpen] = useState(false);
 
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
   const getInitialTime = useCallback(() => {
     const zoned = toZonedTime(new Date(), timezone);
     const h = parseInt(format(zoned, "H"), 10);
@@ -57,14 +68,21 @@ export default function TimePicker({
     }
   }, [value, timezone, getInitialTime]);
 
-  useEffect(() => {
-    if (open && hour !== null && minute !== null) {
-      const formatted = `${hour.toString().padStart(2, "0")}:${minute.toString().padStart(2, "0")}`;
-      if (formatted !== value) {
-        onChange(formatted);
-      }
+  const handleHourSelect = (h: number) => {
+    setHour(h);
+    if (minute !== null) {
+      const formatted = `${h.toString().padStart(2, "0")}:${minute.toString().padStart(2, "0")}`;
+      onChange(formatted);
     }
-  }, [hour, minute, open, onChange, value]);
+  };
+
+  const handleMinuteSelect = (m: number) => {
+    setMinute(m);
+    if (hour !== null) {
+      const formatted = `${hour.toString().padStart(2, "0")}:${m.toString().padStart(2, "0")}`;
+      onChange(formatted);
+    }
+  };
 
   const displayVal = value || placeholder;
 
@@ -77,7 +95,7 @@ export default function TimePicker({
       )}
 
       {customTrigger ? (
-        <div onClick={() => !disabled && setOpen((prev) => !prev)}>
+        <div onClick={(e) => { e.stopPropagation(); !disabled && setOpen((prev) => !prev); }}>
           {customTrigger(displayVal)}
         </div>
       ) : (
@@ -86,7 +104,8 @@ export default function TimePicker({
             ${error ? "border-red-500 bg-red-50/10" : "border-border hover:border-gray-400"}
             ${disabled ? "opacity-50 cursor-not-allowed bg-gray-50" : "cursor-pointer bg-white"}
           `}
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation();
             if (!disabled) setOpen((prev) => !prev);
           }}
         >
@@ -115,14 +134,14 @@ export default function TimePicker({
                   label="Hour (24h)"
                   values={Array.from({ length: 24 }, (_, i) => i)}
                   selected={hour}
-                  onSelect={setHour}
+                  onSelect={handleHourSelect}
                 />
 
                 <TimeColumn
                   label="Minute"
                   values={Array.from({ length: 60 }, (_, i) => i)}
                   selected={minute}
-                  onSelect={setMinute}
+                  onSelect={handleMinuteSelect}
                 />
               </div>
 
