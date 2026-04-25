@@ -1,71 +1,41 @@
 import React from "react";
-import { useWatch, type UseFormReturn } from "react-hook-form";
-import { Switch } from "@/components/features/form/switch";
+import { type UseFormReturn } from "react-hook-form";
 import { Input } from "@/components/features/form/Input";
-import { cn } from "@/lib/utils";
+import { Plane } from "lucide-react";
+import { formatPrice } from "@/lib/booking-utils";
 
 interface AirportPickupFieldProps {
   form: UseFormReturn<any>;
   airportPickupBasePrice: number;
-  disabled?: boolean;
 }
 
 export const AirportPickupField = ({
   form,
   airportPickupBasePrice,
-  disabled,
 }: AirportPickupFieldProps) => {
-  const isAirportPickup = useWatch({ control: form.control, name: "isAirportPickup" });
-
-  const handleToggle = (checked: boolean) => {
-    if (disabled) return;
-    form.setValue("isAirportPickup", checked, { shouldDirty: true });
-  };
-
-  React.useEffect(() => {
-    if (disabled && !isAirportPickup) {
-      form.setValue("isAirportPickup", true, { shouldDirty: false });
-    }
-  }, [disabled, isAirportPickup, form]);
-
   return (
-    <div className="space-y-0">
-      <div
-        className={cn(
-          "flex items-center justify-between gap-3 border border-border bg-background p-3",
-          isAirportPickup ? "rounded-t-lg rounded-b-none border-b-0" : "rounded-lg"
-        )}
-      >
-        <span className="text-sm font-medium">
-          Airport Pickup {`(${(airportPickupBasePrice)})`}
-        </span>
-        <Switch
-          checked={Boolean(isAirportPickup)}
-          onCheckedChange={handleToggle}
-          disabled={disabled}
-        />
+    <div className="space-y-3">
+      <div>
+        <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
+          Flight Number
+          {airportPickupBasePrice > 0 && (
+            <span className="text-sm font-medium text-secondary">
+              ({formatPrice(airportPickupBasePrice)})
+            </span>
+          )}
+        </h3>
+        <p className="text-sm text-gray-500 leading-relaxed -mb-2">
+          Your driver will track your flight and will adjust the pickup time accordingly
+        </p>
       </div>
-
-      {isAirportPickup ? (
-        <div className="rounded-b-lg rounded-t-none border border-border border-t-0 bg-background p-3 md:p-4 space-y-3">
-          <div className="grid grid-cols-2 gap-3">
-            <Input
-              name="airlineName"
-              type="text"
-              label="Airline Name"
-              placeholder="e.g. Emirates"
-              required
-            />
-            <Input
-              name="flightNumber"
-              type="text"
-              label="Flight Number"
-              placeholder="e.g. EK123"
-              required
-            />
-          </div>
-        </div>
-      ) : null}
+      <Input
+        icon={<Plane size={16} className="text-gray-400" />}
+        name="flightNumber"
+        type="text"
+        placeholder="e.g. LH1868"
+        required
+        className="bg-gray-50/50 border-gray-100"
+      />
     </div>
   );
 };

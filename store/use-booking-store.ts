@@ -48,7 +48,8 @@ export interface BookingStep3PersistedData {
         seatId: string;
         quantity: number;
     }[];
-    airlineName?: string;
+    notes?: string;
+    returnNotes?: string;
     flightNumber?: string;
     returnDate?: string;
     returnTime?: string;
@@ -204,9 +205,9 @@ export const calculatePricing = (state: BookingState): Pricing | null => {
     }
 
     // Airport pickup
-    // if (step1.isAirportSelected && bookingSettings.airportPickup.isActive) {
-    //     base += bookingSettings.airportPickup.price;
-    // }
+    if (step1.isAirportSelected && bookingSettings.airportPickup.isActive) {
+        base += bookingSettings.airportPickup.price;
+    }
 
     // Return trip fare
     if (step3?.isReturn) {

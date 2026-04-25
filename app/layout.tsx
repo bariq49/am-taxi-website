@@ -9,7 +9,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "AMS Taxi | Premium Airport Transfers in Amsterdam",
+  title: "Best Taxi Service Amsterdam | AMS Taxi",
   description: "AMS Taxi – Your trusted partner for reliable, comfortable, and professional airport transportation to and from Amsterdam Schiphol Airport.",
 };
 

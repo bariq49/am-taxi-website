@@ -37,7 +37,7 @@ function Step2() {
 
     return (
         <div className="w-full flex flex-col gap-2 md:gap-4">
-            {isLoading && fleets.length === 0 && Array.from({ length: 3 }).map((_, index) => (
+            {isLoading && fleets.length === 0 && Array.from({ length: 10 }).map((_, index) => (
                 <VehicleCardSkeleton key={`fleet-skeleton-${index}`} isExpanded={index === 0} />
             ))}
 

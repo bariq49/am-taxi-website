@@ -12,6 +12,7 @@ function PaymentSuccessContent() {
   const searchParams = useSearchParams()
   const bookingId = searchParams.get("booking_id") || undefined
   const { data: booking, isLoading } = useBookingStatus(bookingId)
+  console.log(booking)
   if (isLoading) return <PaymentSuccessSkeleton />
 
   const pickup = parseAddress(booking?.tripDetails?.pickupAddress)
@@ -119,24 +120,52 @@ function PaymentSuccessContent() {
             <div className="mt-4 space-y-2.5">
               <div className="flex items-center justify-between text-sm sm:text-base">
                 <p className="text-gray-500">BASE FARE</p>
-                <p className="font-semibold text-foreground">{formatPrice(fare, "$")}</p>
+                <p className="font-semibold text-foreground">{formatPrice(fare, "€")}</p>
               </div>
 
               <div className="border-t border-secondary-200 pt-3">
-                <p className="text-xs text-muted">Additional Services</p>
-                <p className="mt-1 text-sm sm:text-base text-gray-500">
-                  {totalChildSeats > 0 ? `Child Seat (${totalChildSeats})` : "No additional services"}
-                </p>
+                <p className="text-xs text-muted mb-2">Additional Services</p>
+                <div className="space-y-1.5">
+                  {(booking?.tripDetails?.childSeats?.length || 0) > 0 && (
+                    <div className="text-sm text-gray-500">
+                      <p className="font-medium text-xs text-gray-400 uppercase tracking-tight mb-0.5">Outbound Child Seats</p>
+                      {booking.tripDetails.childSeats.map((seat: any, i: number) => (
+                        <div key={i} className="flex justify-between items-center">
+                          <span>{seat.seatId?.name || "Child Seat"} (x{seat.quantity})</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {(booking?.tripDetails?.returnChildSeats?.length || 0) > 0 && (
+                    <div className="text-sm text-gray-500 pt-1">
+                      <p className="font-medium text-xs text-gray-400 uppercase tracking-tight mb-0.5">Return Trip Child Seats</p>
+                      {booking.tripDetails.returnChildSeats.map((seat: any, i: number) => (
+                        <div key={i} className="flex justify-between items-center">
+                          <span>{seat.seatId?.name || "Child Seat"} (x{seat.quantity})</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {booking?.pricingBreakdown?.extras?.airportPickup?.total > 0 && (
+                    <div className="flex justify-between items-center text-sm text-gray-500 pt-1">
+                      <span>Airport Pickup Service</span>
+                      <span className="font-medium">{formatPrice(booking.pricingBreakdown.extras.airportPickup.total, "€")}</span>
+                    </div>
+                  )}
+
+                  {!(booking?.tripDetails?.childSeats?.length || 0) &&
+                    !(booking?.tripDetails?.returnChildSeats?.length || 0) &&
+                    !(booking?.pricingBreakdown?.extras?.airportPickup?.total > 0) && (
+                      <p className="text-sm text-gray-500">No additional services</p>
+                    )}
+                </div>
               </div>
 
               <div className="border-t border-secondary-200 pt-3 flex items-center justify-between">
                 <p className="text-xl sm:text-2xl font-semibold text-foreground">Total Paid</p>
-                <p className="text-3xl sm:text-2xl font-bold text-secondary">{formatPrice(totalPaid, "$")}</p>
-              </div>
-
-              <div className="pt-1 flex items-center gap-2 text-xs text-gray-500">
-                <WalletCards className="h-3.5 w-3.5" />
-                <p>Payment status: {booking?.paymentStatus || "pending"}</p>
+                <p className="text-3xl sm:text-2xl font-bold text-secondary">{formatPrice(totalPaid, "€")}</p>
               </div>
             </div>
           </div>

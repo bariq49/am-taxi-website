@@ -21,8 +21,9 @@ export interface CheckoutPayload {
     returnTime?: string;
     passengers: number;
     bags: number;
-    airlineName?: string;
     flightNumber?: string;
+    notes?: string;
+    returnNotes?: string;
     childSeats: { seatId: string; quantity: number }[];
     returnChildSeats?: { seatId: string; quantity: number }[];
   };

@@ -12,20 +12,20 @@ import "swiper/css/pagination";
 const STEPS = [
     {
         id: "Step 01",
-        title: "Choose Location",
-        description: "Select your preferred pickup location and dates. We have coverage in major cities and airports.",
+        title: "Enter your taxi ride data",
+        description: "Provide your pickup and drop-off details to get started with your journey.",
         icon: MapPin,
     },
     {
         id: "Step 02",
-        title: "Pick Your Taxi",
-        description: "Browse our premium fleet and choose the vehicle that fits your style and travel needs.",
+        title: "Calculate the fixed fee",
+        description: "Instantly view a transparent, fixed price based on your selected route and vehicle.",
         icon: Car,
     },
     {
         id: "Step 03",
-        title: "Book & Go",
-        description: "Complete your secure booking in minutes. Your car will be ready and waiting for you.",
+        title: "Book and pay safely online",
+        description: "Confirm your booking and complete payment securely in just a few clicks.",
         icon: CreditCard,
     },
 ];

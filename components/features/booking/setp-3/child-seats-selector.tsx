@@ -1,4 +1,7 @@
 import { cn } from "@/lib/utils";
+import { Baby, Car, AlertCircle, Info } from "lucide-react";
+import { Counter } from "../../form/counter";
+import { formatPrice } from "@/lib/booking-utils";
 
 export interface ChildSeatSelection {
   seatId: string;
@@ -9,12 +12,13 @@ export interface ChildSeatOption {
   _id: string;
   name: string;
   price: number;
+  description?: string;
 }
 
 interface ChildSeatsSelectorProps {
   options: ChildSeatOption[];
   selections: ChildSeatSelection[];
-  onQuantityChange: (seatId: string, delta: number) => void;
+  onQuantityChange: (seatId: string, quantity: number) => void;
   className?: string;
 }
 
@@ -23,49 +27,69 @@ export const ChildSeatsSelector = ({
   selections,
   onQuantityChange,
   className,
-}: ChildSeatsSelectorProps) => (
-  <div className={cn("rounded-lg border border-border p-3 flex flex-col gap-3", className)}>
-    <div className="flex flex-col gap-2">
+}: ChildSeatsSelectorProps) => {
+  return (
+    <div className={cn("flex flex-col gap-2", className)}>
       {options.map((seat) => {
         const selectedSeat = selections.find((item) => item.seatId === seat._id);
         const quantity = selectedSeat?.quantity ?? 0;
+        const isBooster = seat.name.toLowerCase().includes("booster");
 
         return (
           <div
             key={seat._id}
-            className="rounded-sm border border-border bg-background px-2 py-1.5 flex flex-col gap-2 sm:min-h-[46px] sm:flex-row sm:items-center sm:justify-between"
+            className="rounded-sm border border-border flex flex-col md:flex-row md:items-center justify-between overflow-hidden bg-white"
           >
-            <div className="text-sm  text-foreground">
-              {seat.name}
-            </div>
-
-            <div className="flex w-full items-center gap-3 sm:w-auto">
-              <div className="flex h-[36px] w-full items-center overflow-hidden rounded-sm border border-border bg-white text-black sm:w-auto cursor-pointer">
-                <button
-                  type="button"
-                  onClick={() => onQuantityChange(seat._id, -1)}
-                  disabled={quantity <= 0}
-                  className="h-full w-12 shrink-0 cursor-pointer flex items-center justify-center border-r border-gray-200 text-base font-semibold hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
-                  aria-label={`Decrease ${seat.name}`}
-                >
-                  -
-                </button>
-                <span className="flex-1 text-center py-2.5 text-sm font-semibold tabular-nums border-x border-gray-200 bg-background min-w-[52px]">
-                  {quantity}
-                </span>
-                <button
-                  type="button"
-                  onClick={() => onQuantityChange(seat._id, 1)}
-                  className="h-full w-12 cursor-pointer shrink-0 flex items-center justify-center border-l border-gray-200 text-base font-semibold hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
-                  aria-label={`Increase ${seat.name}`}
-                >
-                  +
-                </button>
+            <div className="flex items-center gap-3 p-3 md:p-4 flex-1">
+              <div className="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center shrink-0 border border-gray-100">
+                <span className="text-xl">{isBooster ? "💺" : "👶"}</span>
+              </div>
+              <div className="flex flex-col gap-0.5">
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-bold text-gray-900 leading-none">{seat.name}</span>
+                  {seat.price === 0 ? (
+                    <span className="text-[10px] bg-green-100 text-green-700 px-1.5 py-0.5 rounded-full font-bold uppercase tracking-wide">
+                      FREE
+                    </span>
+                  ) : (
+                    <span className="text-xs font-semibold text-secondary">
+                      ({formatPrice(seat.price)})
+                    </span>
+                  )}
+                </div>
+                <p className="text-xs text-gray-500 leading-tight">
+                  {seat.description || "Age-appropriate safety seat for your journey."}
+                </p>
               </div>
             </div>
+
+            <div className="w-full md:w-auto md:p-3">
+              <Counter
+                value={quantity}
+                onChange={(val) => onQuantityChange(seat._id, val)}
+                min={0}
+                max={5}
+                className="h-10 w-full md:w-[120px] rounded-none rounded-b-sm border-x-0 border-b-0 md:border md:rounded-sm"
+              />
+            </div>
           </div>
+
         );
       })}
+
+      <div className=" space-y-2">
+        <div className="bg-orange-50 border border-orange-100 rounded-sm p-2 flex items-start gap-3">
+          <AlertCircle className="w-5 h-5 text-orange-600 shrink-0 mt-0.5" />
+          <p className="text-xs md:text-sm text-orange-800 leading-relaxed">
+            You can select a maximum of 5 child/booster seats per booking. If you need more, please{" "}
+            <span className="font-bold underline cursor-pointer">contact our customer service</span> after booking.
+          </p>
+        </div>
+        <div className="flex items-center gap-2 text-xs md:text-sm text-gray-600 px-1">
+          <Info className="w-4 h-4 text-gray-400" />
+          <span>Please note age & weight in "driver notes" for proper equipment.</span>
+        </div>
+      </div>
     </div>
-  </div>
-);
+  );
+};

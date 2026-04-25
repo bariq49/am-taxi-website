@@ -3,3 +3,4 @@ export * from "./instagram-icon";
 export * from "./google-icon";
 export * from "./stars-icon";
 export * from "./compass-icon";
+export * from "./payment-icons";

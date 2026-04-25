@@ -31,7 +31,7 @@ function PassengerDetailsPage() {
 
                 <div className="w-full lg:w-1/3 flex flex-col gap-4 lg:sticky lg:top-24 lg:self-start px-4 md:px-0">
                     <div className="hidden lg:block">
-                        {showRouteMap && <AnimatedRouteMap />}
+                        {/* {showRouteMap && <AnimatedRouteMap />} */}
                         <SummaryDetails />
                     </div>
 

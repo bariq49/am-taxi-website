@@ -24,12 +24,13 @@ export default function Footer() {
   ];
 
   const airportLinks: FooterLinkItem[] = [
-    { href: "/amsterdam-schiphol-airport", label: "Amsterdam Schiphol Airport" },
-    { href: "/eindhoven-airport", label: "Eindhoven Airport" },
-    { href: "/rotterdam-the-hague-airport", label: "Rotterdam Hague Airport" },
-    { href: "/groningen-airport-eelde", label: "Groningen Airport Eelde" },
-
-
+    { href: "/amsterdam-schiphol-airport", label: "Amsterdam - Schiphol from €35,- " },
+    { href: "/eindhoven-airport", label: "Den Haag - Schiphol from €70,-" },
+    { href: "/rotterdam-the-hague-airport", label: "Utrecht - Schiphol from €60,-" },
+    { href: "/groningen-airport-eelde", label: "Haarlem - Schiphol from €35,-" },
+    { href: "/almere", label: "Almere - Schiphol from €60,-" },
+    { href: "/leiden", label: "Leiden - Schiphol from €50,-" },
+    // { href: "/rotterdam", label: "Rotterdam - Schiphol from €80,-" },
   ];
 
   const serviceLinks: FooterLinkItem[] = [
@@ -45,11 +46,11 @@ export default function Footer() {
   return (
     <footer className="bg-primary text-white">
       <div className="container mx-auto py-12 px-4 sm:py-16">
-        <div className="grid grid-cols-1 gap-10 text-left sm:grid-cols-2 lg:grid-cols-12">
-          <div className="flex flex-col items-start lg:col-span-4">
+        <div className="grid grid-cols-1 gap-10 text-left sm:grid-cols-2 lg:grid-cols-12 lg:gap-8">
+          <div className="flex flex-col items-start lg:col-span-3">
             <div className="mb-5">
               <Link href="/">
-                <Image src="/assets/logo/logo-1.png" alt="Logo" width={96} height={80} className="h-[72px] w-auto sm:h-[80px]" />
+                <Image src="/assets/logo/logo-white.png" alt="Logo" width={96} height={80} className="h-[72px] w-auto sm:h-[60px]" />
               </Link>
             </div>
             <p className="max-w-sm text-sm leading-relaxed text-gray-300">{COMPANY_DESCRIPTION}</p>
@@ -78,13 +79,13 @@ export default function Footer() {
           <div className="lg:col-span-2">
             <FooterLinksColumn title="Quick Links" links={quickLinks} />
           </div>
-
+          <div className="lg:col-span-3">
+            <FooterLinksColumn title="Popular Destinations" links={airportLinks} />
+          </div>
           <div className="lg:col-span-2">
             <FooterLinksColumn title="Our Services" links={serviceLinks} />
           </div>
-          <div className="lg:col-span-2">
-            <FooterLinksColumn title="Airports" links={airportLinks} />
-          </div>
+
 
 
           {/* Contact Info */}
