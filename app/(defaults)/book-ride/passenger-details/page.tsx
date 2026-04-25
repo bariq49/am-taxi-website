@@ -16,7 +16,7 @@ function PassengerDetailsPage() {
     return (
         <div className="min-h-screen flex justify-center items-start  pt-24 md:pt-52 md:px-4">
             <div className="w-full md:max-w-7xl flex flex-col lg:flex-row gap-6">
-                <div className="flex-1 min-w-0 bg-white py-4 px-1 rounded-t-3xl relative z-10 md:mt-0 md:rounded-2xl overflow-hidden flex flex-col">
+                <div className="flex-1 min-w-0 bg-white py-4 px-1 rounded-t-3xl relative z-10 md:mt-0 md:rounded-2xl overflow-visible flex flex-col">
                     <div className="mb-4">
                         <button
                             onClick={() => router.push('/book-ride/select-vehicle')}

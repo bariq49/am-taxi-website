@@ -111,12 +111,12 @@ export const ReturnTripSection = () => {
 
                 {isReturn && (
                     <div className="border-t border-border mt-3 pt-4 space-y-4 animate-in slide-in-from-top-2 duration-300">
-                        {/* <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2">
                             <div className="w-1 h-5 bg-secondary rounded-full" />
                             <h4 className="text-sm font-bold text-gray-900">
                                 Return Trip Details
                             </h4>
-                        </div> */}
+                        </div>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <Input
                                 name="returnDate"
