@@ -45,7 +45,7 @@ export default function CitiesSection() {
                             Discover the best taxi transportation deals in cities of Netherland destinations.
                         </p>
                     </div>
-                    <div className="md:pb-2 hidden lg:block">
+                    {/* <div className="md:pb-2 hidden lg:block">
                         <Link
                             href="/locations"
                             className="inline-flex flex-col group"
@@ -56,7 +56,7 @@ export default function CitiesSection() {
                             </span>
                             <div className="h-[2px] w-full bg-secondary mt-[6px] group-hover:w-[110%] transition-all duration-300" />
                         </Link>
-                    </div>
+                    </div> */}
                 </div>
 
                 <div className="relative">

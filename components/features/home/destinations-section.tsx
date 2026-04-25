@@ -45,7 +45,7 @@ export default function DestinationsSection() {
                             Discover the best taxi transportation deals in airport destinations.
                         </p>
                     </div>
-                    <div className="md:pb-2 hidden lg:block">
+                    {/* <div className="md:pb-2 hidden lg:block">
                         <Link
                             href="/locations"
                             className="inline-flex flex-col group"
@@ -56,7 +56,7 @@ export default function DestinationsSection() {
                             </span>
                             <div className="h-[2px] w-full bg-secondary mt-[6px] group-hover:w-[110%] transition-all duration-300" />
                         </Link>
-                    </div>
+                    </div> */}
                 </div>
 
                 <div className="relative">
