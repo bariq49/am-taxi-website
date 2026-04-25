@@ -7,9 +7,6 @@ import FeaturesGrid from "@/components/features/about/features-grid";
 import ServiceAreasGrid from "@/components/features/about/service-areas-grid";
 import ServiceCTA from "@/components/features/cta/service-cta";
 import { ICONS } from "@/constants/icon-constants";
-import FleetSection from "@/components/features/home/fleet-section";
-import CitiesSection from "@/components/features/home/cities-section";
-import ProcessSection from "@/components/features/home/process-section";
 
 export const metadata = {
     title: `Cargo  Crew Transportation | ${COMPANY_NAME}`,
@@ -97,13 +94,13 @@ export default function CargoCrewTransportationPage() {
         <main className="min-h-screen">
             <Banner
                 image={IMAGES.CARGO_CREW_TRANSPORTATION_BANNER}
-                topText="Cargo & Crew Transportation"
-                title="Cargo & Crew <br/>Transportation Service"
+                topText="Cargo Crew Transportation"
+                title="Cargo Crew <br/>Transportation Service"
                 description="Professional 24/7 transportation service for cargo crew at Amsterdam Schiphol Airport. 15-minute response for last-minute bookings."
             />
             <StorySection
                 image={IMAGES.SERVICES.CARGO_CREW_TRANSPORTATION.STORY_IMAGE}
-                title="Cargo & Crew Transportation Service Amsterdam Schiphol"
+                title="Cargo Crew Transportation Service Amsterdam Schiphol"
                 imageSide="left"
                 description="AMS Airport Taxi provides reliable and professional transportation services from and to Amsterdam Schiphol Airport, covering the Netherlands and major airports across Europe. We specialize in long-distance transfers, airport connections, and hotel transportation for cargo and business crew. Whether you are moving crew between airports or to the city, we offer safe, comfortable, and punctual transfers."
             />
@@ -133,7 +130,7 @@ export default function CargoCrewTransportationPage() {
                 pointsDescription="This makes us the ideal partner for cargo crew, operations teams, and crew schedulers who need fast and dependable service."
             />
             <ServiceCTA
-                title="Book Cargo & Crew Transport"
+                title="Book Cargo Crew Transport"
                 description="Reliable 24/7 transportation for cargo and airline crew at Schiphol Airport. Contact us now for immediate dispatch or to schedule a transfer."
                 buttonText="BOOK NOW"
                 buttonLink="/"

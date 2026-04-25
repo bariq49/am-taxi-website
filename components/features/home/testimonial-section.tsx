@@ -77,7 +77,7 @@ export default function Testimonials() {
                 <div className="flex items-center justify-center mt-14 gap-0">
                     <div className="flex-1 flex flex-col items-center gap-1 px-2 md:px-8">
                         <div className="text-2xl md:text-5xl font-extrabold text-primary tracking-tight">
-                            <AnimatedCounter end={500} suffix="+" />
+                            <AnimatedCounter end={10} suffix="K+" />
                         </div>
                         <span className="text-[10px] md:text-sm font-bold text-gray-400 uppercase tracking-wider whitespace-nowrap">
                             Happy Customers

@@ -12,7 +12,7 @@ interface HeaderDesktopNavProps {
 
 export const HeaderDesktopNav = forwardRef<HTMLElement, HeaderDesktopNavProps>(
   ({ pathname, openDropdownId, onDropdownOpen, onDropdownClose }, ref) => (
-    <nav ref={ref} className="hidden items-center justify-center space-x-2 py-3 md:flex" role="menubar">
+    <nav ref={ref} className="hidden items-center space-x-2 md:flex" role="menubar">
       {NAV_LINKS.map((link) => {
         const active = isNavActive(pathname, link);
 
@@ -22,7 +22,7 @@ export const HeaderDesktopNav = forwardRef<HTMLElement, HeaderDesktopNavProps>(
               key={link.title}
               href={link.path || "#"}
               role="menuitem"
-              className={`block px-3 py-2 text-base font-semibold tracking-wide transition-colors ${active ? "text-secondary" : "text-background/90 hover:text-secondary-400"
+              className={`block px-2 py-2 text-[17px] font-bold transition-colors ${active ? "text-secondary" : "text-white/90 hover:text-white"
                 }`}
             >
               {link.title}
@@ -40,7 +40,7 @@ export const HeaderDesktopNav = forwardRef<HTMLElement, HeaderDesktopNavProps>(
             onMouseLeave={onDropdownClose}
           >
             <button
-              className={`flex items-center px-3 py-2 text-base font-semibold tracking-wide transition-colors ${active ? "text-secondary" : "text-background/90 hover:text-secondary-400"
+              className={`flex items-center px-2 py-2 text-[17px] font-bold transition-colors ${active ? "text-secondary" : "text-white/90 hover:text-white"
                 }`}
               aria-haspopup="true"
               aria-expanded={isOpen}
@@ -68,7 +68,7 @@ export const HeaderDesktopNav = forwardRef<HTMLElement, HeaderDesktopNavProps>(
                         key={sub.path}
                         href={sub.path}
                         role="menuitem"
-                        className={`group flex items-center gap-3 rounded-sm px-3.5 py-3 text-sm font-medium transition-all duration-300 ${pathname === sub.path
+                        className={`group flex items-center gap-3 rounded-sm px-3.5 py-3 text-[15px] font-medium transition-all duration-300 ${pathname === sub.path
                           ? "bg-secondary/20 text-secondary"
                           : "text-white/80 hover:bg-white/5 hover:text-secondary"
                           }`}
@@ -76,7 +76,7 @@ export const HeaderDesktopNav = forwardRef<HTMLElement, HeaderDesktopNavProps>(
                         <div className="flex h-5 w-5 items-center justify-center rounded-full bg-white/5 transition-all duration-300 group-hover:bg-secondary/20 shrink-0">
                           <ArrowRight className="h-3 w-3 text-gray-500 transition-all duration-300 group-hover:translate-x-0.5 group-hover:text-secondary" />
                         </div>
-                        <span className="transition-all duration-300 group-hover:translate-x-0.5">{sub.title}</span>
+                        <span className="transition-all duration-300 font-bold group-hover:translate-x-0.5">{sub.title}</span>
                       </Link>
                     ))}
                   </div>

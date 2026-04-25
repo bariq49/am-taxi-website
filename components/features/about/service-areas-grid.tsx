@@ -30,7 +30,7 @@ export default function ServiceAreasGrid({
 }: ServiceAreasGridProps) {
     return (
         <section className={`py-16 bg-white overflow-hidden ${className}`}>
-            <div className="container mx-auto px-4 max-w-screen-xl">
+            <div className="container mx-auto px-4">
                 <div className="max-w-3xl mx-auto text-center mb-10">
                     {topText && (
                         <span className="text-secondary font-semibold text-base mb-2 block">
