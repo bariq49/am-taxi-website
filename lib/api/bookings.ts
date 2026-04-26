@@ -10,6 +10,13 @@ export interface CheckoutPayload {
     phone: string;
     email: string;
   };
+  bookerDetails?: {
+    firstName: string;
+    lastName: string;
+    phone: string;
+    email: string;
+  };
+  isBookingForSomeoneElse?: boolean;
   tripDetails: {
     pickupAddress: string;
     deliveryAddress: string;

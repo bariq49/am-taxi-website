@@ -37,23 +37,23 @@ export const IMAGES = {
             STORY_IMAGE_2: "/assets/images/services/airport-ride/airport-ride-story-2.png",
         },
         AIRLINE_CREW: {
-            STORY_IMAGE: "/assets/images/services/airline-crew/airline-crew-story-1.png",
+            STORY_IMAGE: "/assets/images/services/airline-crew/airline-crew-story-3.png",
             STORY_IMAGE_2: "/assets/images/services/airline-crew/airline-crew-story-2.png",
         },
         CITY_RIDES: {
             STORY_IMAGE: "/assets/images/services/city-rides/city-rides-story-1.png",
-            STORY_IMAGE_2: "/assets/images/services/city-rides/city-rides-story-2.png",
+            STORY_IMAGE_2: "/assets/images/services/city-rides/city-rides-story-3.png",
         },
         HOURLY_RIDES: {
             STORY_IMAGE: "/assets/images/services/hourly-rides/hourly-rides-story-1.png",
         },
         CARGO_CREW_TRANSPORTATION: {
-            STORY_IMAGE: "/assets/images/services/cargo-crew-transportation/cargo-crew-transportation-story-3.png",
+            STORY_IMAGE: "/assets/images/services/cargo-crew-transportation/cargo-crew-transportation-story-1.png",
             STORY_IMAGE_2: "/assets/images/services/cargo-crew-transportation/cargo-crew-transportation-story-4.png",
         },
         PRIVATE_JET_TRANSFER: {
-            STORY_IMAGE: "/assets/images/services/private-jet-transfer/private-jet-transfer-story-1.png",
-            STORY_IMAGE_2: "/assets/images/services/private-jet-transfer/private-jet-transfer-story-2.png",
+            STORY_IMAGE: "/assets/images/services/private-jet-transfer/private-jet-transfer-story-4.png",
+            STORY_IMAGE_2: "/assets/images/services/private-jet-transfer/private-jet-transfer-story-5.png",
             STORY_IMAGE_3: "/assets/images/services/private-jet-transfer/private-jet-transfer-story-3.png",
         },
         AIRPORTS: {

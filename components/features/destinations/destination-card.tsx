@@ -1,18 +1,23 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 
 interface DestinationCardProps {
     destination: {
         name: string;
         description?: string;
         image: string;
+        href: string;
     };
 }
 
 export default function DestinationCard({ destination }: DestinationCardProps) {
     return (
-        <div className="relative h-[260px] md:h-[320px] w-full rounded-md overflow-hidden group cursor-pointer shadow-sm transition-all duration-500">
+        <Link
+            href={destination.href}
+            className="relative h-[260px] md:h-[320px] w-full rounded-md overflow-hidden group cursor-pointer shadow-sm transition-all duration-500 block"
+        >
             <Image
                 src={destination.image}
                 alt={destination.name}
@@ -28,11 +33,11 @@ export default function DestinationCard({ destination }: DestinationCardProps) {
             </div>
             {destination.description && (
                 <div className="absolute bottom-0 left-0 right-0 p-5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
-                    <p className="text-gray-300 text-base leading-relaxed line-clamp-2">
+                    <p className="text-gray-300 text-sm md:text-base leading-relaxed line-clamp-2">
                         {destination.description}
                     </p>
                 </div>
             )}
-        </div>
+        </Link>
     );
 }

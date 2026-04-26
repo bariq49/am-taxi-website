@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation"
 import { Check, WalletCards } from "lucide-react"
 import TripRouteDetails from "@/components/features/booking/shared/trip-route-details"
 import { useBookingStatus } from "@/hooks/queries/use-booking"
-import { formatPrice, parseAddress, formatTripDate } from "@/lib/booking-utils"
+import { formatPrice, parseAddress, formatTripDate, formatDistance } from "@/lib/booking-utils"
 import { PaymentSuccessSkeleton } from "@/components/features/skeletons/payment-success-skeleton"
 
 function PaymentSuccessContent() {
@@ -28,7 +28,9 @@ function PaymentSuccessContent() {
         ? "Return"
         : "One Way"
   const outwardValue = formatTripDate(booking?.tripDetails?.pickupDate)
-  const passengerName = booking?.passengerDetails?.fullName || "Guest"
+  const passengerName = booking?.passengerDetails
+    ? `${booking.passengerDetails.firstName} ${booking.passengerDetails.lastName}`.trim()
+    : "Guest"
   const passengerEmail = booking?.passengerDetails?.email || "N/A"
   const bookingNumber = booking?.bookingNumber || booking?._id || "N/A"
   const fare = booking?.pricingBreakdown?.totals?.subtotal ?? booking?.amount ?? 0
@@ -58,10 +60,10 @@ function PaymentSuccessContent() {
 
           <div className="text-center lg:text-left">
             <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground">
-              Thank You, {passengerName}
+              {booking?.isBookingForSomeoneElse ? "Booking Confirmed" : `Thank You, ${booking?.passengerDetails?.firstName || 'Guest'}`}
             </h1>
             <p className="mt-2 text-sm sm:text-base text-gray-600 leading-relaxed">
-              Your ride has been confirmed and is ready for your journey. A confirmation email has been sent to {passengerEmail} with full trip details.
+              Your ride {booking?.isBookingForSomeoneElse ? `for ${passengerName}` : ""} has been confirmed and is ready for your journey. A confirmation email has been sent to {passengerEmail} with full trip details.
             </p>
           </div>
 
@@ -85,6 +87,7 @@ function PaymentSuccessContent() {
               tripType={tripType}
               categoryLabel="Outward"
               categoryValue={outwardValue}
+              estDistance={formatDistance(booking?.tripDetails?.distance)}
             />
           </div>
 
@@ -202,6 +205,7 @@ function PaymentSuccessContent() {
               tripType={tripType}
               categoryLabel="Outward"
               categoryValue={outwardValue}
+              estDistance={formatDistance(booking?.tripDetails?.distance)}
             />
           </div>
 

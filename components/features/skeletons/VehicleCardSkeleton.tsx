@@ -15,14 +15,14 @@ export function VehicleCardSkeleton({ isExpanded = false }: VehicleCardSkeletonP
       )}
     >
       {/* Best Value Pill Skeleton */}
-      <div className="absolute -top-3 left-1 z-20">
+      {/* <div className="absolute -top-3 left-1 z-20">
         <div className="h-6 w-20 sm:w-24 animate-pulse rounded-full bg-primary/20 shadow-sm" />
-      </div>
+      </div> */}
 
       <div className="flex items-center md:p-4 p-2 py-1">
         {/* Vehicle Image Skeleton */}
         <div className="relative flex-shrink-0 w-32 sm:w-40 lg:w-48 aspect-[4/3] sm:aspect-auto flex items-center justify-center bg-gray/10 rounded-md overflow-hidden px-1 sm:px-2">
-           <div className="w-full aspect-[16/9] animate-pulse bg-gray-200 rounded" />
+          <div className="w-full aspect-[16/9] animate-pulse bg-gray-200 rounded" />
         </div>
 
         {/* Content Section Skeleton */}
@@ -65,16 +65,16 @@ export function VehicleCardSkeleton({ isExpanded = false }: VehicleCardSkeletonP
           <div className="border-t border-dashed border-border mx-4" />
           <div className="px-4 py-2 flex flex-col sm:flex-row items-center justify-center sm:justify-between gap-4">
             <div className="flex items-center justify-between sm:justify-start gap-x-3 sm:gap-x-8 gap-y-3 w-full sm:w-auto">
-                <div className="flex items-center gap-2">
-                    <div className="h-4 w-4 animate-pulse bg-gray-200 rounded-full" />
-                    <div className="h-4 w-20 animate-pulse bg-gray-200 rounded" />
-                    <div className="h-6 w-20 animate-pulse bg-gray-200 rounded-full" />
-                </div>
-                <div className="flex items-center gap-2">
-                    <div className="h-4 w-4 animate-pulse bg-gray-200 rounded-full" />
-                    <div className="h-4 w-20 animate-pulse bg-gray-200 rounded" />
-                    <div className="h-6 w-20 animate-pulse bg-gray-200 rounded-full" />
-                </div>
+              <div className="flex items-center gap-2">
+                <div className="h-4 w-4 animate-pulse bg-gray-200 rounded-full" />
+                <div className="h-4 w-20 animate-pulse bg-gray-200 rounded" />
+                <div className="h-6 w-20 animate-pulse bg-gray-200 rounded-full" />
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="h-4 w-4 animate-pulse bg-gray-200 rounded-full" />
+                <div className="h-4 w-20 animate-pulse bg-gray-200 rounded" />
+                <div className="h-6 w-20 animate-pulse bg-gray-200 rounded-full" />
+              </div>
             </div>
 
             <div className="h-9 w-full sm:w-32 animate-pulse bg-primary/20 rounded-sm" />

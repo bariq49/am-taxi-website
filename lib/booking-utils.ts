@@ -6,6 +6,21 @@ export function formatPrice(value: number | undefined | null, currencySign: stri
   return `${currencySign}${safeValue.toFixed(2)}`;
 }
 
+export function formatDistance(distance: number | undefined | null): string | null {
+  if (!distance) return null;
+  return `${distance.toFixed(1)} km`;
+}
+
+export function formatDuration(duration: string | undefined | null, durationMinutes: number | undefined | null): string | null {
+  if (duration?.trim()) return duration.trim();
+  if (typeof durationMinutes === "number") {
+    const hrs = Math.floor(durationMinutes / 60);
+    const mins = durationMinutes % 60;
+    return hrs > 0 ? `${hrs} h ${mins} mins` : `${mins} mins`;
+  }
+  return null;
+}
+
 export interface AddressInfo {
   name: string;
   detail: string;

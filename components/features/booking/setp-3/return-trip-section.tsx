@@ -45,9 +45,9 @@ export const ReturnTripSection = () => {
             >
                 {returnDiscountRate > 0 && (
                     <div className="absolute -top-3 -right-1 z-20">
-                        <div className="bg-secondary text-white flex items-center gap-2 px-2 py-1 md:px-4 md:py-2 rounded-full border-2 border-white animate-in zoom-in slide-in-from-right-4 duration-500">
-                            <Tag className="fill-current text-white/90 w-3 h-3 md:w-4 md:h-4" />
-                            <span className="text-[10px] md:text-xs font-black uppercase tracking-widest leading-none">
+                        <div className="bg-secondary text-white flex items-center gap-2 px-2 py-1 rounded-full border-2 border-white animate-in zoom-in slide-in-from-right-4 duration-500">
+                            <Tag className="fill-current text-white w-3 h-3" />
+                            <span className="text-xs font-semibold leading-none">
                                 Save {returnDiscountRate}%
                             </span>
                         </div>
