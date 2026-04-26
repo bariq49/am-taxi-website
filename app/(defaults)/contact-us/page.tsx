@@ -1,6 +1,5 @@
 import React from "react";
-import { COMPANY_NAME, COMPANY_PHONE, COMPANY_EMAIL, COMPANY_ADDRESS, COMPANY_PHONE_HREF, COMPANY_EMAIL_HREF } from "@/constants/app-default";
-import { Phone, Mail, MapPin, Clock, Send } from "lucide-react";
+import { COMPANY_NAME } from "@/constants/app-default";
 import Banner from "@/components/features/banner/banner";
 import { IMAGES } from "@/constants/image-constants";
 

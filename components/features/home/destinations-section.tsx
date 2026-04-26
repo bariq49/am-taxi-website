@@ -14,21 +14,25 @@ const DESTINATIONS = [
         name: "Amsterdam Airport Schiphol",
         description: "Primary international hub with 24/7 premium taxi services.",
         image: IMAGES.DESTINATIONS.SCHIPHOL,
+        href: "/amsterdam-schiphol-airport",
     },
     {
         name: "Rotterdam The Hague Airport",
         description: "Quick business transfers and regional travel connections.",
         image: IMAGES.DESTINATIONS.ROTTERDAM,
+        href: "/rotterdam-the-hague-airport",
     },
     {
         name: "Eindhoven Airport",
         description: "Reliable transport for the technology and design capital.",
         image: IMAGES.DESTINATIONS.EINDHOVEN,
+        href: "/eindhoven-airport",
     },
     {
         name: "Groningen Airport Eelde",
         description: "Convenient airport transfers serving the northern regions.",
         image: IMAGES.DESTINATIONS.GRONINGEN,
+        href: "/groningen-airport-eelde",
     },
 ];
 

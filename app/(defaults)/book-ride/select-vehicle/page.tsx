@@ -40,14 +40,21 @@ function SelectVehiclePage() {
             <div className="w-12 h-1.5 bg-gray rounded-full" />
           </div>
 
-          <div className="mb-4">
+          <div className="px-4 py-1 flex items-center gap-6 mb-2 sticky top-0 bg-white z-20">
             <button
               onClick={() => router.push('/')}
-              className="group flex items-center gap-2 text-muted transition-colors hover:text-primary cursor-pointer"
+              className="flex items-center gap-2 text-gray-800 hover:text-black transition-colors"
             >
-              <ArrowLeft size={16} strokeWidth={2} className="transition-transform group-hover:-translate-x-1" />
-              <span className="text-sm font-semibold">Back to Home</span>
+              <ArrowLeft size={20} strokeWidth={2.5} />
+              <span className="text-base font-semibold">Back</span>
             </button>
+
+            <div className="lg:hidden flex items-center gap-2">
+              <Info className="text-secondary h-4 w-4" />
+              <span className="text-sm font-semibold text-primary whitespace-nowrap">
+                All prices include VAT, taxes & tolls
+              </span>
+            </div>
           </div>
 
           <Setp2 />

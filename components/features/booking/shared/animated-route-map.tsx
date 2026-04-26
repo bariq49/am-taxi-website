@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useEffect, useMemo } from "react";
-import { MapPin, Clock } from "lucide-react";
+import { MapPin, Clock, Info } from "lucide-react";
 import { useBookingStore } from "@/store/use-booking-store";
 import { loadGoogleMaps } from "@/lib/google-maps-loader";
 
@@ -65,6 +65,7 @@ function AnimatedRouteMap() {
   const deliveryAddress = step1?.deliveryAddress ?? "";
   const stops = step1?.stops ?? EMPTY_STOPS;
 
+  /* 
   const estDistance = useMemo(() => {
     if (!step1?.distance) return null;
     return `${step1.distance.toFixed(1)} km`;
@@ -78,6 +79,7 @@ function AnimatedRouteMap() {
     }
     return null;
   }, [step1?.duration, step1?.durationMinutes]);
+  */
 
   const stopWaypoints = useMemo(
     () => stops.filter((s) => s.address?.trim()).map((s) => ({ location: s.address.trim(), stopover: true })),
@@ -186,20 +188,32 @@ function AnimatedRouteMap() {
     <div className="w-full h-[250px] sm:h-[350px] overflow-hidden relative rounded-none border-0 shadow-none lg:rounded-sm lg:border lg:border-border group">
       <div ref={mapRef} className="w-full h-full" />
 
-      {/* Integrated Stats Dock */}
+      {/* Integrated Info Dock */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 z-10 w-fit">
-        <div className="bg-white/90 backdrop-blur-sm px-6 py-2 rounded-t-md border-t border-x border-gray-300 flex items-center gap-6 shadow-sm">
-          <div className="flex items-center gap-1.5 whitespace-nowrap">
-            <MapPin size={14} className="text-secondary" />
-            <span className="text-sm font-semibold text-gray-700 tabular-nums">
-              {estDistance || "0.0 km"}
-            </span>
+        <div className="bg-white/95 backdrop-blur-sm px-6 py-2 rounded-t-xl border-t border-x border-gray-200 flex flex-col items-center gap-1.5 shadow-lg">
+          {/* Estimated Stats - Commented out as requested */}
+          {/* 
+          <div className="flex items-center gap-7">
+            <div className="flex items-center gap-1.5 whitespace-nowrap">
+              <MapPin size={14} className="text-secondary" />
+              <span className="text-sm font-bold text-gray-800 tabular-nums">
+                {estDistance || "0.0 km"}
+              </span>
+            </div>
+            <div className="w-px h-3 bg-gray-200" />
+            <div className="flex items-center gap-1.5 whitespace-nowrap">
+              <Clock size={14} className="text-secondary" />
+              <span className="text-sm font-bold text-gray-800 tabular-nums lowercase">
+                {estTime || "0 mins"}
+              </span>
+            </div>
           </div>
-          <div className="w-px h-3 bg-gray-300" />
-          <div className="flex items-center gap-1.5 whitespace-nowrap">
-            <Clock size={14} className="text-secondary" />
-            <span className="text-sm font-semibold text-gray-700 tabular-nums lowercase">
-              {estTime || "0 mins"}
+          */}
+
+          <div className="flex items-center gap-2">
+            <Info className="text-secondary h-4 w-4" />
+            <span className="text-sm font-semibold text-primary whitespace-nowrap">
+              All prices include VAT, taxes & tolls
             </span>
           </div>
         </div>

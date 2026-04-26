@@ -18,6 +18,8 @@ type TripRouteDetailsProps = {
   categoryValue?: string;
   pickupTime?: string;
   deliveryTime?: string;
+  estDistance?: string | null;
+  estDuration?: string | null;
   showAnimation?: boolean;
   showTripMeta?: boolean;
   className?: string;
@@ -33,6 +35,8 @@ export default function TripRouteDetails({
   categoryValue,
   pickupTime,
   deliveryTime,
+  estDistance,
+  estDuration,
   showAnimation = true,
   showTripMeta = false,
   className,
@@ -60,7 +64,7 @@ export default function TripRouteDetails({
       {!isHourly && (
         <div
           className={cn(
-            "absolute left-[14px] bottom-[30px] w-[4px] bg-gray-200 overflow-visible z-0",
+            "absolute left-[14px] bottom-[25px] w-[4px] bg-gray-200 overflow-visible z-0",
             showTripMeta ? "top-[78px]" : "top-[24px]"
           )}
         >
@@ -73,7 +77,7 @@ export default function TripRouteDetails({
         </div>
       )}
 
-      <div className={cn("relative", !isHourly && "mb-8")}>
+      <div className={cn("relative", !isHourly && "mb-5")}>
         {isHourly ? (
           <div className="flex items-start gap-4">
             <MapPin className="mt-1 h-5 w-5 shrink-0 text-primary" />
@@ -97,6 +101,20 @@ export default function TripRouteDetails({
                 <p className="text-sm text-gray-500 leading-relaxed truncate">
                   {pickup.detail || "Full address not specified"}
                 </p>
+                {(estDistance || estDuration) && (
+                  <div className="flex items-center gap-2 mt-2">
+                    {estDuration && (
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-lg bg-gray-50 text-[10px] font-bold text-gray-500 border border-gray-200 shadow-sm lowercase">
+                        ~ {estDuration}
+                      </span>
+                    )}
+                    {estDistance && (
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-lg bg-gray-50 text-[10px] font-bold text-gray-500 border border-gray-200 shadow-sm">
+                        ~ {estDistance}
+                      </span>
+                    )}
+                  </div>
+                )}
               </div>
               <span className="whitespace-nowrap pt-1 text-sm font-semibold text-gray-500">
                 {showPickupTime ? pickupTime : "—"}
@@ -108,7 +126,7 @@ export default function TripRouteDetails({
 
       {!isHourly &&
         stops.map((stop, idx) => (
-          <div key={`${stop.name}-${idx}`} className="relative mb-8">
+          <div key={`${stop.name}-${idx}`} className="relative mb-5">
             <div className="absolute -left-[28.5px] top-[8px] h-2.5 w-2.5 rounded-full bg-gray-300 border-[1.5px] border-white z-10" />
             <div className="flex justify-between items-start gap-4">
               <div className="flex-1 min-w-0">

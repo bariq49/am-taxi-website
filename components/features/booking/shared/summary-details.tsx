@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import { useBookingStore, useTotalPrice } from "@/store/use-booking-store";
 import TripRouteDetails from "./trip-route-details";
-import { parseAddress, calculateArrivalTime, formatTripDate, formatPrice } from "@/lib/booking-utils";
+import { parseAddress, calculateArrivalTime, formatTripDate, formatPrice, formatDistance, formatDuration } from "@/lib/booking-utils";
 import { Check, CheckCircle2, Plane, UserCircle, Users, Luggage } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
@@ -48,10 +48,13 @@ function SummaryDetails() {
         : "One Way";
   const outwardValue = isHourly ? step1?.duration?.trim() || "—" : formattedPickupDate;
 
+  const estDistance = useMemo(() => formatDistance(step1?.distance), [step1?.distance]);
+  const estDuration = useMemo(() => formatDuration(step1?.duration, step1?.durationMinutes), [step1?.duration, step1?.durationMinutes]);
+
   return (
     <>
       <div className="mx-auto w-full rounded-none lg:rounded-lg border border-border p-4 sm:p-5 shadow-sm mt-2 bg-white">
-        <div className="space-y-4">
+        <div className="space-y-3">
           <h2 className="text-xl font-bold text-gray-900">Your Booking</h2>
 
           <div className="">
@@ -66,6 +69,8 @@ function SummaryDetails() {
               categoryValue={outwardValue}
               pickupTime={hasPickupTime ? pickupTime : undefined}
               deliveryTime={hasPickupTime ? deliveryTime : undefined}
+              estDistance={estDistance}
+              estDuration={estDuration}
             />
           </div>
 

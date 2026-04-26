@@ -34,6 +34,7 @@ export interface BookingStep3PersistedData {
     lastName: string;
     phone: string;
     email: string;
+    isBookingForSomeoneElse?: boolean;
     pickupDate: string;
     pickupTime: string;
     passengers: number;

@@ -6,8 +6,9 @@ import { Mail, User } from "lucide-react";
 import { useBookingStore, useTotalPrice } from "@/store/use-booking-store";
 import { useCreateCheckoutSession } from "@/hooks/queries/use-booking";
 import { Button } from "@/components/ui/button";
-import { Form } from "@/components/features/form/form";
+import { Form, FormField, FormItem, FormControl } from "@/components/features/form/form";
 import { Input } from "@/components/features/form/Input";
+import { Switch } from "@/components/features/form/switch";
 import { ReturnTripSection } from "./return-trip-section";
 import { ChildSeatsField } from "./child-seats-field";
 import { DriverNotesField } from "./driver-notes-field";
@@ -21,6 +22,7 @@ interface PassengerDetailsFormValues {
     lastName: string;
     phone: string;
     email: string;
+    isBookingForSomeoneElse: boolean;
     isReturn: boolean;
     isAirportPickup: boolean;
     flightNumber: string;
@@ -54,6 +56,7 @@ function Step3() {
             lastName: "",
             phone: "",
             email: "",
+            isBookingForSomeoneElse: false,
             isReturn: false,
             isAirportPickup: step1?.isAirportSelected ?? false,
             flightNumber: "",
@@ -103,19 +106,37 @@ function Step3() {
                         />
                     )}
 
-                    <div className="mt-4">
-                        <h3 className="text-lg font-semibold text-gray-900">Passenger Details</h3>
+                    <div className="mt-6">
+                        <div className="flex items-center justify-between px-1 mb-3">
+                            <h3 className="text-xl font-semibold text-gray-900 tracking-tight">
+                                {form.watch("isBookingForSomeoneElse") ? "Passenger Details" : "Your Details"}
+                            </h3>
+                            <FormField
+                                control={form.control}
+                                name="isBookingForSomeoneElse"
+                                render={({ field }) => (
+                                    <FormItem className="flex flex-row items-center space-x-3 space-y-0">
+                                        <span className="text-sm font-medium text-gray-500">For someone else?</span>
+                                        <FormControl>
+                                            <Switch
+                                                checked={field.value}
+                                                onCheckedChange={field.onChange}
+                                            />
+                                        </FormControl>
+                                    </FormItem>
+                                )}
+                            />
+                        </div>
+
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2">
                             <Input
                                 name="firstName"
-                                // label="First Name"
                                 placeholder="First Name"
                                 icon={<User size={16} className="text-gray-400" />}
                                 required
                             />
                             <Input
                                 name="lastName"
-                                // label="Last Name"
                                 placeholder="Last Name"
                                 icon={<User size={16} className="text-gray-400" />}
                                 required
@@ -123,7 +144,6 @@ function Step3() {
                             <Input
                                 name="email"
                                 type="email"
-                                // label="Email"
                                 placeholder="Email address"
                                 icon={<Mail size={16} className="text-gray-400" />}
                                 required
@@ -131,7 +151,6 @@ function Step3() {
                             <Input
                                 name="phone"
                                 type="phone"
-                                // label="Phone"
                                 placeholder="Phone number"
                                 required
                             />

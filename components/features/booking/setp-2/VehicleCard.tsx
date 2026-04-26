@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { Counter } from "@/components/ui/counter";
+import { formatPrice } from "@/lib/booking-utils";
 
 interface VehicleCardProps {
   fleet: FleetByDistance;
@@ -15,8 +16,6 @@ interface VehicleCardProps {
   onSelect: (fleet: FleetByDistance) => void;
   onContinue: (fleet: FleetByDistance, passengers: number, luggage: number) => void;
 }
-
-const formatAmount = (value: number) => value.toFixed(2);
 
 export default function VehicleCard({
   fleet,
@@ -43,11 +42,11 @@ export default function VehicleCard({
           : "border-border"
       )}
     >
-      <div className="absolute -top-3 left-1 z-20">
+      {/* <div className="absolute -top-3 left-1 z-20">
         <div className="bg-primary text-[8px] sm:text-[9px] font-black text-white px-2 sm:px-3 py-1 rounded-full uppercase shadow-sm">
           Best Value
         </div>
-      </div>
+      </div> */}
 
       <div className="flex items-center md:p-4 p-2 py-1">
         {/* Vehicle Image */}
@@ -103,11 +102,11 @@ export default function VehicleCard({
               <div className="text-right">
                 {hasDiscount && (
                   <span className="block text-[10px] sm:text-sm font-semibold text-gray-400 line-through">
-                    ${formatAmount(displayPrice)}
+                    {formatPrice(displayPrice)}
                   </span>
                 )}
                 <span className="text-lg sm:text-2xl font-bold text-primary tracking-tight leading-none">
-                  ${formatAmount(totalPrice)}
+                  {formatPrice(totalPrice)}
                 </span>
               </div>
             </div>

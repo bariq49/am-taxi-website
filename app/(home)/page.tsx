@@ -18,7 +18,7 @@ export default function Home() {
             <CitiesSection />
             <ProcessSection />
             <WhyChooseUs />
-            <CtaNewsletter />
+            {/* <CtaNewsletter /> */}
         </>
     );
 }

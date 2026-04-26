@@ -20,17 +20,15 @@ export default function Footer() {
     { href: "/about", label: "About Us" },
     { href: "/fleet", label: "Fleet" },
     { href: "/partner-with-us", label: "Partner With Us" },
-    { href: "/contact", label: "Contact" },
+    { href: "/contact-us", label: "Contact" },
   ];
 
   const airportLinks: FooterLinkItem[] = [
-    { href: "/amsterdam-schiphol-airport", label: "Amsterdam - Schiphol from €35,- " },
-    { href: "/eindhoven-airport", label: "Den Haag - Schiphol from €70,-" },
-    { href: "/rotterdam-the-hague-airport", label: "Utrecht - Schiphol from €60,-" },
-    { href: "/groningen-airport-eelde", label: "Haarlem - Schiphol from €35,-" },
-    { href: "/almere", label: "Almere - Schiphol from €60,-" },
-    { href: "/leiden", label: "Leiden - Schiphol from €50,-" },
-    // { href: "/rotterdam", label: "Rotterdam - Schiphol from €80,-" },
+    { href: "/amsterdam-schiphol-airport", label: "Amsterdam Schiphol Airport" },
+    { href: "/eindhoven-airport", label: "Eindhoven Airport" },
+    { href: "/rotterdam-the-hague-airport", label: "Rotterdam The Hague Airport" },
+    { href: "/groningen-airport-eelde", label: "Groningen Airport Eelde" },
+    { href: "/maastricht-airport", label: "Maastricht Airport" },
   ];
 
   const serviceLinks: FooterLinkItem[] = [
@@ -39,7 +37,7 @@ export default function Footer() {
     { href: "/city-rides", label: "City Rides" },
     { href: "/hourly-ride", label: "Hourly Rides" },
     { href: "/private-jet-transfer", label: "Private Jet Transfer" },
-    { href: "/cargo-crew-transportation", label: "Cargo & Crew Transportation" },
+    { href: "/cargo-crew-transportation", label: "Cargo Crew Transportation" },
 
   ];
 
@@ -54,7 +52,7 @@ export default function Footer() {
               </Link>
             </div>
             <p className="max-w-sm text-sm leading-relaxed text-gray-300">{COMPANY_DESCRIPTION}</p>
-            <div className="mt-6 flex items-center gap-4">
+            {/* <div className="mt-6 flex items-center gap-4">
               <a
                 href={SOCIAL_LINKS.facebook}
                 target="_blank"
@@ -73,14 +71,14 @@ export default function Footer() {
               >
                 <InstagramIcon className="h-5 w-5 text-gray-300 transition-colors duration-300 group-hover:text-white" />
               </a>
-            </div>
+            </div> */}
           </div>
 
           <div className="lg:col-span-2">
             <FooterLinksColumn title="Quick Links" links={quickLinks} />
           </div>
           <div className="lg:col-span-3">
-            <FooterLinksColumn title="Popular Destinations" links={airportLinks} />
+            <FooterLinksColumn title="Popular Airports" links={airportLinks} />
           </div>
           <div className="lg:col-span-2">
             <FooterLinksColumn title="Our Services" links={serviceLinks} />

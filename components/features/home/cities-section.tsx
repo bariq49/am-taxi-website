@@ -14,21 +14,25 @@ const CITIES = [
         name: "Amsterdam",
         description: "Primary international hub with 24/7 premium taxi services.",
         image: IMAGES.CITIES.AMSTERDAM,
+        href: "/amsterdam",
     },
     {
         name: "Rotterdam",
         description: "Primary international hub with 24/7 premium taxi services.",
         image: IMAGES.CITIES.ROTTERDAM,
+        href: "/rotterdam",
     },
     {
         name: "Utrecht",
         description: "Primary international hub with 24/7 premium taxi services.",
         image: IMAGES.CITIES.UTRECHT,
+        href: "/utrecht",
     },
     {
         name: "The Hague",
         description: "Primary international hub with 24/7 premium taxi services.",
         image: IMAGES.CITIES.THE_HAGUE,
+        href: "/the-hague",
     },
 ];
 

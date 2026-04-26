@@ -26,15 +26,17 @@ export const useCreateCheckoutSession = () => {
 
             const pricing = calculatePricing(booking as any);
             const totalPrice = pricing?.total ?? 0;
+            const isBookingForSomeoneElse = booking.step3.isBookingForSomeoneElse ?? false;
 
             const payload: CheckoutPayload = {
                 category: booking.category,
                 vehicleId: booking.selectedVehicle._id,
+                isBookingForSomeoneElse,
                 passengerDetails: {
-                    firstName: booking.step3.firstName?.trim?.() ?? "",
-                    lastName: booking.step3.lastName?.trim?.() ?? "",
-                    phone: booking.step3.phone?.trim?.() ?? "",
-                    email: booking.step3.email?.trim?.() ?? "",
+                    firstName: booking.step3.firstName?.trim() ?? "",
+                    lastName: booking.step3.lastName?.trim() ?? "",
+                    phone: booking.step3.phone?.trim() ?? "",
+                    email: booking.step3.email?.trim() ?? "",
                 },
                 tripDetails: {
                     pickupAddress: booking.step1.pickupAddress,

@@ -7,5 +7,7 @@ export const API_ROUTES = {
     BOOKINGS: `/bookings`,
     REVIEWS: `/reviews`,
     NEWSLETTER: `/newsletter/subscribe`,
+    UPLOAD_PUBLIC: `/upload`,
+    DRIVERS: `/drivers`,
 } as const;
 export default API_ROUTES;
