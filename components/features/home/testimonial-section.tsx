@@ -18,8 +18,8 @@ export default function Testimonials() {
         return <TestimonialSkeleton />;
     }
 
-    const reviews = reviewsData.reviews;
-    const googleReviewsUrl = reviewsData.googleReviewsUrl;
+    const reviews = reviewsData?.reviews;
+    const googleReviewsUrl = reviewsData?.googleReviewsUrl;
 
     return (
         <div className="bg-white py-16">

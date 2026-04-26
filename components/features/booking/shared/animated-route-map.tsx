@@ -6,7 +6,7 @@ import { useBookingStore } from "@/store/use-booking-store";
 import { loadGoogleMaps } from "@/lib/google-maps-loader";
 
 // --- Constants & Styles ---
-const PRIMARY_COLOR = "#f97316";
+const PRIMARY_COLOR = "#f9b233";
 const EMPTY_STOPS: { address: string }[] = [];
 
 const MAP_STYLES: google.maps.MapTypeStyle[] = [

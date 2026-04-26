@@ -1,7 +1,9 @@
+import { Globe, Briefcase, HelpCircle, LayoutDashboard, User, Plane, UserCheck, MapPin, Clock, Truck, Navigation } from "lucide-react";
+
 export interface NavLink {
   title: string;
   path?: string;
-  sublinks?: { title: string; path: string }[];
+  sublinks?: { title: string; path: string; icon?: React.ComponentType<{ className?: string }> }[];
 }
 
 
@@ -21,17 +23,27 @@ export const NAV_LINKS: NavLink[] = [
     title: "Services",
     path: "/services",
     sublinks: [
-      { title: "Airport Ride", path: "/airport-ride" },
-      { title: "Airline Crew", path: "/airline-crew" },
-      { title: "City Rides", path: "/city-rides" },
-      { title: "Hourly Ride", path: "/hourly-ride" },
-      { title: "Cargo Crew", path: "/cargo-crew-transportation" },
-      { title: "Private Jet Transfer", path: "/private-jet-transfer" },
+      { title: "Airport Ride", path: "/airport-ride", icon: Plane },
+      { title: "Airline Crew", path: "/airline-crew", icon: UserCheck },
+      { title: "City Rides", path: "/city-rides", icon: MapPin },
+      { title: "Hourly Ride", path: "/hourly-ride", icon: Clock },
+      { title: "Cargo Crew", path: "/cargo-crew-transportation", icon: Truck },
+      { title: "Private Jet Transfer", path: "/private-jet-transfer", icon: Navigation },
     ],
   },
   { title: "Fleets", path: "/fleets" },
   { title: "About", path: "/about" },
   { title: "Contact", path: "/contact-us" },
+  {
+    title: "Business",
+    sublinks: [
+      {
+        title: "Travel Agencies",
+        path: "/partner-with-us",
+        icon: Globe,
+      },
+    ],
+  },
 ];
 export function isNavActive(pathname: string | null, link: NavLink): boolean {
   if (!pathname) return false;

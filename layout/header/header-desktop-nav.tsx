@@ -40,7 +40,7 @@ export const HeaderDesktopNav = forwardRef<HTMLElement, HeaderDesktopNavProps>(
             onMouseLeave={onDropdownClose}
           >
             <button
-              className={`flex items-center px-2 py-2 text-[17px] font-bold transition-colors ${active ? "text-secondary" : "text-white/90 hover:text-white"
+              className={`flex items-center px-4 py-2 text-[17px] font-bold transition-all duration-300 rounded-full ${isOpen ? "bg-white/10" : "hover:bg-white/5"} ${active || isOpen ? "text-secondary" : "text-white/90 hover:text-white"
                 }`}
               aria-haspopup="true"
               aria-expanded={isOpen}
@@ -54,31 +54,45 @@ export const HeaderDesktopNav = forwardRef<HTMLElement, HeaderDesktopNavProps>(
 
             {isOpen && (
               <div
-                className="absolute left-0 top-full w-60 pt-2 animate-in fade-in slide-in-from-top-2 duration-200"
+                className="absolute left-0 top-full w-64 pt-4 animate-in fade-in slide-in-from-top-2 duration-200 origin-top-left"
                 onMouseEnter={() => onDropdownOpen(link.title)}
                 onMouseLeave={onDropdownClose}
               >
-                <div className="relative rounded-md border border-white/10 bg-primary shadow-2xl" role="menu">
-                  {/* Dropdown Arrow */}
-                  <div className="absolute -top-1.5 left-8 h-3 w-3 rotate-45 border-l border-t border-white/10 bg-primary" />
+                <div className="relative rounded-lg bg-white shadow-2xl p-1.5" role="menu">
+                  {/* High-Fidelity Curved Arrow (SVG) - Left Aligned */}
+                  <div className="absolute -top-[12px] left-8 w-6 h-3.5">
+                    <svg
+                      viewBox="0 0 20 12"
+                      className="w-full h-full fill-white drop-shadow-[0_-2px_1px_rgba(0,0,0,0.05)]"
+                    >
+                      <path d="M0 12 C4 12 7 0 10 0 C13 0 16 12 20 12" />
+                    </svg>
+                  </div>
 
-                  <div className="relative z-10 p-1.5">
-                    {link.sublinks.map((sub) => (
-                      <Link
-                        key={sub.path}
-                        href={sub.path}
-                        role="menuitem"
-                        className={`group flex items-center gap-3 rounded-sm px-3.5 py-3 text-[15px] font-medium transition-all duration-300 ${pathname === sub.path
-                          ? "bg-secondary/20 text-secondary"
-                          : "text-white/80 hover:bg-white/5 hover:text-secondary"
-                          }`}
-                      >
-                        <div className="flex h-5 w-5 items-center justify-center rounded-full bg-white/5 transition-all duration-300 group-hover:bg-secondary/20 shrink-0">
-                          <ArrowRight className="h-3 w-3 text-gray-500 transition-all duration-300 group-hover:translate-x-0.5 group-hover:text-secondary" />
-                        </div>
-                        <span className="transition-all duration-300 font-bold group-hover:translate-x-0.5">{sub.title}</span>
-                      </Link>
-                    ))}
+                  <div className="relative z-10 flex flex-col gap-0.5">
+                    {link.sublinks.map((sub) => {
+                      const Icon = sub.icon;
+                      return (
+                        <Link
+                          key={sub.path}
+                          href={sub.path}
+                          role="menuitem"
+                          className={`group flex items-center gap-2 rounded-xl px-3 py-2 text-[15px] font-bold transition-all duration-300 ${pathname === sub.path
+                            ? "bg-secondary/10 text-secondary"
+                            : "text-gray-600 hover:bg-gray-50 hover:text-secondary"
+                            }`}
+                        >
+                          <div className={`flex h-8 w-8 items-center justify-center rounded-full transition-all duration-300 group-hover:bg-secondary/20 shrink-0 bg-secondary/10`}>
+                            {Icon ? (
+                              <Icon className={`h-4 w-4 text-secondary`} />
+                            ) : (
+                              <ArrowRight className="h-3 w-3 text-gray-400 transition-all duration-300 group-hover:translate-x-0.5 group-hover:text-secondary" />
+                            )}
+                          </div>
+                          <span className="transition-all duration-300 group-hover:translate-x-0.5">{sub.title}</span>
+                        </Link>
+                      );
+                    })}
                   </div>
                 </div>
               </div>

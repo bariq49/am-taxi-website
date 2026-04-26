@@ -25,10 +25,10 @@ export default function Footer() {
 
   const airportLinks: FooterLinkItem[] = [
     { href: "/amsterdam-schiphol-airport", label: "Amsterdam Schiphol Airport" },
-    { href: "/eindhoven-airport", label: "Eindhoven Airport" },
-    { href: "/rotterdam-the-hague-airport", label: "Rotterdam The Hague Airport" },
-    { href: "/groningen-airport-eelde", label: "Groningen Airport Eelde" },
-    { href: "/maastricht-airport", label: "Maastricht Airport" },
+    { href: "/", label: "Eindhoven Airport" },
+    { href: "/", label: "Rotterdam The Hague Airport" },
+    { href: "/", label: "Groningen Airport Eelde" },
+    { href: "/", label: "Maastricht Airport" },
   ];
 
   const serviceLinks: FooterLinkItem[] = [
