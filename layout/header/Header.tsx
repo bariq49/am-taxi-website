@@ -64,10 +64,10 @@ export default function Header() {
             <div className="flex items-center">
               <Link
                 href="/"
-                className="relative h-8 w-32 cursor-pointer transition-all duration-300 hover:scale-105 md:h-10 md:w-36"
+                className="relative h-8 w-32 cursor-pointer transition-all duration-300 hover:scale-105 md:h-30 md:w-36"
               >
                 <Image
-                  src="/assets/logo/logo-white.png"
+                  src="/assets/logo/logo-2.png"
                   alt="AMS Airport Transfer"
                   fill
                   className="object-contain"
