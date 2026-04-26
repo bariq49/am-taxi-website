@@ -33,7 +33,7 @@ export default function HeroSection() {
                     <div className="flex h-full w-full flex-col items-center justify-center gap-6 max-lg:px-3 md:items-start lg:gap-8 xl:col-span-2">
                         <div className="flex flex-col items-start gap-2 md:items-start px-4 md:px-0">
                             <h1 className="text-left text-3xl sm:text-4xl font-extrabold text-white md:text-left md:text-6xl">
-                                Private Taxi throughout <br />
+                                Private Taxi Throughout <br />
                                 <span className="text-left md:text-left md:text-6xl lg:text-7xl xl:text-8xl">The Netherland</span>
                             </h1>
                             <div className="flex flex-col items-start gap-4 mt-6 md:mt-8 md:ml-2">

@@ -25,10 +25,10 @@ export default function Footer() {
 
   const airportLinks: FooterLinkItem[] = [
     { href: "/amsterdam-schiphol-airport", label: "Amsterdam Schiphol Airport" },
-    { href: "/eindhoven-airport", label: "Eindhoven Airport" },
-    { href: "/rotterdam-the-hague-airport", label: "Rotterdam The Hague Airport" },
-    { href: "/groningen-airport-eelde", label: "Groningen Airport Eelde" },
-    { href: "/maastricht-airport", label: "Maastricht Airport" },
+    { href: "/", label: "Eindhoven Airport" },
+    { href: "/", label: "Rotterdam The Hague Airport" },
+    { href: "/", label: "Groningen Airport Eelde" },
+    { href: "/", label: "Maastricht Airport" },
   ];
 
   const serviceLinks: FooterLinkItem[] = [
@@ -46,9 +46,18 @@ export default function Footer() {
       <div className="container mx-auto py-12 px-4 sm:py-16">
         <div className="grid grid-cols-1 gap-10 text-left sm:grid-cols-2 lg:grid-cols-12 lg:gap-8">
           <div className="flex flex-col items-start lg:col-span-3">
-            <div className="mb-5">
-              <Link href="/">
-                <Image src="/assets/logo/logo-white.png" alt="Logo" width={96} height={80} className="h-[72px] w-auto sm:h-[60px]" />
+            <div className="flex items-center">
+              <Link
+                href="/"
+                className="relative h-8 w-32 cursor-pointer transition-all duration-300 hover:scale-105 md:h-30 md:w-36"
+              >
+                <Image
+                  src="/assets/logo/logo-2.png"
+                  alt="AMS Airport Transfer"
+                  fill
+                  className="object-contain"
+                  priority
+                />
               </Link>
             </div>
             <p className="max-w-sm text-sm leading-relaxed text-gray-300">{COMPANY_DESCRIPTION}</p>

@@ -70,7 +70,7 @@ export default function TripRouteDetails({
         >
           {showAnimation ? (
             <div
-              className="absolute left-[7px] -translate-x-1/2 z-10 h-2.5 w-2.5 rounded-full bg-primary/30"
+              className="absolute left-[7px] -translate-x-1/2 z-10 h-2.5 w-2.5 rounded-full bg-secondary"
               style={{ animation: "tripRouteMoveDown 3.5s linear infinite" }}
             />
           ) : null}

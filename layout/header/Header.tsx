@@ -8,7 +8,7 @@ import { HeaderDesktopNav } from "./header-desktop-nav";
 import { HeaderMobileMenu } from "./header-mobile-menu";
 import Link from "next/link";
 import Image from "next/image";
-import { ChevronDown, Globe, Menu, Phone, X } from "lucide-react";
+import { ChevronDown, Globe, Menu, Phone, User, X } from "lucide-react";
 import { COMPANY_PHONE, COMPANY_PHONE_HREF, COMPANY_WHATSAPP_HREF, SOCIAL_LINKS } from "@/constants/app-default";
 import WhatsAppIcon from "@/components/icons/whatsapp-icon";
 import { InstagramIcon } from "@/components/icons";
@@ -64,10 +64,10 @@ export default function Header() {
             <div className="flex items-center">
               <Link
                 href="/"
-                className="relative h-8 w-32 cursor-pointer transition-all duration-300 hover:scale-105 md:h-10 md:w-36"
+                className="relative h-8 w-32 cursor-pointer transition-all duration-300 hover:scale-105 md:h-30 md:w-36"
               >
                 <Image
-                  src="/assets/logo/logo-white.png"
+                  src="/assets/logo/logo-2.png"
                   alt="AMS Airport Transfer"
                   fill
                   className="object-contain"
@@ -94,7 +94,6 @@ export default function Header() {
                   <span>EN</span>
                   <ChevronDown className="h-4 w-4 transition-transform duration-200" />
                 </div>
-
                 {/* Action Icons - Mobile Only */}
                 <div className="flex items-center gap-2 sm:gap-3 md:hidden">
                   <a
